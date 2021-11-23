@@ -1,161 +1,106 @@
+using Plots, Printf, LinearAlgebra, GeoData, NCDatasets, JLD, Interpolations
 
-using Plots, Printf, LinearAlgebra, GeoData, NCDatasets, JLD
+# On charge notre fichier GeoData...
+# Puis on extrait les valeurs dans les variables...
+var = load("BedMachineGreenland_96_176.jld"); # ultra low res data
+Zbed = var["Zbed"]
+xc = var["xc"]
+Hice = var["Hice"]
 
-x=-1:0.01:1;
-f(x) = exp(-(x-10/2)^2);
-y(x) =atan(x)
 
-plot(x,y)
+S = zeros(96, 176) # Épaisseur de de la glace
+B = Zbed.data # Niveau de la mer
+H = Hice.data # Hauteur de la glace
+S .= B .+ H
 
-# enable plotting & saving by default
-if !@isdefined do_visu; do_visu = true end
-if !@isdefined do_save; do_save = true end
 
-# finite difference stencil operation support functions
-@views av(A)    = 0.25*(A[1:end-1,1:end-1].+A[2:end,1:end-1].+A[1:end-1,2:end].+A[2:end,2:end]) # average
-#@views av_xa(A) = 0.5.*(A[1:end-1,:].+A[2:end,:]) # average x-dir
-#@views av_ya(A) = 0.5.*(A[:,1:end-1].+A[:,2:end]) # average y-dir
-@views inn(A)   = A[2:end-1,2:end-1] # inner points
+# display(B)
+# display(B[1])
 
-@views function diffusion_1D(; do_visu=true)
-    # Physics
-    #lx     = 10.0       # domain size
-    #D      = 1.0        # diffusion coefficient
-    #ttot   = 0.6        # total simulation time
-    #dt     = 0.1        # physical time step
-    # physics
-    s2y      = 3600*24*365.25  # seconds to years
-    rho_i    = 910.0           # ice density
-    g        = 9.81            # gravity acceleration
-    npow     = 3.0             # Glen's power law exponent
-    a0       = 1.5e-24         # Glen's law enhancement term
-    dt       = 0.1        # physical time step
-    # Numerics
-    # Derived numerics
-    dx     = 1     # Valeur attribué arbitrairement
-    # Valeurs arbitaires
-   @assert (dx>0) "dx need to be positive"
-    #nx     = size(Zbed,1) # numerical grid resolution #A changer avec les donnees extrait de Zbed 
-    #ny     = size(Zbed,2)
-    #@assert (nx, ny) == size(Zbed) == size(Hice) == size(Mask) "Size doesn't match"
-    itMax    = 1e5             # number of iteration (max)
-    nout     = 50 #200         # error check frequency
-    tolnl    = 1e-6            # nonlinear tolerance
-    epsi     = 1e-4            # small number
-    damp     = 0.85            # convergence accelerator (this is a tuning parameter, dependent on e.g. grid resolution)
-    dtausc   = 1.0/3.0         # iterative dtau scaling
-    # derived physics
-    a      = 2.0*a0/(npow+2)*(rho_i*g)^npow*s2y  #A quoi ca sert ? 
+# Ici on plot les deuxs niveaux en même temps pour pouvoir
+# visuellement définir un intervalle d'inteprolation
+plot(xc, B[:, 80], color = :blue)
+plot!(xc, S[:, 80], color = :red)
 
-    #dtau   = (1.0/(dx^2/D/2.1) + 1.0/dt)^-1 # iterative "timestep" #A changer dans chaque boucle 
-    xc     = LinRange(dx/2, lx-dx/2, nx)
-    # Array allocation
-    qH     = zeros(nx-1)
-    dHdtau = zeros(nx-2)
-    dtau   = zeros(nx-2) #A initialiser à chaque tour de boucle 
-    ResH   = zeros(nx-2)
-    Err    = zeros(nx  )
-    dSdx   = zeros(nx-1)
-    B      = zeros(nx) #Initialisation d'un tableau de 0 de taille nx 
-    H      = zeros(nx)
-    S      = zeros(nx)
-    D      = zeros(nx-1) #Initialisation d'un tableau de 0 de taile nx pour le coeff de diffusion pour chaque point 
-    # Initial condition
-    B       .= 0 #Sert à rien ? 
-    H       .= Hice
-    S       .= B .+ H 
-    t = 0.0
-    #; it = 0; ittot = 0
-    # iteration loop
-    println(" starting iteration loop:")
-    iter = 1; err = 2*tolnl
-    # Physical time loop
-    while iter<itMax
-        #iter = 0; 
-        # Pseudo-transient iteration
-        while err>tolnl #&& #Quelle autre  condition 
-            D     .= a*av(H).^(npow+2) .* dSdx.^(npow-1) #Devient une variable 
-            qH         .= .-av(D).*diff(S[2:end-1])/dx  # flux
-            ResH  .= .-(diff(qH)/dx) .+ inn(M) 
-            #ResH       .= -(H[2:end-1] - Hold[2:end-1])/dt - diff(qH)/dx # residual of the PDE
-            dHdtau     .= ResH + damp*dHdtau         # damped rate of change
-            H[2:end-1] .= H[2:end-1] + dtau*dHdtau   # update rule, sets the BC as H[1]=H[end]=0
 
-            # error check
-            if mod(iter, nout)==0
-                Err .= Err .- H
-                err = norm(Err)/length(Err)
-                @printf(" iter = %d, error = %1.2e \n", iter, err)
-                if isnan(err)
-                    error("""NaNs encountered.  Try a combination of:
-                                decreasing `damp` and/or `dtausc`, more smoothing steps""")
-                end
-            end
-        end
-        
-        #ittot += iter; it += 1; t += dt
-        iter += 1
-        #t += dt  #Necessaire ? 
+# Il faut interpoler entre -3*10^5 et 6*10^5
+# Pour cela on on essaye de déterminer les indices dans la matrice...
+# On utilise une boucle "for" pour cela (on prend les valeurs au dessus de S = 500
+for i = 30:96
+    if (S[:, 80][i] < 500)
+        display(i)
+        break
     end
-    # compute velocities
-    Vx .= -D./(av(H) .+ epsi).*av_ya(dSdx)
-    Vy .= -D./(av(H) .+ epsi).*av_xa(dSdy)
-    # return as GeoArrays
-    return  as_geoarray(H,  Zbed, name=:thickness),
-            as_geoarray(S,  Zbed, name=:surface),
-            as_geoarray(M,  Zbed, name=:smb),
-            as_geoarray(Vx, Zbed, name=:vel_x, staggerd=true),
-            as_geoarray(Vy, Zbed, name=:vel_y, staggerd=true)
+end
+# On obtient l'intervalle [21;87]
+xs = 21:1:87
+
+# On va préparer ici nos pramètres pour l'interpolation
+# On définit une variable temporaire correspondant à la colonne 80 de S
+tmp = S[:, 80]
+
+# On va créer un masque pour tmp entre 21 et 87 
+for i = 1:96
+    if (i < 21 || i > 87)
+        tmp[i] = 0 * tmp[i]
+    end
 end
 
-diffusion_1D(; do_visu=do_visu);
+# display(tmp)
+# display(S[:, 80]);
+# display(xs);
+# A = [S[:, 80] for x in xs]
+# display(A[1])
 
-# ------------------------------------------------------------------------------
+# On définit un intervalle sur lequel interpoler (ici tout l'intervalle)
+xq = 1:1:96
+
+# On lance la fonction d'interpolation (issue d'un package)
+interp_linear = LinearInterpolation(xq, tmp)
+
+# Obtient la fonction d'interpollation pour nos valeurs
+# Ainsi il suffit d'entrer un paramètre un floatant pour obtenir la valeur interpollée
+interp_linear(50)
+# D'ailleurs le package nous permet d'avoir des approximations entre chaque valeurs
+interp_linear(50.5)
+
+# Notre but va désormais être de créer notre propre fonction d'interpolation
+# À partir d'un vecteur et d'un intervalle on retournera un nouveau vecteur interpollé, 
+# avec des approximations entre chaques valeurs
+
+function interp(x, rg, new_rg)
+    tmp = x
+    res = zeros(length(new_rg))
+    # Masque...
+    for i = 1:1:length(rg)
+        if (i < 21 || i > 87)
+            tmp[i] = 0 * tmp[i]
+        end
+    end
+
+    # Package d'interpolation...
+    inter_lin = LinearInterpolation(rg, tmp)
+
+    # On assigne la valeur interpollée à chaque coordonnées du vecteur...
+    for j = 1:1:length(new_rg)
+        res[j] = inter_lin(new_rg[j])
+    end
+
+    # Enfin on retourne notre nouveau vecteur interpollé...
+    return res
+
+end
+
+# On définit l'intervalle issu de xc
+display(xc);
+display(xc[1]);
+display(xc[end]);
+display(xc[86] - xc[85]);
+
+# On obtient notre nouvel intervalle
+rg_xc = -627725:15600:854275
 
 
-var =  load(joinpath(datadir, "BedMachineGreenland_96_176.jld")); # ultra low res data
-Zbed= var["Zbed"]
+test = interp(S[:, 80], rg_xc, -627725:7800:854275)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#using Plots, JLD , GeoData ,LinearAlgebra, NCDatasets
-#include(joinpath(@__DIR__, "helpers.jl"))
-
-
-
-
-#d = load("BedMachineGreenland_96_176.jld")
-#Zbed = d["Zbed"]
-
-#B = Zbed.data
-#display(B); 
-# load the data
-#print("Loading the data ... ")
-#Zbed, Hice, Mask, dx, dy, xc, yc = load_data(; nx=96) # nx=96,160 are included in the repo
-#                                                      # other numbers will trigger a 2GB download
-#println("done.")
-
-# Faire xc * 176 // yc * 96 
