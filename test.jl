@@ -10,7 +10,7 @@ if !@isdefined do_save; do_save = true end
 #@views av(A)    = 0.25*(A[1:end-1,1:end-1].+A[2:end,1:end-1].+A[1:end-1,2:end].+A[2:end,2:end]) # average
 @views av(A) = 0.5.*(A[1:end-1].+A[2:end]) # average x-dir
 #@views av_ya(A) = 0.5.*(A[:,1:end-1].+A[:,2:end]) # average y-dir
-@views inn(A)   = A[2:end-1,2:end-1] # inner points
+@views inn(A)   = A[2:end-1] # inner points
 
 @views function diffusion_1D(; do_visu=true)
     x=-pi:0.01:pi;
@@ -56,12 +56,13 @@ if !@isdefined do_save; do_save = true end
     xc     = x
     nx = taille
     # Array allocation
-    qH     = zeros(nx-1)
-    dHdtau = zeros(nx-2)
+    qH     = zeros(nx-2)
+    dHdtau = zeros(nx-3)
     dtau   = zeros(nx-2) #A initialiser à chaque tour de boucle 
-    ResH   = zeros(nx-2)
+    ResH   = zeros(nx-3)
     Err    = zeros(nx  )
     dSdx   = zeros(nx-1)
+    M      = zeros(nx-1)
     B      = zeros(nx) #Initialisation d'un tableau de 0 de taille nx 
     H      = zeros(nx)
     S      = zeros(nx)
@@ -71,7 +72,7 @@ if !@isdefined do_save; do_save = true end
         B[i]    = y(i) 
         S[i]    = h(x[i]) 
     end
-    H .= S - B
+    H .= S .- B
     t = 0.0
     #; it = 0; ittot = 0
     # iteration loop
@@ -83,11 +84,11 @@ if !@isdefined do_save; do_save = true end
         # Pseudo-transient iteration
         while err>tolnl  #Quelle autre  condition 
             D     .= a*av(H).^(npow+2) .* dSdx.^(npow-1) #Devient une variable 
-            qH         .= .-av(D).*diff(S[2:end-1])/dx  # flux
+            qH         .= .-av(D).*diff(S[2:end])/dx  # flux
             ResH  .= .-(diff(qH)/dx) .+ inn(M) 
             #ResH       .= -(H[2:end-1] - Hold[2:end-1])/dt - diff(qH)/dx # residual of the PDE
-            dHdtau     .= ResH + damp*dHdtau         # damped rate of change
-            H[2:end-1] .= H[2:end-1] + dtau*dHdtau   # update rule, sets the BC as H[1]=H[end]=0
+            dHdtau     .= ResH .+ damp*dHdtau         # damped rate of change
+            H[2:end-1] .= H[2:end-1] .+ dtau*dHdtau   # update rule, sets the BC as H[1]=H[end]=0
 
             # error check
             if mod(iter, nout)==0
@@ -120,6 +121,3 @@ diffusion_1D(; do_visu=do_visu);
 
 # ------------------------------------------------------------------------------
 
-
-#var =  load(joinpath(datadir, "BedMachineGreenland_96_176.jld")); # ultra low res data
-#Zbed= var["Zbed"]
