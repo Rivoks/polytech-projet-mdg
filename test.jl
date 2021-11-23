@@ -7,24 +7,13 @@ if !@isdefined do_visu; do_visu = true end
 if !@isdefined do_save; do_save = true end
 
 # finite difference stencil operation support functions
-#@views av(A)    = 0.25*(A[1:end-1,1:end-1].+A[2:end,1:end-1].+A[1:end-1,2:end].+A[2:end,2:end]) # average
 @views av(A) = 0.5.*(A[1:end-1].+A[2:end]) # average x-dir
-#@views av_ya(A) = 0.5.*(A[:,1:end-1].+A[:,2:end]) # average y-dir
-@views inn(A)   = A[2:end-1,2:end-1] # inner points
+@views inn(A)   = A[2:end-1] # inner points
 
 @views function diffusion_1D(; do_visu=true)
-    x=-pi:0.01:pi;
-    f(x) = exp(-(x-10/2)^2);
-    y(x) =cos(x/2);
-    h(x) =-cos(x/2);
-    taille=length(x)
-    fonction2=zeros(taille)
-    for i in 1:taille
-        fonction2[i]=2*y(x[i])*100
-    end
 
     # Physics
-    lx     = taille      # domain size
+    lx     = 96      # domain size
     #D      = 1.0        # diffusion coefficient
     #ttot   = 0.6        # total simulation time
     #dt     = 0.1        # physical time step
@@ -37,10 +26,8 @@ if !@isdefined do_save; do_save = true end
     dt       = 0.1        # physical time step
     # Numerics
     # Derived numerics
-    dx     = 0.01     # Valeur attribué arbitrairement (Pas en SI)
     # Valeurs arbitaires
-   @assert (dx>0) "dx need to be positive"
-    #nx     = size(Zbed,1) # numerical grid resolution #A changer avec les donnees extrait de Zbed 
+        #nx     = size(Zbed,1) # numerical grid resolution #A changer avec les donnees extrait de Zbed 
     #ny     = size(Zbed,2)
     #@assert (nx, ny) == size(Zbed) == size(Hice) == size(Mask) "Size doesn't match"
     itMax    = 1e5             # number of iteration (max)
@@ -53,25 +40,35 @@ if !@isdefined do_save; do_save = true end
     a      = 2.0*a0/(npow+2)*(rho_i*g)^npow*s2y  #Viscosité de la glace
 
     #dtau   = (1.0/(dx^2/D/2.1) + 1.0/dt)^-1 # iterative "timestep" #A changer dans chaque boucle 
-    xc     = x
-    nx = taille
+    #xc     = x
+    nx = 96
     # Array allocation
-    qH     = zeros(nx-1)
-    dHdtau = zeros(nx-2)
-    dtau   = zeros(nx-2) #A initialiser à chaque tour de boucle 
-    ResH   = zeros(nx-2)
+    qH     = zeros(nx-2)
+    dHdtau = zeros(nx-3)
+    dtau   = zeros(nx-3) #A initialiser à chaque tour de boucle 
+    ResH   = zeros(nx-3)
     Err    = zeros(nx  )
     dSdx   = zeros(nx-1)
+    M      = zeros(nx-1)
     B      = zeros(nx) #Initialisation d'un tableau de 0 de taille nx 
     H      = zeros(nx)
-    S      = zeros(nx)
     D      = zeros(nx-1) #Initialisation d'un tableau de 0 de taile nx pour le coeff de diffusion pour chaque point 
     # Initial condition
-    for i in 1:nx
-        B[i]    = y(i) 
-        S[i]    = h(x[i]) 
-    end
-    H .= S - B
+    # On charge notre fichier GeoData...
+    # Puis on extrait les valeurs dans les variables...
+    var = load("BedMachineGreenland_96_176.jld"); # ultra low res data
+    Zbed = var["Zbed"]
+    xc = var["xc"]
+    Hice = var["Hice"]
+    dx =15600;
+    S = zeros(96) # Épaisseur de de la glace
+    B1 = Zbed.data # Niveau de la mer
+    H1 = Hice.data # Hauteur de la glace
+    B = B1[:,80]
+    H = H1[:,80]
+    S .= B .+ H
+    plot(xc,S)
+    plot!(xc,B1)
     t = 0.0
     #; it = 0; ittot = 0
     # iteration loop
@@ -82,12 +79,13 @@ if !@isdefined do_save; do_save = true end
         #iter = 0; 
         # Pseudo-transient iteration
         while err>tolnl  #Quelle autre  condition 
-            D     .= a*av(H).^(npow+2) .* dSdx.^(npow-1) #Devient une variable 
-            qH         .= .-av(D).*diff(S[2:end-1])/dx  # flux
-            ResH  .= .-(diff(qH)/dx) .+ inn(M) 
+            dSdx .= diff(S)/dx
+            D     .= a*av(H).^(npow+2) .*dSdx.^(npow-1) #Devient une variable 
+            qH         .= .-av(D).*diff(S[2:end])/dx  # flux
+            ResH  .= .-(diff(qH)/dx) .+ inn(M) #a quoi sert le m
             #ResH       .= -(H[2:end-1] - Hold[2:end-1])/dt - diff(qH)/dx # residual of the PDE
             dHdtau     .= ResH + damp*dHdtau         # damped rate of change
-            H[2:end-1] .= H[2:end-1] + dtau*dHdtau   # update rule, sets the BC as H[1]=H[end]=0
+            H[2:end-2] .= H[2:end-2] + dtau.*dHdtau   # update rule, sets the BC as H[1]=H[end]=0
 
             # error check
             if mod(iter, nout)==0
@@ -120,6 +118,3 @@ diffusion_1D(; do_visu=do_visu);
 
 # ------------------------------------------------------------------------------
 
-
-#var =  load(joinpath(datadir, "BedMachineGreenland_96_176.jld")); # ultra low res data
-#Zbed= var["Zbed"]
