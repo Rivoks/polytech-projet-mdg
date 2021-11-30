@@ -47,9 +47,9 @@ if !@isdefined do_save; do_save = true end
     dHdtau = zeros(nx-3)
     dtau   = zeros(nx-3) #A initialiser à chaque tour de boucle 
     ResH   = zeros(nx-3)
-    Err    = zeros(nx  )
+    Err    = zeros(nx)
     dSdx   = zeros(nx-1)
-    M      = zeros(nx-1)
+    M      = 0.15*ones(nx-1)
     B      = zeros(nx) #Initialisation d'un tableau de 0 de taille nx 
     H      = zeros(nx)
     D      = zeros(nx-1) #Initialisation d'un tableau de 0 de taile nx pour le coeff de diffusion pour chaque point 
@@ -61,51 +61,56 @@ if !@isdefined do_save; do_save = true end
     xc = var["xc"]
     Hice = var["Hice"]
     dx =15600;
+    cfl    = dx^2/4.1
+    #grad_b, z_ELA, b_max = mass_balance_constants(xc, 80)
     S = zeros(96) # Épaisseur de de la glace
     B1 = Zbed.data # Niveau de la mer
     H1 = Hice.data # Hauteur de la glace
     B = B1[:,80]
     H = H1[:,80]
     S .= B .+ H
-    plot(xc,S)
-    plot!(xc,B1)
-    t = 0.0
+    #display(plot(xc,S))
+    #display(plot!(xc,B))
     #; it = 0; ittot = 0
     # iteration loop
     println(" starting iteration loop:")
     iter = 1; err = 2*tolnl
     # Physical time loop
-    while iter<itMax
+    #while iter<itMax
         #iter = 0; 
         # Pseudo-transient iteration
-        while err>tolnl  #Quelle autre  condition 
+        while err>tolnl && iter<itMax #Quelle autre  condition
+            Err .= H
+            #M     .= min.(grad_b.*(S .- z_ELA), b_max) 
             dSdx .= diff(S)/dx
             D     .= a*av(H).^(npow+2) .*dSdx.^(npow-1) #Devient une variable 
-            qH         .= .-av(D).*diff(S[2:end])/dx  # flux
+            qH         .= .-av(D).*diff(S[2:end])/dx  # flux -> négatif lorsqu'on grimpe la courbe
             ResH  .= .-(diff(qH)/dx) .+ inn(M) #a quoi sert le m
-            #ResH       .= -(H[2:end-1] - Hold[2:end-1])/dt - diff(qH)/dx # residual of the PDE
+            dtau  .= dtausc*min.(10.0, cfl./(epsi .+ av(D[1:end-1])))
             dHdtau     .= ResH + damp*dHdtau         # damped rate of change
             H[2:end-2] .= H[2:end-2] + dtau.*dHdtau   # update rule, sets the BC as H[1]=H[end]=0
 
             # error check
             if mod(iter, nout)==0
+                @printf("diff(S) = %d ,dSdx = %d, S = %d, D = %f, qH = %f, ResH = %f, H = %f, dtau = %f", (S[50]-S[51])/dx, dSdx[50], S[50], D[50], qH[50], ResH[50], H[50], dHdtau[50])
                 Err .= Err .- H
                 err = norm(Err)/length(Err)
-                @printf(" iter = %d, error = %1.2e \n", iter, err)
+                @printf(" Err = %f, iter = %d, error = %1.2e \n", Err[50], iter, err)
                 if isnan(err)
                     error("""NaNs encountered.  Try a combination of:
                                 decreasing `damp` and/or `dtausc`, more smoothing steps""")
                 end
             end
+            iter += 1
         end
         
         #ittot += iter; it += 1; t += dt
-        iter += 1
+        #iter += 1
         #t += dt  #Necessaire ? 
-    end
+   # end
     # compute velocities
-    Vx .= -D./(av(H) .+ epsi).*av_ya(dSdx)
-    Vy .= -D./(av(H) .+ epsi).*av_xa(dSdy)
+    Vx .= -D./(av(H) .+ epsi).*av(dSdx)
+    #Vy .= -D./(av(H) .+ epsi).*av_xa(dSdy)
     # return as GeoArrays
     return  as_geoarray(H,  Zbed, name=:thickness),
             as_geoarray(S,  Zbed, name=:surface),
