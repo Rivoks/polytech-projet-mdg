@@ -47,7 +47,7 @@ L’intérêt ici va être d’énoncer les relations générales de Stokes appl
 
 L’écoulement d’un glacier dépend de plusieurs facteurs, qui sont principalement l’accumulation de neige, la fonte de glace, la gravité et le niveau de la pente du lit rocheux.
 Les écoulements sont considérés comme fluides, incompressibles, visqueux et non linéaires, d’où l’intérêt de les modéliser avec les relations de Stokes.
-
+Dans le cadre de ce projet, nous allons utilisé le langage Julia pour la résolution de systèmes d'équations différentielles afin de pouvoir prédire l'écoulement glaciaire du Groenland.
 
 
 \begin{center}
@@ -64,8 +64,21 @@ Documentation:
 %-----------------------------------------------------------
 \section{Présentation des techniques de résolution}
 
+\subsection{Pourquoi Julia ?}
+
+Julia est un langage de programmation moderne et polyvalent, crée en 2009 par des chercheurs et ouvert au grand public en 2012. C'est un langage de haut niveau, dynamique et conçu pour des calculs scientifique. Sa syntaxe est similaire à Python, R ou encore Matlab.
+ 
+
+
 \subsection{Les équations de Stokes}
 
+https://scienceetonnante.com/2014/03/03/la-mysterieuse-equation-de-navier-stokes/
+
+Les équations de Stokes ont comme principal objectif de décrire les mouvements des fluides. 
+Pour décrire correctement un fluide en mouvement, il faut connaître sa vitesse en tout point de l'espace : son champ de vitesse. Ainsi les équations de Stokes permettent de décrire le champ de vitesse d'un fluide. 
+Dans un fluide nous considérons deux types de forces à savoir, les forces de pression et les forces visqueuses. 
+
+Afin de pouvoir appliquer ces équations dans le cas des écoulements des glaciers, nous considérerons ces derniers comme des fluides incompressibles, visqueux et non linéaires. Il s'agit d'un système d'équations pouvant être appliqué à tout type de glacier, régissant la vitesse u et la pression p de l’écoulement. 
 
 \subsection{Shallow ice approximation (SIA)}
 
