@@ -41,7 +41,7 @@ end
     #ny     = size(Zbed,2)
     #@assert (nx, ny) == size(Zbed) == size(Hice) == size(Mask) "Size doesn't match"
     itMax    = 1e5             # number of iteration (max)
-    nout     = 1 #200         # error check frequency
+    nout     = 10 #200         # error check frequency
     tolnl    = 1e-6            # nonlinear tolerance
     epsi     = 1e-4            # small number
     damp     = 0.85            # convergence accelerator (this is a tuning parameter, dependent on e.g. grid resolution)
@@ -54,7 +54,7 @@ end
     nx = 96
     # Array allocation
     qH     = zeros(nx-2)
-    dHdtau = zeros(nx-3)
+    dHdt = zeros(nx-3)
     dtau   = zeros(nx-3) #A initialiser à chaque tour de boucle 
     ResH   = zeros(nx-3)
     Err    = zeros(nx)
@@ -87,6 +87,7 @@ end
     #display(plot(xc,S))
     #display(plot!(xc,B))
     #; it = 0; ittot = 0
+
     # iteration loop
     println(" starting iteration loop:")
     iter = 1; err = 2*tolnl
@@ -99,20 +100,20 @@ end
             M     .= min.(grad_b.*(S .- z_ELA), b_max) 
             dSdx .= diff(S)/dx
             D     .= a*av(H).^(npow+2) .*dSdx.^(npow-1) #Devient une variable 
-            qH         .= .-av(D).*diff(S[2:end])/dx  # flux -> négatif lorsqu'on grimpe la courbe
-            ResH  .= .-(diff(qH)/dx) .+ inn(M[1:end-1]) #a quoi sert le m
-            dtau  .= dtausc*min.(10.0, cfl./(epsi .+ av(D[1:end-1])))
-            dHdtau     .= ResH + damp*dHdtau         # damped rate of change
-            H[2:end-2] .= max.(0.0,H[2:end-2] .+ dtau.*dHdtau)   # update rule, sets the BC as H[1]=H[end]=0
+            qH         .= .-av(D).*diff(S[1:end-1])/dx  # flux -> négatif lorsqu'on grimpe la courbe
+            ResH  .= .-(diff(qH)/dx .+ inn(M[1:end-1])) #Valeur absolue pour test
+            dtau  .= dtausc*min.(10.0, cfl./(epsi .+ av(D[2:end])))
+            dHdt     .= ResH + damp.*dHdt         # damped rate of change
+            H[2:end-2] .= max.(0.0,H[2:end-2] .+ dtau.*dHdt)  # update rule, sets the BC as H[1]=H[end]=0
             # apply mask (a very poor-man's calving law)
             H[Mask.==0] .= 0.0
             # update surface
             S     .= B .+ H
             # error check
             if mod(iter, nout)==0
-                @printf("diff(S) = %f ,dSdx = %f, S = %f, D = %f, qH = %f, ResH = %f, H = %f, dtau = %f", (S[50]-S[51])/dx, dSdx[50], S[50], D[50], qH[50], ResH[50], H[50], dHdtau[50])
+                @printf("dSdx = %f, S = %f, D = %f, qH = %f, ResH = %f, H = %f, dtau = %f", dSdx[50], S[50], D[50], qH[50], ResH[50], H[50], dHdt[50])
                 Err .= Err .- H
-                err = norm(Err)/length(Err)
+                err = norm(Err)/length(Err) # Length = 96
                 @printf(" Err = %f, iter = %d, error = %1.2e \n", Err[50], iter, err)
                 if isnan(err)
                     error("""NaNs encountered.  Try a combination of:
