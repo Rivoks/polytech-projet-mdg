@@ -1,0 +1,143 @@
+\documentclass{article}
+
+\usepackage[francais]{babel}
+\def\printlandscape{\special{landscape}}    % Works with dvips.
+%\usepackage{pstricks,pst-node,pst-tree}
+%\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} 
+\usepackage{fancybox} % for shadow and Bitemize
+\usepackage{alltt}
+\usepackage{graphicx}
+%\usepackage{epsfig}
+%\usepackage{fullpage}
+%\usepackage{fancyhdr}
+%\usepackage{moreverb}
+%\usepackage{xspace}
+\usepackage[colorlinks,hyperindex,bookmarks,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\usepackage{wrapfig}
+\usepackage{epsf}
+
+
+\begin{document}
+
+\title{Rapport de projet pluridisciplinaire}
+
+\date{\today}
+        
+\newpage
+
+\title{Diffusion non linéaire en sciences de la terre modélisation des glaciers}
+ 
+\maketitle
+\tableofcontents
+
+\begin{abstract}
+Résumé du contenu du document.
+\end{abstract}
+
+%-----------------------------------------------------------
+\newpage
+\section{Introduction}\label{sec:intro}
+
+L’écoulement des glaciers est un processus continu, mais il est très difficile de le simuler mathématiquement. Au lieu de cela, les modélisateurs utilisent des méthodes numériques, qui résolvent les équations en une série d’étapes.
+L’intérêt ici va être d’énoncer les relations générales de Stokes appliqués aux glaciers, d’énoncer le modèle Shallow Ice Approximation (SIA) afin d’en déterminer les avantages et les limites dans l’analyse de l’écoulement d’un glacier en fonction du temps.
+
+L’écoulement d’un glacier dépend de plusieurs facteurs, qui sont principalement l’accumulation de neige, la fonte de glace, la gravité et le niveau de la pente du lit rocheux.
+Les écoulements sont considérés comme fluides, incompressibles, visqueux et non linéaires, d’où l’intérêt de les modéliser avec les relations de Stokes.
+Dans le cadre de ce projet, nous allons utilisé le langage Julia pour la résolution de systèmes d'équations différentielles afin de pouvoir prédire l'écoulement glaciaire du Groenland.
+
+
+\begin{center}
+$\frac{\partial H}{\partial t}=\frac{D {\partial}^{2}H}{\partial x^{2}}\qquad(1)$
+\end{center}
+
+Documentation: 
+\begin{itemize}
+\item \LaTeX: \url{http://www.latex-project.org/} 
+\item \TeX users group: \url{http://www.tug.org/}
+\end{itemize}
+
+
+%-----------------------------------------------------------
+\section{Présentation des techniques de résolution}
+
+\subsection{Pourquoi Julia ?}
+
+Julia est un langage de programmation moderne et polyvalent, crée en 2009 par des chercheurs et ouvert au grand public en 2012. C'est un langage de haut niveau, dynamique et conçu pour des calculs scientifique. Sa syntaxe est similaire à Python, R ou encore Matlab.
+ 
+
+
+\subsection{Les équations de Stokes}
+
+https://scienceetonnante.com/2014/03/03/la-mysterieuse-equation-de-navier-stokes/
+
+Les équations de Stokes ont comme principal objectif de décrire les mouvements des fluides. 
+Pour décrire correctement un fluide en mouvement, il faut connaître sa vitesse en tout point de l'espace : son champ de vitesse. Ainsi les équations de Stokes permettent de décrire le champ de vitesse d'un fluide. 
+Dans un fluide nous considérons deux types de forces à savoir, les forces de pression et les forces visqueuses. 
+
+Afin de pouvoir appliquer ces équations dans le cas des écoulements des glaciers, nous considérerons ces derniers comme des fluides incompressibles, visqueux et non linéaires. Il s'agit d'un système d'équations pouvant être appliqué à tout type de glacier, régissant la vitesse u et la pression p de l’écoulement. 
+
+\subsection{Shallow ice approximation (SIA)}
+
+
+\subsection{Spécialités}
+
+Facile à utiliser: Listes d'éléments numérotés:
+\begin{enumerate}
+\item premier élément
+\item deuxième élément
+\item aussi imbriqués:
+%
+\begin{itemize}
+\item Ici, une liste non numérotée
+\item avec un autre élément
+\end{itemize}
+%
+\end{enumerate}
+
+Mathématiques:
+\begin{itemize}
+\item Sous- et super-scripts: $a_n$ et $b^k$, utiliser des accolades
+  pour des expressions plus complexes: $x^{(y^z)}$
+
+\item Symboles mathématiques, tels que $\sum_{i=0}^{n} f(i)$
+
+\item Caractères de l'alphabet grecque: $\Gamma$ ou calligraphiques: ${\cal D}$
+\end{itemize}
+
+Fontes de caractères spécifiques:
+\begin{itemize}
+\item \emph{Italique}
+\item \textbf{Gras}
+\item \texttt{typewriter}
+\item ou combiné \emph{\textbf{italique-gras}}
+\end{itemize}
+
+%-----------------------------------------------------------
+\section{Simulations numériques}
+
+\begin{tabular}[h]{|l|l|}
+\hline
+Dates              & Tâches  \\
+\hline
+\hline
+Du 7 mars au 2 mai & 1~ière itération \\
+                   & 2~ième  itération \\
+\hline
+\end{tabular}
+
+Je me réfère à la section~\ref{sec:intro} et la figure~\ref{fig:im}.
+
+%-----------------------------------------------------------
+\bibliography{rapport}
+\bibliographystyle{abbrv}
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% coding: utf-8
+%%% End:
