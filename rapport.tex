@@ -73,13 +73,34 @@ Julia est un langage de programmation moderne et polyvalent, crée en 2009 par d
 \subsection{Les équations de Stokes}
 
 https://scienceetonnante.com/2014/03/03/la-mysterieuse-equation-de-navier-stokes/
+https://hal.uca.fr/hal-03022007/document
 
 Les équations de Stokes ont comme principal objectif de décrire les mouvements des fluides. 
 Pour décrire correctement un fluide en mouvement, il faut connaître sa vitesse en tout point de l'espace : son champ de vitesse. Ainsi les équations de Stokes permettent de décrire le champ de vitesse d'un fluide. 
 Dans un fluide nous considérons deux types de forces à savoir, les forces de pression et les forces visqueuses. 
 
-Afin de pouvoir appliquer ces équations dans le cas des écoulements des glaciers, nous considérerons ces derniers comme des fluides incompressibles, visqueux et non linéaires. Il s'agit d'un système d'équations pouvant être appliqué à tout type de glacier, régissant la vitesse u et la pression p de l’écoulement. 
+Afin de pouvoir appliquer ces équations dans le cas des écoulements des glaciers, nous considérerons ces derniers comme des fluides incompressibles, visqueux et non linéaires. Il s'agit d'un système d'équations pouvant être appliqué à tout type de glacier.
 
+Ce système permet une très grande précision dans les résultats puisqu'il prend en compte toutes les contraintes au nombre de neuf, qu’elles soient longitudinales, transversales, verticales ou encore horizontales. 
+Résoudre les équations de stokes revient à résoudre ce système : 
+
+
+\begin{center}
+$\left\{
+\begin{array}{l}
+-div(2 \mu ||\epsilon(\vec{v})||) + \nabla p = \rho \vec{g} \qquad(1)  \\
+div(\vec{v}) = 0 \qquad(2) 
+\end{array}
+\right.$
+\end{center}
+
+avec $\vec{v}$ la vitesse, $\nabla p$ le gradient de pression, $\vec{g}$ l'accélération de pesanteur et $\rho$ la masse volumique.
+
+Néanmoins, le Groenland  une calotte tellement grande de milliers de kilomètres, qu'il faut un nombre considérable de points pour résoudre ces équations. De plus du fait de la complexités des equations et des géométries de la calotte, cela est coûteux en temps de calcul. 
+
+Nous observons que les calottes sont relativement mince, soit quelques kilomètres d'épaisseur, ainsi nous pouvons négliger les variations verticales de la vitesse / les variations de cisaillement longitudinal. Nous en concluons, que pour minimiser le temps de calcul, nous ne sommes pas obligé d'utiliser un modèle en 3D en résolvant les équations de Stokes mais que nous pouvons simplement utilisé un modèle simplifié en 2D. Le modèle SIA intervient justement en tant qu’approximation des relations de Stokes, permettant des calculs beaucoup plus simples pour un modèle en 2D.
+
+ 
 \subsection{Shallow ice approximation (SIA)}
 
 
@@ -128,7 +149,7 @@ Du 7 mars au 2 mai & 1~ière itération \\
                    & 2~ième  itération \\
 \hline
 \end{tabular}
-
+    
 Je me réfère à la section~\ref{sec:intro} et la figure~\ref{fig:im}.
 
 %-----------------------------------------------------------
