@@ -1,4 +1,4 @@
-\documentclass{article}
+ \documentclass{article}
 
 \usepackage[francais]{babel}
 \def\printlandscape{\special{landscape}}    % Works with dvips.
@@ -19,7 +19,8 @@
 
 \usepackage{wrapfig}
 \usepackage{epsf}
-
+\usepackage{enumitem}
+\usepackage{pifont}
 
 \begin{document}
 
@@ -50,17 +51,6 @@ Les écoulements sont considérés comme fluides, incompressibles, visqueux et n
 Dans le cadre de ce projet, nous allons utilisé le langage Julia pour la résolution de systèmes d'équations différentielles afin de pouvoir prédire l'écoulement glaciaire du Groenland.
 
 
-\begin{center}
-$\frac{\partial H}{\partial t}=\frac{D {\partial}^{2}H}{\partial x^{2}}\qquad(1)$
-\end{center}
-
-Documentation: 
-\begin{itemize}
-\item \LaTeX: \url{http://www.latex-project.org/} 
-\item \TeX users group: \url{http://www.tug.org/}
-\end{itemize}
-
-
 %-----------------------------------------------------------
 \section{Présentation des techniques de résolution}
 
@@ -89,7 +79,7 @@ Résoudre les équations de stokes revient à résoudre ce système :
 $\left\{
 \begin{array}{l}
 -div(2 \mu ||\epsilon(\vec{v})||) + \nabla p = \rho \vec{g} \qquad(1)  \\
-div(\vec{v}) = 0 \qquad(2) 
+div(\vec{v}) = 0 \qquad
 \end{array}
 \right.$
 \end{center}
@@ -98,59 +88,69 @@ avec $\vec{v}$ la vitesse, $\nabla p$ le gradient de pression, $\vec{g}$ l'accé
 
 Néanmoins, le Groenland  une calotte tellement grande de milliers de kilomètres, qu'il faut un nombre considérable de points pour résoudre ces équations. De plus du fait de la complexités des equations et des géométries de la calotte, cela est coûteux en temps de calcul. 
 
-Nous observons que les calottes sont relativement mince, soit quelques kilomètres d'épaisseur, ainsi nous pouvons négliger les variations verticales de la vitesse / les variations de cisaillement longitudinal. Nous en concluons, que pour minimiser le temps de calcul, nous ne sommes pas obligé d'utiliser un modèle en 3D en résolvant les équations de Stokes mais que nous pouvons simplement utilisé un modèle simplifié en 2D. Le modèle SIA intervient justement en tant qu’approximation des relations de Stokes, permettant des calculs beaucoup plus simples pour un modèle en 2D.
+Nous observons que les calottes sont relativement mince, soit quelques kilomètres d'épaisseur, ainsi nous pouvons négliger les variations verticales de la vitesse / les contraintes de cisaillement longitudinal. Nous en concluons, que pour minimiser le temps de calcul, nous ne sommes pas obligé d'utiliser un modèle en 3D en résolvant les équations de Stokes mais que nous pouvons simplement utilisé un modèle simplifié en 2D. Le modèle SIA intervient justement en tant qu’approximation des relations de Stokes, permettant des calculs beaucoup plus simples pour un modèle en 2D.
 
  
 \subsection{Shallow ice approximation (SIA)}
+https://tel.archives-ouvertes.fr/tel-00192512v2/document
+
+Nous avons vu que la résolution du systèmes des équations de Stokes est très couteuse en temps pour des applications réalistes. C'est pour cette raison que nous allons utiliser une simplification de ces équations basée sur le fait que sur de très grandes calottes, l'épaisseur est extrêmement faible par rapport à la dimension horizontal. Pour cela, nous allons utilisé le modèle SIA (shallow ice approximation). Sa validité dépend du rapport d'aspect caractéristique $\zeta$ des objets glaciaires :
+\begin{center}
+$\zeta = \frac{e}{L} \qquad(2)$
+\end{center}
+
+avec e l'épaisseur du glacier et L la largeur du glacier. Ce rapport est par exemple de $10^{-3}$ pour l'Antarctique et de $5.10^{-3}$ pour le Groenland. En effet, la validité de la SIA diminue lorsque le rapport d'aspect caractéristique $\zeta$ augmente. 
+La SIA est en réalité la résolution d'une équation de diffusion non linéaire : 
 
 
-\subsection{Spécialités}
+\begin{center}
+$\frac{\partial H}{\partial t}=D\frac{{\partial}^{2}H}{\partial x^{2}} + M\qquad(3)$
+\end{center}
 
-Facile à utiliser: Listes d'éléments numérotés:
-\begin{enumerate}
-\item premier élément
-\item deuxième élément
-\item aussi imbriqués:
-%
-\begin{itemize}
-\item Ici, une liste non numérotée
-\item avec un autre élément
+avec D le coefficient de diffusion, H l'épaisseur du glacier et M la masse balance.
+\\
+
+\begin{itemize}[label=\ding{212}]
+\item H la hauteur du glacier 
+
+L'épaisseur H est donnée par l'équation suivante : 
+\begin{center}
+$H(x) = S(x) + B(x)\qquad(4)$
+\end{center}
+où B est la hauteur de l'encaissant rocheux et S la topographie de la glace. H est représentée sur la figure ci-dessous : 
+\\
+\\
+\begin{figure}[!htpb]
+\centering
+\includegraphics[width=10cm, keepaspectratio=true, height=10cm]{H.png}
+\caption{Représentation de H, B et S}
+\label{fig01ch1}
+\end{figure}
+\\
+
+Les données topographiques, l'élévation du substratum rocheux et l'épaisseur de la glace proviennent du jeu de données BedMachine Greenland v3. 
+\\
+\item M la masse balance  
+
+Il faut savoir que l'écoulement d'un glacier dépend de plusieurs facteurs : la neige, glace, pluie, fonte, perte de glace, gravité. La masse balance M est la somme de phénomène qui sont l'accumulation et l'ablation de la glace :
+\begin{center}
+$M = accumulaiton + ablation\qquad(5)$
+\end{center}
+Ainsi la masse balance permet d'équilibrer les 2 phénomènes à la surface en fonction de la ligne d'équilibre. L'altitude de la ligne d'équilibre (ELA) est où la zone d'accumulation, au sommet du glacier, est égale à la zone d'ablation, en bas du glacier. Nous pouvons la distinguer sur la figure ci-dessous : 
+\begin{figure}
+\centering
+\includegraphics[width=10cm, keepaspectratio=true, height=9cm]{equilibrium_line_altitude1.png}
+\caption{Représentation de la ligne d'équilibre sur un glacier}
+
+\end{figure}
+
 \end{itemize}
-%
-\end{enumerate}
 
-Mathématiques:
-\begin{itemize}
-\item Sous- et super-scripts: $a_n$ et $b^k$, utiliser des accolades
-  pour des expressions plus complexes: $x^{(y^z)}$
-
-\item Symboles mathématiques, tels que $\sum_{i=0}^{n} f(i)$
-
-\item Caractères de l'alphabet grecque: $\Gamma$ ou calligraphiques: ${\cal D}$
-\end{itemize}
-
-Fontes de caractères spécifiques:
-\begin{itemize}
-\item \emph{Italique}
-\item \textbf{Gras}
-\item \texttt{typewriter}
-\item ou combiné \emph{\textbf{italique-gras}}
-\end{itemize}
-
-%-----------------------------------------------------------
+\newpage
+Dans le code, la masse balance M est calculé à partir de gradb le gradient du bilan massique, zELA la latitude de la ligne d'équilibre (ELA) et bmax l'accumulation maximale.
 \section{Simulations numériques}
 
-\begin{tabular}[h]{|l|l|}
-\hline
-Dates              & Tâches  \\
-\hline
-\hline
-Du 7 mars au 2 mai & 1~ière itération \\
-                   & 2~ième  itération \\
-\hline
-\end{tabular}
-    
-Je me réfère à la section~\ref{sec:intro} et la figure~\ref{fig:im}.
+\section{Résultats}
 
 %-----------------------------------------------------------
 \bibliography{rapport}
