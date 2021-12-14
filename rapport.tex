@@ -10,17 +10,18 @@
 \usepackage{fancybox} % for shadow and Bitemize
 \usepackage{alltt}
 \usepackage{graphicx}
+\usepackage{lmodern}
 %\usepackage{epsfig}
 %\usepackage{fullpage}
 %\usepackage{fancyhdr}
 %\usepackage{moreverb}
 %\usepackage{xspace}
 \usepackage[colorlinks,hyperindex,bookmarks,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
-
-\usepackage{wrapfig}
+%\usepackage{wrapfig}
 \usepackage{epsf}
 \usepackage{enumitem}
 \usepackage{pifont}
+\usepackage{hyperref}
 
 \begin{document}
 
@@ -62,95 +63,140 @@ Julia est un langage de programmation moderne et polyvalent, crée en 2009 par d
 
 \subsection{Les équations de Stokes}
 
-https://scienceetonnante.com/2014/03/03/la-mysterieuse-equation-de-navier-stokes/
-https://hal.uca.fr/hal-03022007/document
+\href{https://scienceetonnante.com/2014/03/03/la-mysterieuse-equation-de-navier-stokes/}{L'équation de Navier-Stokes}
 
 Les équations de Stokes ont comme principal objectif de décrire les mouvements des fluides. 
 Pour décrire correctement un fluide en mouvement, il faut connaître sa vitesse en tout point de l'espace : son champ de vitesse. Ainsi les équations de Stokes permettent de décrire le champ de vitesse d'un fluide. 
 Dans un fluide nous considérons deux types de forces à savoir, les forces de pression et les forces visqueuses. 
 
 Afin de pouvoir appliquer ces équations dans le cas des écoulements des glaciers, nous considérerons ces derniers comme des fluides incompressibles, visqueux et non linéaires. Il s'agit d'un système d'équations pouvant être appliqué à tout type de glacier.
-
+\newpage
 Ce système permet une très grande précision dans les résultats puisqu'il prend en compte toutes les contraintes au nombre de neuf, qu’elles soient longitudinales, transversales, verticales ou encore horizontales. 
 Résoudre les équations de stokes revient à résoudre ce système : 
 
 
-\begin{center}
-$\left\{
+\begin{equation}
+\left\{
 \begin{array}{l}
--div(2 \mu ||\epsilon(\vec{v})||) + \nabla p = \rho \vec{g} \qquad(1)  \\
+-div(2 \mu \varepsilon(\vec{v})) + \nabla p = \rho \vec{g} \\
 div(\vec{v}) = 0 \qquad
 \end{array}
-\right.$
-\end{center}
+\right.
+\label{eq1}
+\end{equation}
 
-avec $\vec{v}$ la vitesse, $\nabla p$ le gradient de pression, $\vec{g}$ l'accélération de pesanteur et $\rho$ la masse volumique.
-
+avec $\vec{v}$ la vitesse, $\nabla p$ le gradient de pression, $\vec{g}$ l'accélération de pesanteur,$\rho$ la masse volumique, $\mu$ la viscosité et $\varepsilon(\vec{v})$ le taux de déformation.
 Néanmoins, le Groenland  une calotte tellement grande de milliers de kilomètres, qu'il faut un nombre considérable de points pour résoudre ces équations. De plus du fait de la complexités des equations et des géométries de la calotte, cela est coûteux en temps de calcul. 
 
 Nous observons que les calottes sont relativement mince, soit quelques kilomètres d'épaisseur, ainsi nous pouvons négliger les variations verticales de la vitesse / les contraintes de cisaillement longitudinal. Nous en concluons, que pour minimiser le temps de calcul, nous ne sommes pas obligé d'utiliser un modèle en 3D en résolvant les équations de Stokes mais que nous pouvons simplement utilisé un modèle simplifié en 2D. Le modèle SIA intervient justement en tant qu’approximation des relations de Stokes, permettant des calculs beaucoup plus simples pour un modèle en 2D.
 
  
 \subsection{Shallow ice approximation (SIA)}
-https://tel.archives-ouvertes.fr/tel-00192512v2/document
+\href{https://tel.archives-ouvertes.fr/tel-00192512v2/document}{L'équation SIA simplifiée}
 
-Nous avons vu que la résolution du systèmes des équations de Stokes est très couteuse en temps pour des applications réalistes. C'est pour cette raison que nous allons utiliser une simplification de ces équations basée sur le fait que sur de très grandes calottes, l'épaisseur est extrêmement faible par rapport à la dimension horizontal. Pour cela, nous allons utilisé le modèle SIA (shallow ice approximation). Sa validité dépend du rapport d'aspect caractéristique $\zeta$ des objets glaciaires :
-\begin{center}
-$\zeta = \frac{e}{L} \qquad(2)$
-\end{center}
+Les chercheurs assurent que la résolution du systèmes des équations de Stokes est très couteuse en temps pour des applications réalistes. C'est pour cette raison que nous allons utiliser une simplification de ces équations basée sur le fait que sur de très grandes calottes, l'épaisseur est extrêmement faible par rapport à la dimension horizontal. Pour cela, nous allons utilisé le modèle SIA (shallow ice approximation). Sa validité dépend du rapport d'aspect caractéristique $\zeta$ des objets glaciaires :
+\begin{equation}
+\zeta = \frac{e}{L}
+\label{eq2} 
+\end{equation}
 
 avec e l'épaisseur du glacier et L la largeur du glacier. Ce rapport est par exemple de $10^{-3}$ pour l'Antarctique et de $5.10^{-3}$ pour le Groenland. En effet, la validité de la SIA diminue lorsque le rapport d'aspect caractéristique $\zeta$ augmente. 
 La SIA est en réalité la résolution d'une équation de diffusion non linéaire : 
 
 
-\begin{center}
-$\frac{\partial H}{\partial t}=D\frac{{\partial}^{2}H}{\partial x^{2}} + M\qquad(3)$
-\end{center}
+\begin{equation}
+\frac{\partial H}{\partial t}=D\frac{{\partial}^{2}H}{\partial x^{2}} + M
+\label{eq3}
+\end{equation}
 
-avec D le coefficient de diffusion, H l'épaisseur du glacier et M la masse balance.
-\\
-
-\begin{itemize}[label=\ding{212}]
-\item H la hauteur du glacier 
-
-L'épaisseur H est donnée par l'équation suivante : 
-\begin{center}
-$H(x) = S(x) + B(x)\qquad(4)$
-\end{center}
+avec D le coefficient de diffusion, H l'épaisseur du glacier et M la conservation de masse.
+\newpage
+L'épaisseur H est donnée par l'équation suivante :
+\begin{equation}
+H(x) = S(x) + B(x)
+\label{eq4}
+\end{equation}
 où B est la hauteur de l'encaissant rocheux et S la topographie de la glace. H est représentée sur la figure ci-dessous : 
 \\
 \\
 \begin{figure}[!htpb]
 \centering
 \includegraphics[width=10cm, keepaspectratio=true, height=10cm]{H.png}
-\caption{Représentation de H, B et S}
+\caption{Représentation de l'épaisseur de la glace H, la hauteur du lit rocheux B et la topologie de la glace S}
 \label{fig01ch1}
 \end{figure}
-\\
-
 Les données topographiques, l'élévation du substratum rocheux et l'épaisseur de la glace proviennent du jeu de données BedMachine Greenland v3. 
 \\
-\item M la masse balance  
 
-Il faut savoir que l'écoulement d'un glacier dépend de plusieurs facteurs : la neige, glace, pluie, fonte, perte de glace, gravité. La masse balance M est la somme de phénomène qui sont l'accumulation et l'ablation de la glace :
-\begin{center}
-$M = accumulaiton + ablation\qquad(5)$
-\end{center}
+Il faut savoir que l'écoulement d'un glacier dépend de plusieurs facteurs : la neige, glace, pluie, fonte, perte de glace, gravité. La conservation de masse M se calcule de la manière suivante :
+\begin{equation}
+M = accumulaiton + ablation
+\label{5}
+\end{equation}
+
 Ainsi la masse balance permet d'équilibrer les 2 phénomènes à la surface en fonction de la ligne d'équilibre. L'altitude de la ligne d'équilibre (ELA) est où la zone d'accumulation, au sommet du glacier, est égale à la zone d'ablation, en bas du glacier. Nous pouvons la distinguer sur la figure ci-dessous : 
-\begin{figure}
+\newpage
+\begin{figure}[!htpb]
 \centering
-\includegraphics[width=10cm, keepaspectratio=true, height=9cm]{equilibrium_line_altitude1.png}
-\caption{Représentation de la ligne d'équilibre sur un glacier}
+\includegraphics[width=10cm, keepaspectratio=true, height=10cm]{equilibrium_line_altitude1.png}
+\caption{Représentation de la ligne d'équilibre sur un glacier, déterminée par la conservation de masse M, c'est-à-dire là où la zone d'abblation et la zone d'accumulation se rencontrent}
 
 \end{figure}
 
-\end{itemize}
 
+
+Dans le code, la conservation de masse M est calculée à partir de gradb le gradient du bilan massique, zELA la latitude de la ligne d'équilibre (ELA) et bmax l'accumulation maximale.
 \newpage
-Dans le code, la masse balance M est calculé à partir de gradb le gradient du bilan massique, zELA la latitude de la ligne d'équilibre (ELA) et bmax l'accumulation maximale.
 \section{Simulations numériques}
 
+Nous avons commencé par étudier un dossier GITHUB public qui modélisait la fonte de glacier.
+\newline
+\href{https://github.com/luraess/julia-parallel-course-EGU21.git}{GitHUB du professeur}
+\newline
+
+ Il était composé de trois codes qui simplifiaient le problème en 1D : Un code simple qui ne s'occupe que de la fonte de la glace en fonction du temps. Un deuxième code rajoute une solution itérative ainsi qu'une tolérance de fin, forçant le programme à s'arrêter uniquement lorsque cette tolérance est atteinte. Enfin, un troisième code introduit un "damp" itératif qui permet au programme de converger plus rapidement.
+\newline
+Ces trois codes sont considérés linéaires, car le coefficient de diffusion D était une constante.
+\newline
+Un quatrième code considérait le problème en 2D et était considéré comme non linéaire, c'est-à-dire que ce coefficient D variait à chaque point et à chaque itération du problème. Notre but était donc de créer un code non linéaire qui simplifie le problème en 1D, à l'aide de tous ces codes.
+\newline
+En s'inspirant de ces codes, nous avons créé un code dont la boucle s'effectue de la manière suivante :
+\newline
+\begin{verbatim}
+while err>tolnl && iter<itMax # On sort lorsque l'erreur est en 
+dessous de la tolérance 	(ou trop d'itérations)
+        Err         .= H                                               
+        M           .= min.(grad_b.*(S .- z_ELA), b_max)            
+        dSdx        .= diff(S)/dx 
+        D           .= a*av(H).^(npow+2) .*dSdx.^(npow-1)              
+        qH          .= .-av(D).*diff(S[1:end-1])/dx                     
+        ResH        .= .-(diff(qH)/dx .+ inn(M[1:end-1])) 
+        dtau        .= dtausc*min.(10.0, cfl./(epsi .+ av(D[2:end])))
+        dHdt        .= ResH + damp.*dHdt                                
+        H[2:end-2]  .= max.(0.0,H[2:end-2] .+ dtau.*dHdt)               
+        H[Mask.==0] .= 0.0
+        S           .= B .+ H                                       
+\end{verbatim}
+\newpage
+Nous avons recréé l'équation~\eqref{eq3} en calculant les dérivées partielles selon ${x}$ avec la méthode des différences finies. Cela consiste à calculer la différence entre deux valeurs consécutives.
+\newline
+Nous avons introduit plusieurs tableaux : le coefficient de diffusion D, le flux qH, le résidu de l'équation ResH ainsi que les surfaces B, H et S.
+\newline
+Ce code remet à jour toutes les valeurs jusqu'à ce que l'erreur déterminée descende en dessous d'une tolérance prédéfinie. On introduit également un pas d'itération maximal pour éviter que le programme ne s'arrête jamais.
+\newline
+A chaque tour de boucle, nous réinitialisons le coefficient D, la conservation de masse M et la [dérivée itérative] dtau. Puis nous calculons les dérivées partielles dSdx, qH et ResH en effectuant les différences finies. Toutes ces valeurs nous permettent de mettre à jour la [] dHdt ainsi que l'épaisseur de la glace H et enfin la surface S. Nous appliquons également un masque afin de ne pas atteindre le niveau de la mer et nous gardons en mémoire l'épaisseur H afin d'en déterminer l'erreur.
+\newline
+Au bout de cinquante itérations, nous actualisons la valeur de la variable err avec le code suivant :
+\begin{verbatim}
+if mod(iter, nout)==0 
+            Err .= Err .- H
+            err = norm(Err)/length(Err) 
+end
+\end{verbatim}
+La boucle s'arrête lorsque l'erreur est plus petite que la tolérance imposée.
+
 \section{Résultats}
+% Faire différents scénarios en fonction de la fonte des glacier (3 ?)
 
 %-----------------------------------------------------------
 \bibliography{rapport}

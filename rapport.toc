@@ -5,4 +5,4 @@
 \contentsline {subsection}{\numberline {2.2}Les équations de Stokes}{2}{subsection.2.2}%
 \contentsline {subsection}{\numberline {2.3}Shallow ice approximation (SIA)}{3}{subsection.2.3}%
 \contentsline {section}{\numberline {3}Simulations numériques}{6}{section.3}%
-\contentsline {section}{\numberline {4}Résultats}{6}{section.4}%
+\contentsline {section}{\numberline {4}Résultats}{7}{section.4}%
