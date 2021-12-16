@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.30)  14 DEC 2021 12:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.30)  16 DEC 2021 11:22
 entering extended mode
 **./rapport.tex
 (rapport.tex
@@ -576,76 +576,91 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 
 LaTeX Warning: No \author given.
 
-(rapport.toc
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 4.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 4.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 4.
-)
+
+Package hyperref Warning: old toc file detected, not used; run LaTeX again.
+
 \tf@toc=\write5
 \openout5 = `rapport.toc'.
 
- [1
+[1
 
-{C:/Users/Yamato Musubi/AppData/Local/MiKTeX/pdftex/config/pdftex.map}] [2] [3]
-<H.png, id=70, 1927.2pt x 1204.5pt>
+{C:/Users/Yamato Musubi/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
+[2]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 78.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 78.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 78.
+ [3] [4]
+<H.png, id=50, 1927.2pt x 1204.5pt>
 File: H.png Graphic file (type png)
 <use H.png>
-Package pdftex.def Info: H.png  used on input line 124.
+Package pdftex.def Info: H.png  used on input line 146.
 (pdftex.def)             Requested size: 284.50949pt x 177.81844pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 118--130
+Underfull \hbox (badness 10000) in paragraph at lines 140--152
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 118--130
+Underfull \hbox (badness 10000) in paragraph at lines 140--152
 
  []
 
-[4 <./H.png>]
-<equilibrium_line_altitude1.png, id=79, 513.8397pt x 496.4949pt>
+[5 <./H.png>]
+<equilibrium_line_altitude1.png, id=59, 513.8397pt x 496.4949pt>
 File: equilibrium_line_altitude1.png Graphic file (type png)
 <use equilibrium_line_altitude1.png>
-Package pdftex.def Info: equilibrium_line_altitude1.png  used on input line 141
+Package pdftex.def Info: equilibrium_line_altitude1.png  used on input line 163
 .
 (pdftex.def)             Requested size: 284.54149pt x 274.9367pt.
- [5 <./equilibrium_line_altitude1.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 152--156
+ [6 <./equilibrium_line_altitude1.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 174--178
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 157--165
+Underfull \hbox (badness 10000) in paragraph at lines 179--187
 
  []
 
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-65.
+87.
 (C:\Users\Yamato Musubi\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Overfull \hbox (17.24895pt too wide) in paragraph at lines 179--179
+Overfull \hbox (17.24895pt too wide) in paragraph at lines 201--201
 []        \T1/lmtt/m/n/10 dtau        .= dtausc*min.(10.0, cfl./(epsi .+ av(D[2
 :end])))[] 
  []
 
-[6]
+[7]
+
+LaTeX Warning: Reference `eq3' on page 8 undefined on input line 203.
+
 No file rapport.bbl.
-[7] (rapport.aux)
+[8] (rapport.aux)
+
+LaTeX Warning: There were undefined references.
+
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package rerunfilecheck Info: File `rapport.out' has not changed.
-(rerunfilecheck)             Checksum: 274708087C776E2089A1B8C818CFC560;1173.
+
+Package rerunfilecheck Warning: File `rapport.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `rapport.out':
+(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
+(rerunfilecheck)             After:  274708087C776E2089A1B8C818CFC560;1173.
  ) 
 Here is how much of TeX's memory you used:
- 11253 strings out of 478927
- 172916 string characters out of 2848707
- 492529 words of memory out of 3000000
- 28894 multiletter control sequences out of 15000+600000
+ 11247 strings out of 478927
+ 172784 string characters out of 2848707
+ 492920 words of memory out of 3000000
+ 28886 multiletter control sequences out of 15000+600000
  456795 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  60i,8n,66p,627b,424s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -662,17 +677,21 @@ i/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmcsc10.pfb><C:/Users/Yam
 ato Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pfb><C:/U
 sers/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.p
 fb><C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/
-lmr10.pfb><C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/pub
-lic/lm/lmr12.pfb><C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/ty
-pe1/public/lm/lmr17.pfb><C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/f
-onts/type1/public/lm/lmr7.pfb><C:/Users/Yamato Musubi/AppData/Local/Programs/Mi
-KTeX/fonts/type1/public/lm/lmr9.pfb><C:/Users/Yamato Musubi/AppData/Local/Progr
-ams/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/Yamato Musubi/AppData/Loc
-al/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/Users/Yamato Musubi/AppD
-ata/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb>
-Output written on rapport.pdf (7 pages, 511547 bytes).
+lmmi5.pfb><C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/pub
+lic/lm/lmr10.pfb><C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/ty
+pe1/public/lm/lmr12.pfb><C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/f
+onts/type1/public/lm/lmr17.pfb><C:/Users/Yamato Musubi/AppData/Local/Programs/M
+iKTeX/fonts/type1/public/lm/lmr5.pfb><C:/Users/Yamato Musubi/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:/Users/Yamato Musubi/AppData/Loca
+l/Programs/MiKTeX/fonts/type1/public/lm/lmr9.pfb><C:/Users/Yamato Musubi/AppDat
+a/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/Yamato Musub
+i/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy5.pfb><C:/Users/Yamat
+o Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/User
+s/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb>
+
+Output written on rapport.pdf (8 pages, 529726 bytes).
 PDF statistics:
- 169 PDF objects out of 1000 (max. 8388607)
- 23 named destinations out of 1000 (max. 500000)
- 67 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 163 PDF objects out of 1000 (max. 8388607)
+ 27 named destinations out of 1000 (max. 500000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

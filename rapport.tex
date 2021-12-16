@@ -93,6 +93,8 @@ Nous observons que les calottes sont relativement mince, soit quelques kilomètr
  
 \subsection{Shallow ice approximation (SIA)}
 \href{https://tel.archives-ouvertes.fr/tel-00192512v2/document}{L'équation SIA simplifiée}
+\newline
+\href{https://www.cambridge.org/core/journals/journal-of-glaciology/article/dependence-of-centuryscale-projections-of-the-greenland-ice-sheet-on-its-thermal-regime/71233B1A12B0348B4AB38D9B2EE493AC}{Détails sur l'équation SIA simplifiée}
 
 Les chercheurs assurent que la résolution du systèmes des équations de Stokes est très couteuse en temps pour des applications réalistes. C'est pour cette raison que nous allons utiliser une simplification de ces équations basée sur le fait que sur de très grandes calottes, l'épaisseur est extrêmement faible par rapport à la dimension horizontal. Pour cela, nous allons utilisé le modèle SIA (shallow ice approximation). Sa validité dépend du rapport d'aspect caractéristique $\zeta$ des objets glaciaires :
 \begin{equation}
@@ -100,13 +102,33 @@ Les chercheurs assurent que la résolution du systèmes des équations de Stokes
 \label{eq2} 
 \end{equation}
 
-avec e l'épaisseur du glacier et L la largeur du glacier. Ce rapport est par exemple de $10^{-3}$ pour l'Antarctique et de $5.10^{-3}$ pour le Groenland. En effet, la validité de la SIA diminue lorsque le rapport d'aspect caractéristique $\zeta$ augmente. 
-La SIA est en réalité la résolution d'une équation de diffusion non linéaire : 
-
+Avec e l'épaisseur du glacier et L la largeur du glacier. Ce rapport est par exemple de $10^{-3}$ pour l'Antarctique et de $5.10^{-3}$ pour le Groenland. En effet, la validité de la SIA diminue lorsque le rapport d'aspect caractéristique $\zeta$ augmente. 
+\newline
+De plus, on considère ici les [intéractions internes] (aussi appelés bridge effect), ce qui nous permet de séparer les vitesses horizontales et verticales. $\mu$ est considéré isotrope et s'écrit :
+\begin{equation}
+\mu = \frac{B}{2\varepsilon(\vec{v})^\frac{n-1}{n}}
+\label{eq2} 
+\end{equation}
+Où B est la solidité de la glace et n est le coefficient de la loi de Glen (on prendra n = 3)
+\newline
+La vitesse horizontale devient donc solution de :
+\begin{equation}
+-div(2 \mu \varepsilon(\vec{v}))  = \rho \vec{g}\frac{{\partial}S}{\partial x}
+\label{eq3}
+\end{equation}
+Et l'évolution de la surface est déterminée grâce à une équation hyperbolique utilisant la méthode des différences finies et est dictée par la conservation de masse. C'est cette équation que l'on retiendra car elle nous permettra d'étudier la hauteur de la glace au fur et à mesure du temps.
+Cette équation s'écrit :
+\begin{equation}
+\frac{\partial H}{\partial t}=-\nabla H\vec{v} + Ms - Mb
+\label{eq3}
+\end{equation}
+Avec H l'épaisseur de la glace, $\vec{v}$ la vitesse horizontale moyenne, Ms la conservation de masse en surface et Mb la fonte de la glace à la base.
+Etant donné que $\vec{v}$ est la vitesse horizontale, c'est également une dérivée partielle selon x.
+On peut donc écrire cette équation SIA comme la résolution d'une équation de diffusion non linéaire : 
 
 \begin{equation}
 \frac{\partial H}{\partial t}=D\frac{{\partial}^{2}H}{\partial x^{2}} + M
-\label{eq3}
+\label{eq4}
 \end{equation}
 
 avec D le coefficient de diffusion, H l'épaisseur du glacier et M la conservation de masse.
