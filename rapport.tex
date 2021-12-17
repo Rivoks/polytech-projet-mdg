@@ -200,9 +200,9 @@ dessous de la tolérance 	(ou trop d'itérations)
         S           .= B .+ H                                       
 \end{verbatim}
 \newpage
-Nous avons recréé l'équation~\eqref{eq3} en calculant les dérivées partielles selon ${x}$ avec la méthode des différences finies. Cela consiste à calculer la différence entre deux valeurs consécutives.
+Nous avons recréé l'équation~\eqref{eq4} en calculant les dérivées partielles selon ${x}$ avec la méthode des différences finies. Cela consiste à calculer la différence entre deux valeurs consécutives. L'idée était de reprendre un code similaire à au code non linéaire 2D et de ne conserver qu'une seule dimension, c'est-à-dire toutes les variables dépendantes de x. Les composantes dépendantes de y n'ont donc pas été prise en compte.
 \newline
-Nous avons introduit plusieurs tableaux : le coefficient de diffusion D, le flux qH, le résidu de l'équation ResH ainsi que les surfaces B, H et S.
+Nous avons introduit plusieurs tableaux : le coefficient de diffusion D, le flux qH, le résidu de l'équation ResH ainsi que les surfaces B, H et S, dont la taille varie en fonction des calculs qu'on leur applique. Par exemple, les méthodes des différences finies sur un tableau de taille nx renvoie un autre tableau de taille nx-1 (car on applique nx-1 opérations sur nx valeurs).
 \newline
 Ce code remet à jour toutes les valeurs jusqu'à ce que l'erreur déterminée descende en dessous d'une tolérance prédéfinie. On introduit également un pas d'itération maximal pour éviter que le programme ne s'arrête jamais.
 \newline
@@ -218,6 +218,25 @@ end
 La boucle s'arrête lorsque l'erreur est plus petite que la tolérance imposée.
 
 \section{Résultats}
+
+Pour s'assurer que le code compilait, nous avons simplifié certaines variables du problème. La conservation de masse était constante et les surfaces H, B et S  étaient modélisées par des fonctions mathématiques. Une fois cela fait, nous avons extrait des valeurs d'un autre fichier contenant toutes les valeurs du Groenland [retrouver la référence].
+\begin{figure}[!htpb]
+\centering
+\includegraphics[width=10cm, keepaspectratio=true, height=10cm]{Groenland.png}
+\caption{Topologie du Groenland d'après les données récupérées. La courbe y2 représente la hauteur du lit rocheux B et y1 la topologie de la glace S. }
+
+\end{figure}
+\newpage
+Nous avons ensuite réajusté l'abblation M ainsi que les coefficients itératifs damp afin d'avoir une vitesse de convergence adaptée au problème.
+Nous affichons donc le résultat obtenu à l'aide d'un plot.
+\begin{figure}[!htpb]
+\centering
+\includegraphics[width=10cm, keepaspectratio=true, height=10cm]{Iceflow1D.png}
+\caption{Evolution du niveau de glace en fonction du temps. La courbe bleu représente la hauteur H au début, la courbe orange donne la hauteur H une fois la simulation terminée et la courbe verte montre le lit rocheux B.}
+
+\end{figure}
+\newpage
+Il nous faut à présent déterminer la colonne où les variations horizontales sont les plus faibles, afin d'avoir le modèle le plus proche possible de la réalité.
 % Faire différents scénarios en fonction de la fonte des glacier (3 ?)
 
 %-----------------------------------------------------------
