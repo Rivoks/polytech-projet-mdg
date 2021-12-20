@@ -86,9 +86,9 @@ div(\vec{v}) = 0 \qquad
 \end{equation}
 
 avec $\vec{v}$ la vitesse, $\nabla p$ le gradient de pression, $\vec{g}$ l'accélération de pesanteur,$\rho$ la masse volumique, $\mu$ la viscosité et $\varepsilon(\vec{v})$ le taux de déformation.
-Néanmoins, le Groenland  une calotte tellement grande de milliers de kilomètres, qu'il faut un nombre considérable de points pour résoudre ces équations. De plus du fait de la complexités des equations et des géométries de la calotte, cela est coûteux en temps de calcul. 
+Néanmoins, le Groenland est une calotte tellement grande de milliers de kilomètres, qu'il faut un nombre considérable de points pour résoudre ces équations. De plus du fait de la complexités des equations et des géométries de la calotte, cela est coûteux en temps de calcul. 
 
-Nous observons que les calottes sont relativement mince, soit quelques kilomètres d'épaisseur, ainsi nous pouvons négliger les variations verticales de la vitesse / les contraintes de cisaillement longitudinal. Nous en concluons, que pour minimiser le temps de calcul, nous ne sommes pas obligé d'utiliser un modèle en 3D en résolvant les équations de Stokes mais que nous pouvons simplement utilisé un modèle simplifié en 2D. Le modèle SIA intervient justement en tant qu’approximation des relations de Stokes, permettant des calculs beaucoup plus simples pour un modèle en 2D.
+Nous observons que les calottes sont relativement minces, soit quelques kilomètres d'épaisseur, ainsi nous pouvons négliger les variations verticales de la vitesse / les contraintes de cisaillement longitudinales. Nous en concluons, que pour minimiser le temps de calcul, nous ne sommes pas obligé d'utiliser un modèle en 3D en résolvant les équations de Stokes mais que nous pouvons simplement utilisé un modèle simplifié en 2D. Le modèle SIA intervient justement en tant qu’approximation des relations de Stokes, permettant des calculs beaucoup plus simples pour un modèle en 2D.
 
  
 \subsection{Shallow ice approximation (SIA)}
@@ -96,7 +96,7 @@ Nous observons que les calottes sont relativement mince, soit quelques kilomètr
 \newline
 \href{https://www.cambridge.org/core/journals/journal-of-glaciology/article/dependence-of-centuryscale-projections-of-the-greenland-ice-sheet-on-its-thermal-regime/71233B1A12B0348B4AB38D9B2EE493AC}{Détails sur l'équation SIA simplifiée}
 
-Les chercheurs assurent que la résolution du systèmes des équations de Stokes est très couteuse en temps pour des applications réalistes. C'est pour cette raison que nous allons utiliser une simplification de ces équations basée sur le fait que sur de très grandes calottes, l'épaisseur est extrêmement faible par rapport à la dimension horizontal. Pour cela, nous allons utilisé le modèle SIA (shallow ice approximation). Sa validité dépend du rapport d'aspect caractéristique $\zeta$ des objets glaciaires :
+Les chercheurs assurent que la résolution du systèmes des équations de Stokes est très couteuse en temps pour des applications réalistes. C'est pour cette raison que nous allons utiliser une simplification de ces équations basée sur le fait que sur de très grandes calottes, l'épaisseur est extrêmement faible par rapport à la dimension horizontale. Pour cela, nous allons utilisé le modèle SIA (Shallow Ice Approximation). Sa validité dépend du rapport d'aspect caractéristique $\zeta$ des objets glaciaires :
 \begin{equation}
 \zeta = \frac{e}{L}
 \label{eq2} 
@@ -122,7 +122,7 @@ Cette équation s'écrit :
 \frac{\partial H}{\partial t}=-\nabla H\vec{v} + Ms - Mb
 \label{eq3}
 \end{equation}
-Avec H l'épaisseur de la glace, $\vec{v}$ la vitesse horizontale moyenne, Ms la conservation de masse en surface et Mb la fonte de la glace à la base.
+Avec H l'épaisseur de la glace, $\vec{v}$ la vitesse horizontale moyenne, \textit{Ms} la conservation de masse en surface et \textit{Mb} la fonte de la glace à la base.
 Etant donné que $\vec{v}$ est la vitesse horizontale, c'est également une dérivée partielle selon x.
 On peut donc écrire cette équation SIA comme la résolution d'une équation de diffusion non linéaire : 
 
@@ -152,7 +152,7 @@ Les données topographiques, l'élévation du substratum rocheux et l'épaisseur
 
 Il faut savoir que l'écoulement d'un glacier dépend de plusieurs facteurs : la neige, glace, pluie, fonte, perte de glace, gravité. La conservation de masse M se calcule de la manière suivante :
 \begin{equation}
-M = accumulaiton + ablation
+M = accumulation + ablation
 \label{5}
 \end{equation}
 
@@ -167,7 +167,7 @@ Ainsi la masse balance permet d'équilibrer les 2 phénomènes à la surface en 
 
 
 
-Dans le code, la conservation de masse M est calculée à partir de gradb le gradient du bilan massique, zELA la latitude de la ligne d'équilibre (ELA) et bmax l'accumulation maximale.
+Dans le code, la conservation de masse M est calculée à partir de \textit{gradb} le gradient du bilan massique, \textit{zELA} la latitude de la ligne d'équilibre (ELA) et \textit{bmax} l'accumulation maximale.
 \newpage
 \section{Simulations numériques}
 
@@ -176,7 +176,7 @@ Nous avons commencé par étudier un dossier GITHUB public qui modélisait la fo
 \href{https://github.com/luraess/julia-parallel-course-EGU21.git}{GitHUB du professeur}
 \newline
 
- Il était composé de trois codes qui simplifiaient le problème en 1D : Un code simple qui ne s'occupe que de la fonte de la glace en fonction du temps. Un deuxième code rajoute une solution itérative ainsi qu'une tolérance de fin, forçant le programme à s'arrêter uniquement lorsque cette tolérance est atteinte. Enfin, un troisième code introduit un "damp" itératif qui permet au programme de converger plus rapidement.
+ Il était composé de trois codes qui simplifiaient le problème en 1D : un code simple qui ne s'occupe que de la fonte de la glace en fonction du temps. Un deuxième code qui rajoute une solution itérative ainsi qu'une tolérance de fin, forçant le programme à s'arrêter uniquement lorsque cette tolérance est atteinte. Enfin, un troisième code introduit un "damp" itératif qui permet au programme de converger plus rapidement.
 \newline
 Ces trois codes sont considérés linéaires, car le coefficient de diffusion D était une constante.
 \newline
@@ -200,7 +200,7 @@ dessous de la tolérance 	(ou trop d'itérations)
         S           .= B .+ H                                       
 \end{verbatim}
 \newpage
-Nous avons recréé l'équation~\eqref{eq4} en calculant les dérivées partielles selon ${x}$ avec la méthode des différences finies. Cela consiste à calculer la différence entre deux valeurs consécutives. L'idée était de reprendre un code similaire à au code non linéaire 2D et de ne conserver qu'une seule dimension, c'est-à-dire toutes les variables dépendantes de x. Les composantes dépendantes de y n'ont donc pas été prise en compte.
+Nous avons recréé l'équation~\eqref{eq4} en calculant les dérivées partielles selon ${x}$ avec la méthode des différences finies. Cela consiste à calculer la différence entre deux valeurs consécutives. L'idée était de reprendre un code similaire au code non linéaire 2D et de ne conserver qu'une seule dimension, c'est-à-dire toutes les variables dépendantes de x. Les composantes dépendantes de y n'ont donc pas été prise en compte.
 \newline
 Nous avons introduit plusieurs tableaux : le coefficient de diffusion D, le flux qH, le résidu de l'équation ResH ainsi que les surfaces B, H et S, dont la taille varie en fonction des calculs qu'on leur applique. Par exemple, les méthodes des différences finies sur un tableau de taille nx renvoie un autre tableau de taille nx-1 (car on applique nx-1 opérations sur nx valeurs).
 \newline
@@ -237,6 +237,16 @@ Nous affichons donc le résultat obtenu à l'aide d'un plot.
 \end{figure}
 \newpage
 Il nous faut à présent déterminer la colonne où les variations horizontales sont les plus faibles, afin d'avoir le modèle le plus proche possible de la réalité.
+\newline
+Pour cela, nous avons cherché dans les données que nous avions sur le Groenland la ligne "horizontale" qui nous permettait d'avoir des résultats suffisamement justes pour pouvoir appliquer notre code. Plus précisemment, il fallait que la ligne choisie soit une ligne qui permette de négliger les vitesses verticales.
+Pour choisir judicieusement cette ligne, nous avons comparé les différentes données que nous avions à notre disposition en faisant une différence entre deux lignes consécutives, nous avons alors choisi celle qui avait une valeur la plus faible. Ce qui nous permettait de trouver la ligne 43. 
+\newline
+En exécutant le code avec cette ligne, nous avons alors le résultat suivant: 
+\begin{figure}[!htpb]
+\centering
+\includegraphics[width=10cm, keepaspectratio=true, height=10cm]{ligne43.png}
+\caption{Topologie du Groenland en appliquant la ligne 43. La courbe bleue  représente la hauteur H au début, la courbe orange donne la hauteur H une fois la simulation appliquée pour la ligne 43 et la courbe verte montre le lit rocheux B. }
+\end{figure}
 % Faire différents scénarios en fonction de la fonte des glacier (3 ?)
 
 %-----------------------------------------------------------
