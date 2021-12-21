@@ -25,15 +25,15 @@
 
 \begin{document}
 
-\title{Rapport de projet pluridisciplinaire}
 
-\date{\today}
+\title{\textbf{Rapport de projet pluridisciplinaire :} \newline Diffusion non linéaire en sciences de la terre modélisation des glaciers}
+\maketitle
+
+
         
 \newpage
 
-\title{Diffusion non linéaire en sciences de la terre modélisation des glaciers}
- 
-\maketitle
+
 \tableofcontents
 
 \begin{abstract}
@@ -44,10 +44,10 @@ Résumé du contenu du document.
 \newpage
 \section{Introduction}\label{sec:intro}
 
-L’écoulement des glaciers est un processus continu, mais il est très difficile de le simuler mathématiquement. Pour cela, les modélisateurs utilisent des méthodes numériques, qui résolvent les équations en une série d’étapes.
+L’écoulement des glaciers est un processus continu, mais il est très difficile de le simuler mathématiquement. Pour cela, les modélisateurs utilisent des méthodes numériques qui résolvent les équations en une série d’étapes.
 L’intérêt ici va être d’énoncer les relations générales de Stokes appliqués aux glaciers, d’énoncer le modèle Shallow Ice Approximation (SIA) afin d’en déterminer les avantages et les limites dans l’analyse de l’écoulement d’un glacier en fonction du temps.
 
-L’écoulement d’un glacier dépend de plusieurs facteurs, qui sont principalement l’accumulation de neige, la fonte de glace, la gravité et le niveau de la pente du lit rocheux.
+L’écoulement d’un glacier dépend de plusieurs facteurs qui sont principalement l’accumulation de neige, la fonte de glace, la gravité et le niveau de la pente du lit rocheux.
 Les écoulements sont considérés comme fluides, incompressibles, visqueux et non linéaires, d’où l’intérêt de les modéliser avec les relations de Stokes.
 Dans le cadre de ce projet, nous allons utilisé le langage Julia pour la résolution de systèmes d'équations différentielles afin de pouvoir prédire l'écoulement glaciaire du Groenland.
 
@@ -66,7 +66,7 @@ Julia est un langage de programmation moderne et polyvalent, crée en 2009 par d
 \href{https://scienceetonnante.com/2014/03/03/la-mysterieuse-equation-de-navier-stokes/}{L'équation de Navier-Stokes}
 
 Les équations de Stokes ont comme principal objectif de décrire les mouvements des fluides. 
-Pour décrire correctement un fluide en mouvement, il faut connaître sa vitesse en tout point de l'espace : son champ de vitesse. Ainsi les équations de Stokes permettent de décrire le champ de vitesse d'un fluide. 
+Pour procéder correctement, il faut connaître sa vitesse en tout point de l'espace : son champ de vitesse. Ainsi les équations de Stokes permettent de décrire le champ de vitesse d'un fluide. 
 Dans un fluide nous considérons deux types de forces à savoir, les forces de pression et les forces visqueuses. 
 
 Afin de pouvoir appliquer ces équations dans le cas des écoulements des glaciers, nous considérerons ces derniers comme des fluides incompressibles, visqueux et non linéaires. Il s'agit d'un système d'équations pouvant être appliqué à tout type de glacier.
@@ -85,10 +85,10 @@ div(\vec{v}) = 0 \qquad
 \label{eq1}
 \end{equation}
 
-avec $\vec{v}$ la vitesse, $\nabla p$ le gradient de pression, $\vec{g}$ l'accélération de pesanteur,$\rho$ la masse volumique, $\mu$ la viscosité et $\varepsilon(\vec{v})$ le taux de déformation.
-Néanmoins, le Groenland est une calotte tellement grande de milliers de kilomètres, qu'il faut un nombre considérable de points pour résoudre ces équations. De plus du fait de la complexités des equations et des géométries de la calotte, cela est coûteux en temps de calcul. 
+avec $\vec{v}$ la vitesse, $\nabla p$ le gradient de pression, $\vec{g}$ l'accélération de pesanteur, $\rho$ la masse volumique, $\mu$ la viscosité et $\varepsilon(\vec{v})$ le taux de déformation.
+Néanmoins, le Groenland est une calotte grande de milliers de kilomètres qu'il faut un nombre considérable de points pour résoudre ces équations. De plus du fait de la complexité de celles-ci ainsi que des géométries de la calotte, cela est coûteux en temps de calcul. 
 
-Nous observons que les calottes sont relativement minces, soit quelques kilomètres d'épaisseur, ainsi nous pouvons négliger les variations verticales de la vitesse / les contraintes de cisaillement longitudinales. Nous en concluons, que pour minimiser le temps de calcul, nous ne sommes pas obligé d'utiliser un modèle en 3D en résolvant les équations de Stokes mais que nous pouvons simplement utilisé un modèle simplifié en 2D. Le modèle SIA intervient justement en tant qu’approximation des relations de Stokes, permettant des calculs beaucoup plus simples pour un modèle en 2D.
+Nous observons que les calottes sont relativement minces, soit quelques kilomètres d'épaisseur, nous pouvons alors négliger les variations verticales de la vitesse / les contraintes de cisaillement longitudinales. Nous en concluons, que pour minimiser le temps de calcul, nous ne sommes pas obligé d'utiliser un modèle en 3D en résolvant les équations de Stokes mais que nous pouvons simplement utilisé un modèle simplifié en 2D. Le modèle SIA intervient justement en tant qu’approximation des relations de Stokes, permettant des calculs beaucoup plus simples pour un modèle en 2D.
 
  
 \subsection{Shallow ice approximation (SIA)}
@@ -103,7 +103,7 @@ Les chercheurs assurent que la résolution du systèmes des équations de Stokes
 \end{equation}
 
 Avec e l'épaisseur du glacier et L la largeur du glacier. Ce rapport est par exemple de $10^{-3}$ pour l'Antarctique et de $5.10^{-3}$ pour le Groenland. En effet, la validité de la SIA diminue lorsque le rapport d'aspect caractéristique $\zeta$ augmente. 
-\newline
+\newpage
 De plus, on considère ici les [intéractions internes] (aussi appelés bridge effect), ce qui nous permet de séparer les vitesses horizontales et verticales. $\mu$ est considéré isotrope et s'écrit :
 \begin{equation}
 \mu = \frac{B}{2\varepsilon(\vec{v})^\frac{n-1}{n}}
@@ -147,6 +147,7 @@ où B est la hauteur de l'encaissant rocheux et S la topographie de la glace. H 
 \caption{Représentation de l'épaisseur de la glace H, la hauteur du lit rocheux B et la topologie de la glace S}
 \label{fig01ch1}
 \end{figure}
+\newline
 Les données topographiques, l'élévation du substratum rocheux et l'épaisseur de la glace proviennent du jeu de données BedMachine Greenland v3. 
 \\
 
@@ -156,8 +157,8 @@ M = accumulation + ablation
 \label{5}
 \end{equation}
 
-Ainsi la masse balance permet d'équilibrer les 2 phénomènes à la surface en fonction de la ligne d'équilibre. L'altitude de la ligne d'équilibre (ELA) est où la zone d'accumulation, au sommet du glacier, est égale à la zone d'ablation, en bas du glacier. Nous pouvons la distinguer sur la figure ci-dessous : 
 \newpage
+Ainsi la conservation de masse permet d'équilibrer les 2 phénomènes à la surface en fonction de la ligne d'équilibre. L'altitude de la ligne d'équilibre (ELA) est où la zone d'accumulation, au sommet du glacier, est égale à la zone d'ablation, en bas du glacier. Nous pouvons la distinguer sur la figure ci-dessous : 
 \begin{figure}[!htpb]
 \centering
 \includegraphics[width=10cm, keepaspectratio=true, height=10cm]{equilibrium_line_altitude1.png}
