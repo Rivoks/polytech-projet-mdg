@@ -74,13 +74,12 @@ Afin de pouvoir appliquer ces équations dans le cas des écoulements des glacie
 \newpage
 Ce système permet une très grande précision dans les résultats puisqu'il prend en compte toutes les contraintes au nombre de neuf, qu’elles soient longitudinales, transversales, verticales ou encore horizontales. 
 
-\href{https://hal.uca.fr/hal-03022007/document}{L'équation de Navier-Stokes}
 
-L'équation de stokes peut être assimiler à la deuxième loi de Newton appliquées aux fluides, 
+L'équation de stokes peut être assimiler à la deuxième loi de Newton appliquées aux fluides
 \begin{equation}
 \sum\vec{F}=m\vec{a}
 \end{equation}
-, avec F les forces, m la masse de ce corps et a son accélération.
+ ,avec $F$ les forces s'exerçant sur le volume, $m$ sa masse et $a$ son accélération.
 Il faut alors déterminer les 3 termes pour un fluide en mouvement, à savoir dans notre cas, la glace. \newline
 Les termes qui vont suivre sont explicités dans le cours d'\href{https://hal.uca.fr/hal-03022007/document}{Introduction à la dynamique des fluides visqueux de Thierry Menand}.
 \\\\
@@ -93,20 +92,85 @@ Avec $\rho$ la masse volumique et $\Delta V = \rho dxdydz $ le volume du fluide.
 Les 3 composantes de l'accélération d'un fluide dans un volume élémentaire s'écrit : 
 \begin{equation}
 \begin{array}{l}
-\frac{D \textrm{v}_\textrm{x}}{Dt} = \frac{\partial \textrm{v}_\textrm{x}}{\partial t} + (\vec{v}.\vec{\nabla})\textrm{v}_\textrm{x} = \frac{\partial \textrm{v}_\textrm{x}}{\partial t} + \textrm{v}_\textrm{x} \frac{\partial \textrm{v}_\textrm{x}}{\partial t} + \textrm{v}_\textrm{y} \frac{\partial \textrm{v}_\textrm{x}}{\partial t} + \textrm{v}_\textrm{z} \frac{\partial \textrm{v}_\textrm{x}}{\partial t}  \\
-\frac{D \textrm{v}_\textrm{y}}{Dt} = \frac{\partial \textrm{v}_\textrm{y}}{\partial t} + (\vec{v}.\vec{\nabla})\textrm{v}_\textrm{y} = \frac{\partial \textrm{v}_\textrm{y}}{\partial t} + \textrm{v}_\textrm{x} \frac{\partial \textrm{v}_\textrm{y}}{\partial t} + \textrm{v}_\textrm{y} \frac{\partial \textrm{v}_\textrm{y}}{\partial t} + \textrm{v}_\textrm{z} \frac{\partial \textrm{v}_\textrm{y}}{\partial t} \\
-\frac{D \textrm{v}_\textrm{z}}{Dt} = \frac{\partial \textrm{v}_\textrm{z}}{\partial t} + (\vec{v}.\vec{\nabla})\textrm{v}_\textrm{z} = \frac{\partial \textrm{v}_\textrm{y}}{\partial t} + \textrm{v}_\textrm{x} \frac{\partial \textrm{v}_\textrm{z}}{\partial t} + \textrm{v}_\textrm{y} \frac{\partial \textrm{v}_\textrm{z}}{\partial t} + \textrm{v}_\textrm{z} \frac{\partial \textrm{v}_\textrm{z}}{\partial t}
+\frac{D v_{x}}{Dt} = \frac{\partial v_{x}}{\partial t} + (\vec{v}.\vec{\nabla})v_{x} = \frac{\partial v_{x}}{\partial t} + v_{x} \frac{\partial v_{x}}{\partial t} + v_{y} \frac{\partial v_{x}}{\partial t} + v_{z} \frac{\partial v_{x}}{\partial t}  \\
+\frac{D v_{y}}{Dt} = \frac{\partial v_{y}}{\partial t} + (\vec{v}.\vec{\nabla})v_{y} = \frac{\partial v_{y}}{\partial t} + v_{x} \frac{\partial v_{y}}{\partial t} + v_{y} \frac{\partial v_{y}}{\partial t} + v_{z} \frac{\partial v_{y}}{\partial t} \\
+\frac{D v_{z}}{Dt} = \frac{\partial v_{z}}{\partial t} + (\vec{v}.\vec{\nabla})v_{z} = \frac{\partial v_{y}}{\partial t} + v_{x} \frac{\partial v_{z}}{\partial t} + v_{y} \frac{\partial v_{z}}{\partial t} + v_{z} \frac{\partial v_{z}}{\partial t}
 \end{array}
 \label{eq1}
 \end{equation}
-avec $\textrm{v}_\textrm{x}$, $\textrm{v}_\textrm{y}$ et $\textrm{v}_\textrm{z}$ ****************************
 \\\\
 La somme des forces est la somme des forces $\vec{F}v$ qui agissent sur tout le volume et des forces $\vec{F}s$ qui agissent sur ces surfaces.
-à finir*****************************
 \\\\
-Résoudre les équations de stokes revient à résoudre ce système : 
-
-
+Les forces de volume  $\vec{F}v$ induitent par la gravité, agissent sur toutes les particules du volume élémentaire et s'écrient :
+\begin{equation}
+\vec{F}v = 
+\left(
+\begin{array}{l}
+F_{vx} \\
+F_{vy} \\
+F_{vz}
+\end{array}
+\right)
+=
+\left(
+\begin{array}{l}
+\Delta_{m} g_{x} \\
+\Delta_{m} g_{y}  \\
+\Delta_{m} g_{z} 
+\end{array}
+\right)
+= \rho
+\left(
+\begin{array}{l}
+g_{x} \\
+g_{y}  \\
+g_{z}
+\end{array}
+\right)
+\Delta V
+\end{equation}
+ avec la masse $\Delta_{m} = \rho \Delta V$ et $g$ l'accélération de la pesanteur.
+\\\\
+Les forces de surface $\vec{F}s$ sont les forces induitent par la pression du fluide s'exerçant perpendiculairement aux surface et les forces induitent par les contraintes cisaillantes qui agissent parallèlement aux surfaces. Pour le cas d'un glacier nous prenons en compte que les contraintes normales à la surface : 
+\begin{equation}
+\sigma = 2 \mu \varepsilon - I_{d}P
+\end{equation}
+avec $\mu$ le coefficient de viscosité, $\varepsilon$ le taux de déformation, $I_{d}$ la matrice identité et $P$ la pression. $2\mu \varepsilon$ est la partie qui concerne la déformation et $I_{d}$ est la partie isotrope.\newline
+Soit les 3 composantes des contraintes normales aux surfaces :
+\begin{equation}
+\left(
+\begin{array}{l}
+\sigma_{xx} = -P + 2 \mu \frac{\partial v_{x}}{\partial x} \\
+\sigma_{yy} = -P + 2 \mu \frac{\partial v_{y}}{\partial y} \\
+\sigma_{zz} = -P + 2 \mu \frac{\partial v_{z}}{\partial z}
+\end{array}
+\right)
+\end{equation}
+\\
+Ainsi les forces de surface $\vec{F}s$ s'écrient : 
+\begin{equation}
+\vec{F}s = 
+\left(
+\begin{array}{l}
+\sum F_{sx} = (-\frac{\partial P}{\partial x} + 2\mu \frac{\partial^2v_{x}}{\partial x^2})\Delta V  \\
+\sum F_{sy} = (-\frac{\partial P}{\partial y} + 2\mu \frac{\partial^2v_{y}}{\partial y^2})\Delta V \\
+\sum F_{sz} = (-\frac{\partial P}{\partial z} + 2\mu \frac{\partial^2v_{z}}{\partial z^2})\Delta V
+\end{array}
+\right)
+\end{equation}
+\\\\
+Au final, en réécrivant la loi de Newton avec tous les termes, nous retrouvons :
+\begin{equation}
+\left(
+\begin{array}{l}
+\rho \frac{D v_{x}}{Dt} = \rho(\frac{\partial v_{x}}{\partial t} + v_{x} \frac{\partial v_{x}}{\partial t} + v_{y} \frac{\partial v_{x}}{\partial t} + v_{z} \frac{\partial v_{x}}{\partial t}) = \rho g_{x} - \frac{\partial P}{\partial x} + 2\mu \frac{\partial^2v_{x}}{\partial x^2}  \\
+\rho \frac{D v_{y}}{Dt} = \rho(\frac{\partial v_{y}}{\partial t} + v_{x} \frac{\partial v_{y}}{\partial t} + v_{y} \frac{\partial v_{y}}{\partial t} + v_{z} \frac{\partial v_{y}}{\partial t}) =  \rho g_{y} - \frac{\partial P}{\partial y} + 2\mu \frac{\partial^2v_{y}}{\partial y^2} \\
+\rho \frac{D v_{z}}{Dt} = \rho(\frac{\partial v_{y}}{\partial t} + v_{x} \frac{\partial v_{z}}{\partial t} + v_{y} \frac{\partial v_{z}}{\partial t} + v_{z} \frac{\partial v_{z}}{\partial t}) = \rho g_{z} - \frac{\partial P}{\partial z} + 2\mu \frac{\partial^2v_{z}}{\partial z^2}
+\end{array}
+\right)
+\end{equation}
+\\
+Sous forme vectorielle l'expression se réécrit : 
 \begin{equation}
 \left\{
 \begin{array}{l}
@@ -116,13 +180,12 @@ div(\vec{v}) = 0 \qquad
 \right.
 \label{eq1}
 \end{equation}
-
-avec $\vec{v}$ la vitesse, $\nabla p$ le gradient de pression, $\vec{g}$ l'accélération de pesanteur, $\rho$ la masse volumique, $\mu$ la viscosité et $\varepsilon(\vec{v})$ le taux de déformation.
-\newline
+avec $\nabla = ( \frac{\partial}{\partial x} + \frac{\partial}{\partial y} + \frac{\partial}{\partial z})$, $\vec{v}$ la vitesse, $\vec{g}$ l'accélération de pesanteur, $\rho$ la masse volumique, $\mu$ le coefficient de viscosité et $\varepsilon$ le taux de déformation. $div(\vec{v}) = 0$ car il n'y a pas de variation de volume
+\\\\
 Néanmoins, le Groenland est une calotte grande de milliers de kilomètres qu'il faut un nombre considérable de points pour résoudre ces équations. De plus du fait de la complexité de celles-ci ainsi que des géométries de la calotte, cela est coûteux en temps de calcul. 
 
 
-Il existe de nombreuses simplification sde ces équations afin de minimiser le temps de calcul. Parmi elle, une des plus connue est l'approximation de la couche mince (Shallow Ice Approximation)appliquée pour la première fois sur la glace par Kolumban Hutter (1983). Ce modèle permet de réduire le problème de résolution 3D à un problème 2D. Il permet des calculs beaucoup plus simple. Ainsi, les calottes étant relativement minces, soit quelques kilomètres d'épaisseur, nous pouvons négliger les variations verticales de la vitesse / les contraintes de cisaillement longitudinales et utiliser le modèle de l'approximation de la couche mince.
+Il existe de nombreuses simplifications de  ces équations afin de minimiser le temps de calcul. Parmi elle, une des plus connue est l'approximation de la couche mince (Shallow Ice Approximation)appliquée pour la première fois sur la glace par Kolumban Hutter (1983). Ce modèle permet de réduire le problème de résolution 3D à un problème 2D. Il permet des calculs beaucoup plus simple. Ainsi, les calottes étant relativement minces, soit quelques kilomètres d'épaisseur, nous pouvons négliger les (variations verticales de la vitesse) les contraintes de cisaillement longitudinales et utiliser le modèle de l'approximation de la couche mince.
 
  
 \subsection{Shallow ice approximation (SIA)}
@@ -137,7 +200,7 @@ Les chercheurs assurent que la résolution du systèmes des équations de Stokes
 \end{equation}
 
 Avec e l'épaisseur du glacier et L la largeur du glacier. Ce rapport est par exemple de $10^{-3}$ pour l'Antarctique et de $5.10^{-3}$ pour le Groenland. En effet, la validité de la SIA diminue lorsque le rapport d'aspect caractéristique $\zeta$ augmente. 
-\newpage
+
 De plus, on considère ici les [interactions internes] (aussi appelés bridge effect), ce qui nous permet de séparer les vitesses horizontales et verticales. $\mu$ est considéré isotrope et s'écrit :
 \begin{equation}
 \mu = \frac{B}{2\varepsilon(\vec{v})^\frac{n-1}{n}}
