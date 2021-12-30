@@ -16,7 +16,7 @@ function mass_balance_constants(xc, yc) # Permet de récupérer toutes les valeu
     Xc, Yc   = [Float32(x) for x=xc,y=yc], [Float32(y) for x=xc,y=yc]
     Yc2      = Yc .- minimum(Yc); Yc2 .= Yc2/maximum(Yc2)
     grad_b   = (1.3517 .- 0.014158.*(lat_min.+Yc2*(lat_max-lat_min)))./100.0.*0.91 # Mass Bal. gradient, from doi: 10.1017/jog.2016.75
-    z_ELA    = 2000.0 .- Yc2*300.0                                 # Educated guess for ELA altitude
+    z_ELA    = 1300.0 .- Yc2*300.0                                 # Educated guess for ELA altitude
     return grad_b, z_ELA, b_max
 end
 
@@ -34,12 +34,12 @@ end
     nout     = 50 #200         # error check frequency
     tolnl    = 1e-6            # nonlinear tolerance
     epsi     = 1e-4            # small number
-    damp     = 0.60            # Pour converger plus vite (on l'a arbitrairement mis à 0.65)
+    damp     = 0.65            # Pour converger plus vite (on l'a arbitrairement mis à 0.65)
     dtausc   = 0.75/3.0        # iterative dtau scaling (on l'a arbitairement mis à 0.75/3, peut changer)
     # derived physics
     cfl    = 0                 # Confition de stzbilite
     a      = 2.0*a0/(npow+2)*(rho_i*g)^npow*s2y  #Viscosité de la glace
-    nx = 96 # Nombre de valeurs en x
+    nx = 176 # Nombre de valeurs en x
     # Array allocation (Chaque tableau à une taille dépendante du calcul qu'on y fait)
     qH     = zeros(nx-2) # Flux
     dHdt   = zeros(nx-3)
@@ -71,12 +71,12 @@ end
     H1 = Hice.data # Epaisseur de la glace
 
     # On ne récupère qu'une colonne qu'on étudiera ensuite (Arbitrairement choisi la colonne 80)
-    B = B1[:,80]
-    H = H1[:,80]
-    H0 = copy(H)
-    grad_b=grad_b1[:,80] # Help  gradient du bilan massique
-    z_ELA = z_ELA1[:,80] # Help latitude de la ligne d'équilibre
-    Mask=Mask1[:,80] # Booléen qui nous permettra d'appliquer le masque pour le niveau de la mer
+    B = B1[43,:]
+    H = H1[43,:]
+    H0 = copy(H) # Servira pour le plot final
+    grad_b=grad_b1[43,:] # Gradient du bilan massique
+    z_ELA = z_ELA1[43,:] # Latitude de la ligne d'équilibre
+    Mask=Mask1[43,:] # Booléen qui nous permettra d'appliquer le masque pour le niveau de la mer
     S .= B .+ H # Evaluation de la hauteur de la surface (Base + Glace)
   
     # iteration loop
@@ -110,10 +110,17 @@ end
         iter += 1
     end
 
+    # Calcule la fonte moyenne de la glace sur l'ensemble considéré
+    fonte = zeros(nx)
+    fonte = H0 .- H
+    moy0 = sum(H0)
+    moy = sum(fonte)
+    @printf(" Hauteur de base moyenne est : %d , Fonte moyenne est : %f ",moy0/length(H0) ,moy/length(fonte))
+
     # Affiche la surface de la glace avant et après la simulation, ainsi que le niveau du lit rocheux
     if do_visu
-        display(plot(xc, H0, linewidth=3, label="H initial")); display(plot!(xc, H, legend=true, framestyle=:box, linewidth=3,label="H apres diffusion", xlabel="lx", ylabel="H", title="iceflow 1D (nt=$nout, iters=$iter)"))
-        display(plot!(xc, B, linewidth=3, label="lit rocheux"));
+        display(plot(yc, H0, linewidth=3, label="H initial")); display(plot!(yc, H, legend=true, framestyle=:box, linewidth=3,label="H apres diffusion", xlabel="lx", ylabel="H", title="iceflow 1D (nt=$nout, iters=$iter)"))
+        display(plot!(yc, B, linewidth=3, label="lit rocheux"));
     end
 end
 

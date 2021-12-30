@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.30)  29 DEC 2021 11:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.30)  30 DEC 2021 12:21
 entering extended mode
 **./rapport.tex
 (rapport.tex
@@ -727,7 +727,7 @@ Here is how much of TeX's memory you used:
  28949 multiletter control sequences out of 15000+600000
  464421 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,8n,66p,752b,424s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,8n,66p,753b,424s stack positions out of 5000i,500n,10000p,200000b,80000s
 {C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-t
 s1.enc}{C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm
 /lm-ec.enc}{C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/enc/dvip
@@ -756,7 +756,7 @@ Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C
 .pfb><C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/public/l
 m/lmsy7.pfb><C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/p
 ublic/lm/lmtt10.pfb>
-Output written on rapport.pdf (13 pages, 920197 bytes).
+Output written on rapport.pdf (13 pages, 920255 bytes).
 PDF statistics:
  257 PDF objects out of 1000 (max. 8388607)
  44 named destinations out of 1000 (max. 500000)
