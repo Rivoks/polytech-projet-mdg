@@ -58,15 +58,13 @@ Dans le cadre de ce projet, nous allons utilisé le langage Julia pour la résol
 
 \subsection{Pourquoi Julia ?}
 
-Julia est un langage de programmation moderne et polyvalent, crée en 2009 par des chercheurs et ouvert au grand public en 2012. C'est un langage de haut niveau, dynamique et conçu pour des calculs scientifique. Sa syntaxe est similaire à Python, R ou encore Matlab.
+Julia est un langage de programmation moderne et polyvalent, créé en 2009 par des chercheurs et ouvert au grand public en 2012. C'est un langage de haut niveau, dynamique et conçu pour des calculs scientifique. Sa syntaxe est similaire à Python, R ou encore Matlab.
  
 
 
 \subsection{Les équations de Stokes}
 
-\href{https://scienceetonnante.com/2014/03/03/la-mysterieuse-equation-de-navier-stokes/}{L'équation de Navier-Stokes}
-
-Les équations de Stokes ont comme principal objectif de décrire les mouvements des fluides. 
+Les équations de Stokes \cite{site1} ont comme principal objectif de décrire les mouvements des fluides. 
 Pour procéder correctement, il faut connaître sa vitesse en tout point de l'espace : son champ de vitesse. Ainsi les équations de Stokes permettent de décrire le champ de vitesse d'un fluide. 
 Dans un fluide nous considérons deux types de forces à savoir, les forces de pression et les forces visqueuses. 
 
@@ -75,13 +73,13 @@ Afin de pouvoir appliquer ces équations dans le cas des écoulements des glacie
 Ce système permet une très grande précision dans les résultats puisqu'il prend en compte toutes les contraintes au nombre de neuf, qu’elles soient longitudinales, transversales, verticales ou encore horizontales. 
 
 
-L'équation de stokes peut être assimiler à la deuxième loi de Newton appliquées aux fluides
+L'équation de Stokes peut être assimiler à la deuxième loi de Newton appliquée aux fluides
 \begin{equation}
 \sum\vec{F}=m\vec{a}
 \end{equation}
- ,avec $F$ les forces s'exerçant sur le volume, $m$ sa masse et $a$ son accélération.
+ , avec  $\vec{F}$ les forces s'exerçant sur le volume, $m$ sa masse et  $\vec{a}$  son accélération.
 Il faut alors déterminer les 3 termes pour un fluide en mouvement, à savoir dans notre cas, la glace. \newline
-Les termes qui vont suivre sont explicités dans le cours d'\href{https://hal.uca.fr/hal-03022007/document}{Introduction à la dynamique des fluides visqueux de Thierry Menand}.
+Les termes qui vont suivre sont explicités dans le cours "Introduction à la dynamique des fluides visqueux" de Thierry Menand.\cite{menand2020introduction}
 \\\\
 La masse d'un fluide se réécrit :
 \begin{equation}
@@ -131,7 +129,7 @@ g_{z}
 \end{equation}
  avec la masse $\Delta_{m} = \rho \Delta V$ et $g$ l'accélération de la pesanteur.
 \\\\
-Les forces de surface $\vec{F}s$ sont les forces induitent par la pression du fluide s'exerçant perpendiculairement aux surface et les forces induitent par les contraintes cisaillantes qui agissent parallèlement aux surfaces. Pour le cas d'un glacier nous prenons en compte que les contraintes normales à la surface : 
+Les forces de surface $\vec{F}s$ sont les forces induitent par la pression du fluide s'exerçant perpendiculairement aux surfaces et les forces induitent par les contraintes cisaillantes qui agissent parallèlement aux surfaces. Pour le cas d'un glacier nous prenons en compte que les contraintes normales à la surface : 
 \begin{equation}
 \sigma = 2 \mu \varepsilon - I_{d}P
 \end{equation}
@@ -180,20 +178,20 @@ div(\vec{v}) = 0 \qquad
 \right.
 \label{eq1}
 \end{equation}
-avec $\nabla = ( \frac{\partial}{\partial x} + \frac{\partial}{\partial y} + \frac{\partial}{\partial z})$, $\vec{v}$ la vitesse, $\vec{g}$ l'accélération de pesanteur, $\rho$ la masse volumique, $\mu$ le coefficient de viscosité et $\varepsilon$ le taux de déformation. $div(\vec{v}) = 0$ car il n'y a pas de variation de volume
+avec $\nabla = ( \frac{\partial}{\partial x} + \frac{\partial}{\partial y} + \frac{\partial}{\partial z})$, $\vec{v}$ la vitesse, $\vec{g}$ l'accélération de pesanteur, $\rho$ la masse volumique, $\mu$ le coefficient de viscosité et $\varepsilon$ le taux de déformation. $div(\vec{v}) = 0$ car il n'y a pas de variation de volume.
 \\\\
-Néanmoins, le Groenland est une calotte grande de milliers de kilomètres qu'il faut un nombre considérable de points pour résoudre ces équations. De plus du fait de la complexité de celles-ci ainsi que des géométries de la calotte, cela est coûteux en temps de calcul. 
+Néanmoins, le Groenland est une calotte grande de milliers de kilomètres. Il faut alors un nombre considérable de points pour résoudre ces équations. De plus du fait de la complexité de celles-ci ainsi que des géométries de la calotte, cela est coûteux en temps de calcul. 
 
 
-Il existe de nombreuses simplifications de  ces équations afin de minimiser le temps de calcul. Parmi elle, une des plus connue est l'approximation de la couche mince (Shallow Ice Approximation)appliquée pour la première fois sur la glace par Kolumban Hutter (1983). Ce modèle permet de réduire le problème de résolution 3D à un problème 2D. Il permet des calculs beaucoup plus simple. Ainsi, les calottes étant relativement minces, soit quelques kilomètres d'épaisseur, nous pouvons négliger les (variations verticales de la vitesse) les contraintes de cisaillement longitudinales et utiliser le modèle de l'approximation de la couche mince.
+Il existe de nombreuses simplifications de  ces équations afin de minimiser le temps de calcul. Parmi elle, une des plus connue est l'approximation de la couche mince (Shallow Ice Approximation)appliquée pour la première fois sur la glace par Kolumban Hutter (1983). Ce modèle permet de réduire le problème de résolution 3D à un problème 2D. Il permet des calculs beaucoup plus simples. Ainsi, les calottes étant relativement minces, soit quelques kilomètres d'épaisseur, nous pouvons négliger les (variations verticales de la vitesse) les contraintes de cisaillement longitudinales et utiliser le modèle de l'approximation de la couche mince.
 
- 
+ \newpage
 \subsection{Shallow ice approximation (SIA)}
-\href{https://tel.archives-ouvertes.fr/tel-00192512v2/document}{L'équation SIA simplifiée}
-\newline
-\href{https://www.cambridge.org/core/journals/journal-of-glaciology/article/dependence-of-centuryscale-projections-of-the-greenland-ice-sheet-on-its-thermal-regime/71233B1A12B0348B4AB38D9B2EE493AC}{Détails sur l'équation SIA simplifiée}
 
-Les chercheurs assurent que la résolution du systèmes des équations de Stokes est très couteuse en temps pour des applications réalistes. C'est pour cette raison que nous allons utiliser une simplification de ces équations basée sur le fait que sur de très grandes calottes, l'épaisseur est extrêmement faible par rapport à la dimension horizontale. Pour cela, nous allons utilisé le modèle SIA (Shallow Ice Approximation). Sa validité dépend du rapport d'aspect caractéristique $\zeta$ des objets glaciaires :
+
+Pour cette partie, nous nous sommes renseignées à travers le cours de Martina Schäfer \cite{schafer2007modelisation} et aussi grâce à un article publié dans le Cambridge University Press  \cite{seroussi_morlighem_rignot_khazendar_larour_mouginot_2013}.
+\newline
+Les chercheurs assurent que la résolution du système des équations de Stokes est très couteuse en temps pour des applications réalistes. C'est pour cette raison que nous allons utiliser une simplification de ces équations basée sur le fait que sur de très grandes calottes, l'épaisseur est extrêmement faible par rapport à la dimension horizontale. Pour cela, nous allons utiliser le modèle SIA (Shallow Ice Approximation). Sa validité dépend du rapport d'aspect caractéristique $\zeta$ des objets glaciaires :
 \begin{equation}
 \zeta = \frac{e}{L}
 \label{eq2} 
@@ -201,7 +199,7 @@ Les chercheurs assurent que la résolution du systèmes des équations de Stokes
 
 Avec e l'épaisseur du glacier et L la largeur du glacier. Ce rapport est par exemple de $10^{-3}$ pour l'Antarctique et de $5.10^{-3}$ pour le Groenland. En effet, la validité de la SIA diminue lorsque le rapport d'aspect caractéristique $\zeta$ augmente. 
 
-De plus, on néglige ici les interactions internes (aussi appelés bridge effect), ce qui nous permet de séparer les vitesses horizontales et verticales. $\mu$ est considéré isotrope et s'écrit :
+De plus, on néglige ici les interactions internes (aussi appelées bridge effect), ce qui nous permet de séparer les vitesses horizontales et verticales. $\mu$ est considéré isotrope et s'écrit :
 \begin{equation}
 \mu = \frac{B}{2\varepsilon(\vec{v})^\frac{n-1}{n}}
 \label{eq2}      
@@ -213,7 +211,7 @@ La vitesse horizontale devient donc solution de :
 -div(2 \mu \varepsilon(\vec{v}))  = \rho \vec{g}\frac{{\partial}S}{\partial x}
 \label{eq3}
 \end{equation}
-Et l'évolution de la surface est déterminée grâce à une équation hyperbolique utilisant la méthode des différences finies et est dictée par la conservation de masse. C'est cette équation que l'on retiendra car elle nous permettra d'étudier la hauteur de la glace au fur et à mesure du temps.
+L'évolution de la surface est déterminée grâce à une équation hyperbolique utilisant la méthode des différences finies et est dictée par la conservation de masse. C'est cette équation que l'on retiendra car elle nous permettra d'étudier la hauteur de la glace au fur et à mesure du temps.
 Cette équation s'écrit :
 \begin{equation}
 \frac{\partial H}{\partial t}=-\nabla H\vec{v} + Ms - Mb
@@ -269,9 +267,7 @@ Dans le code, la conservation de masse M est calculée à partir de \textit{grad
 \newpage
 \section{Simulations numériques}
 
-Nous avons commencé par étudier un dossier GITHUB public qui modélisait la fonte de glacier.
-\newline
-\href{https://github.com/luraess/julia-parallel-course-EGU21.git}{GitHUB du professeur}
+Nous avons commencé par étudier un dossier GITHUB public \cite{site2} qui modélisait la fonte de glacier.
 \newline
 
  Il était composé de trois codes qui simplifiaient le problème en 1D : un code simple qui ne s'occupe que de la fonte de la glace en fonction du temps. Un deuxième code qui rajoute une solution itérative ainsi qu'une tolérance de fin, forçant le programme à s'arrêter uniquement lorsque cette tolérance est atteinte. Enfin, un troisième code introduit un "damp" itératif qui permet au programme de converger plus rapidement.
@@ -316,7 +312,7 @@ end
 La boucle s'arrête lorsque l'erreur est plus petite que la tolérance imposée.
 
 \section{Résultats}
-\href{https://hal.archives-ouvertes.fr/hal-02922657/file/2008GL033472.pdf}{Prédictions pour l'an 4000}
+
 
 Pour s'assurer que le code compilait, nous avons simplifié certaines variables du problème. La conservation de masse était constante et les surfaces H, B et S  étaient modélisées par des fonctions mathématiques. Une fois cela fait, nous avons extrait des valeurs d'un autre fichier contenant toutes les valeurs du Groenland [retrouver la référence].
 \begin{figure}[!htpb]
@@ -326,7 +322,7 @@ Pour s'assurer que le code compilait, nous avons simplifié certaines variables 
 
 \end{figure}
 \newpage
-Nous avons ensuite réajusté l'abblation M ainsi que les coefficients itératifs damp afin d'avoir une vitesse de convergence adaptée au problème.
+Nous avons ensuite réajusté l'ablation M ainsi que les coefficients itératifs damp afin d'avoir une vitesse de convergence adaptée au problème.
 Nous affichons donc le résultat obtenu à l'aide d'un plot.
 \begin{figure}[!htpb]
 \centering
@@ -349,18 +345,18 @@ En exécutant le code avec cette ligne, nous avons alors le résultat suivant:
 \newpage
 En observant notre schéma, nous pouvons à présent simuler l'évolution de la glace du Groenland et créer notre propre scénario. En conservant nos valeurs, nous pouvons observer une fonte de glace allant de 0 à 1500m de variation. Avec un simple calcul de moyenne, nous obtenons une variation moyenne de 1091m. Notre hauteur de base moyenne étant de 1907, cela nous donne une variation de 57\% de la hauteur. A chaque itération, nous réattribuons des valeurs à tous les tableaux en fonction de a, qui est la viscosité de la glace \textbf{calculée avec un pas de temps annuel}. Nous en déduisons qu'une itération correspond à une année et donc que ce scénario sera atteinte au bout de 2051 ans. 
 \newline
-Nous avons trouvé un article spéculant la fonte de glace au Groenland en fonction de la hausse de CO2, car celui-ci est directement relié avec la hausse de température. Il effectue plusieurs simulations, en fonction de la variation de température considérée (variant entre 1.1°C et 6.4°C) : 
+Nous avons trouvé un article \cite{charbit2008amount} spéculant la fonte de glace au Groenland en fonction de la hausse de CO2, car celui-ci est directement relié avec la hausse de température. Il effectue plusieurs simulations, en fonction de la variation de température considérée (variant entre 1.1°C et 6.4°C) : 
 \begin{figure}[!htpb]
 \centering
 \includegraphics[width=10cm, keepaspectratio=true, height=10cm]{Variation.png}
 \caption{Schéma indiquant le volume de glace du Groenload à partir de l'an 2000. Grâce à cette simulation, nous pouvons en déduire que le Groenload perdrait entre 10\% et 63\% de son volume, ce que l'on retrouve bien avec notre simulation (Notre simulation est proche de la courbe verte de ce schéma) }
 \end{figure}
-
+\newpage
 % Faire différents scénarios en fonction de la fonte des glacier (3 ?)
 
 %-----------------------------------------------------------
-\bibliography{rapport}
-\bibliographystyle{abbrv}
+\bibliography{bibliographie.bib}
+\bibliographystyle{unsrt}
 \end{document}
 
 %%% Local Variables:

@@ -1,0 +1,33 @@
+\begin{thebibliography}{1}
+
+\bibitem{site1}
+David Louapre.
+\newblock La mystérieuse équation de navier-stokes.
+
+\bibitem{menand2020introduction}
+Thierry Menand.
+\newblock Introduction {\`a} la dynamique des fluides visqueux.
+\newblock 2020.
+
+\bibitem{schafer2007modelisation}
+Martina Sch{\"a}fer.
+\newblock {\em MOD{\'E}LISATION DE L'ECOULEMENT DES GLACIERS TEMP{\'E}R{\'E}S}.
+\newblock PhD thesis, Universit{\'e} Joseph-Fourier-Grenoble I, 2007.
+
+\bibitem{seroussi_morlighem_rignot_khazendar_larour_mouginot_2013}
+H.~Seroussi, M.~Morlighem, E.~Rignot, A.~Khazendar, E.~Larour, and J.~Mouginot.
+\newblock Dependence of century-scale projections of the greenland ice sheet on
+  its thermal regime.
+\newblock {\em Journal of Glaciology}, 59(218):1024–1034, 2013.
+
+\bibitem{site2}
+Ludovic Räss and Mauro.
+\newblock Solving differential equations in parallel with julia.
+
+\bibitem{charbit2008amount}
+Sylvie Charbit, D~Paillard, and G~Ramstein.
+\newblock Amount of co2 emissions irreversibly leading to the total melting of
+  greenland.
+\newblock {\em Geophysical Research Letters}, 35(12):n--an, 2008.
+
+\end{thebibliography}
