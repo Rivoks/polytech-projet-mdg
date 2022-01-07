@@ -27,13 +27,15 @@
 \begin{document}
 
 
+
 \title{\textbf{Rapport de projet pluridisciplinaire :} \newline Diffusion non linéaire en sciences de la terre modélisation des glaciers}
 \author{Tania Mendes, Mathieu Nguyen, Samson Petros, Yazid Bouhria, Elyas Assili, Maryam Aarab}
 \maketitle
  
+\vspace{50 mm}
+\includegraphics[width=5cm, keepaspectratio=true, height=5cm]{Logo_Polytech_Sorbonne-2.png}\hfill\includegraphics[width=5cm, keepaspectratio=true, height=5cm]{Logo_Sorbonne_Universite-2.png}
 
-\vspace{90 mm}
-\includegraphics[width=5cm, keepaspectratio=true, height=5cm]{Logo_Polytech_Sorbonne-2.png}\hfill\includegraphics[width=5cm, keepaspectratio=true, height=5cm]{Logo_Sorbonne_Université-2.png}
+
 
 \author{} 
 
@@ -41,10 +43,6 @@
 \newpage
 
 \tableofcontents
-
-\begin{abstract}
-Résumé du contenu du document.
-\end{abstract}
 
 %-----------------------------------------------------------
 \newpage
@@ -336,10 +334,32 @@ Nous affichons donc le résultat obtenu à l'aide d'un plot.
 
 \end{figure}
 \newpage
-Il nous faut à présent déterminer la colonne où les variations horizontales sont les plus faibles, afin d'avoir le modèle le plus proche possible de la réalité.
+Il nous faut à présent déterminer la ligne où les variations verticales soient les plus faibles, afin d'avoir le modèle le plus proche possible de la réalité adapté a notre code.
 \newline
 Pour cela, nous avons cherché dans les données que nous avions sur le Groenland la ligne "horizontale" qui nous permettait d'avoir des résultats suffisamement justes pour pouvoir appliquer notre code. Plus précisemment, il fallait que la ligne choisie soit une ligne qui permette de négliger les vitesses verticales.
-Pour choisir judicieusement cette ligne, nous avons comparé les différentes données que nous avions à notre disposition en faisant une différence entre deux lignes consécutives, nous avons alors choisi celle qui avait une valeur la plus faible. Ce qui nous permettait de trouver la ligne 43. 
+Pour choisir judicieusement cette ligne, nous avons comparé les différentes données de vitesses verticales \textit{Vy} que nous avions à notre disposition en faisant une somme entre deux lignes consécutives, voici le code qui nous a permis de trouver  la ligne correspondante: 
+\begin{verbatim}
+V = sqrt.(Vy.^2)
+s=zeros(95)
+for i = 1:95
+    t=V[i,:]
+    s[i]=sum(t)
+end
+s1=zeros(94)
+for i = 2:94
+    s1[i-1] = s[i-1] + s[i+1]
+end
+display(plot(1:95, s))
+display(plot(1:94, s1))
+\end{verbatim}
+A l'aide de ce programme, nous pouvons obtenir une courbe donnant les vitesses verticales sur chaque ligne :
+\begin{figure}[!htpb]
+\centering
+\includegraphics[width=10cm, keepaspectratio=true, height=10cm]{Vitesses.png}
+\caption{Graphe représentant la somme des vitesses selon l'axe Y pour chaque ligne. On ne considère pas les bordures du Groenland car on veut prendre la ligne qui correspond au rapport entre la vitesse horizontale et verticale la plus élevée, ceci est situé au centre du Groenland }
+\end{figure}
+\newline
+ En regardant au centre, nous observons que les vitesses verticales sont les plus faibles vers la ligne 43. Nous avons alors choisi cette ligne pour que notre modèle soit le plus cohérent avec notre modèle 2D. 
 \newline
 En exécutant le code avec cette ligne, nous avons alors le résultat suivant: 
 \begin{figure}[!htpb]
