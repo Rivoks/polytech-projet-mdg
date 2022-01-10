@@ -48,12 +48,14 @@
 \newpage
 \section{Introduction}\label{sec:intro}
 
-L’écoulement des glaciers est un processus continu, mais il est très difficile de le simuler mathématiquement. Pour cela, les modélisateurs utilisent des méthodes numériques qui résolvent les équations en une série d’étapes.
-L’intérêt ici va être d’énoncer les relations générales de Stokes appliquées aux glaciers, d’énoncer le modèle Shallow Ice Approximation (SIA) afin d’en déterminer les avantages et les limites dans l’analyse de l’écoulement d’un glacier en fonction du temps.
-
 L’écoulement d’un glacier dépend de plusieurs facteurs qui sont principalement l’accumulation de neige, la fonte de glace, la gravité et le niveau de la pente du lit rocheux.
 Les écoulements sont considérés comme fluides, incompressibles, visqueux et non linéaires, d’où l’intérêt de les modéliser avec les relations de Stokes.
-Dans le cadre de ce projet, nous allons utilisé le langage Julia pour la résolution de systèmes d'équations différentielles afin de pouvoir prédire l'écoulement glaciaire du Groenland.
+\newline
+C'est un processus continu, mais il est très difficile de les résoudre analytiquement. Pour cela, les modélisateurs utilisent donc des méthodes numériques.
+L’intérêt ici va être d’énoncer les relations générales de Stokes appliquées aux glaciers, d’énoncer le modèle Shallow Ice Approximation (SIA) afin d’en déterminer les avantages et les limites dans l’analyse de l’écoulement d’un glacier en fonction du temps.
+
+
+Dans le cadre de ce projet, nous allons utilisé le langage Julia pour la résolution de systèmes d'équations différentielles par \textbf{différences finies} afin de pouvoir prédire l'écoulement glaciaire du Groenland.
 
 
 %-----------------------------------------------------------
@@ -69,7 +71,7 @@ Julia est un langage de programmation moderne et polyvalent, créé en 2009 par 
 
 Les équations de Stokes \cite{site1} ont comme principal objectif de décrire les mouvements des fluides. 
 Pour procéder correctement, il faut connaître sa vitesse en tout point de l'espace : son champ de vitesse. Ainsi les équations de Stokes permettent de décrire le champ de vitesse d'un fluide. 
-Dans un fluide nous considérons deux types de forces à savoir, les forces de pression et les forces visqueuses. 
+Dans un fluide nous considérons deux types de forces à savoir, les forces de volume (donc de poids) et les forces de surface correspondant au frottement visqueux. 
 
 Afin de pouvoir appliquer ces équations dans le cas des écoulements des glaciers, nous considérerons ces derniers comme des fluides incompressibles, visqueux et non linéaires. Il s'agit d'un système d'équations pouvant être appliqué à tout type de glacier.
 \newpage
@@ -194,7 +196,7 @@ Il existe de nombreuses simplifications de  ces équations afin de minimiser le 
 
 Pour cette partie, nous nous sommes renseignées à travers le cours de Martina Schäfer \cite{schafer2007modelisation} et aussi grâce à un article publié dans le Cambridge University Press  \cite{seroussi_morlighem_rignot_khazendar_larour_mouginot_2013}.
 \newline
-Les chercheurs assurent que la résolution du système des équations de Stokes est très couteuse en temps pour des applications réalistes. C'est pour cette raison que nous allons utiliser une simplification de ces équations basée sur le fait que sur de très grandes calottes, l'épaisseur est extrêmement faible par rapport à la dimension horizontale. Pour cela, nous allons utiliser le modèle SIA (Shallow Ice Approximation). Sa validité dépend du rapport d'aspect caractéristique $\zeta$ des objets glaciaires :
+Cependant, d'après une étude de ,des chercheurs assurent que la résolution du système des équations de Stokes est très couteuse en temps pour des applications réalistes (avec une complexité de \textbf{nlog(n)}. C'est pour cette raison qu'ils utilisent une simplification de ces équations basée sur le fait que sur de très grandes calottes, l'épaisseur est extrêmement faible par rapport à la dimension horizontale. Pour cela, nous allons utiliser le modèle SIA (Shallow Ice Approximation). Sa validité dépend du rapport d'aspect caractéristique $\zeta$ des objets glaciaires :
 \begin{equation}
 \zeta = \frac{e}{L}
 \label{eq2} 
@@ -214,7 +216,7 @@ La vitesse horizontale devient donc solution de :
 -div(2 \mu \varepsilon(\vec{v}))  = \rho \vec{g}\frac{{\partial}S}{\partial x}
 \label{eq3}
 \end{equation}
-L'évolution de la surface est déterminée grâce à une équation hyperbolique utilisant la méthode des différences finies et est dictée par la conservation de masse. C'est cette équation que l'on retiendra car elle nous permettra d'étudier la hauteur de la glace au fur et à mesure du temps.
+L'évolution de la surface est déterminée en résolvant une équation hyperbolique, celle-ci est dictée par la conservation de masse. C'est cette équation que l'on retiendra car elle nous permettra d'étudier la hauteur de la glace au fur et à mesure du temps.
 Cette équation s'écrit :
 \begin{equation}
 \frac{\partial H}{\partial t}=-\nabla H\vec{v} + Ms - Mb
@@ -225,7 +227,7 @@ Etant donné que $\vec{v}$ est la vitesse horizontale, c'est également une dér
 On peut donc écrire cette équation SIA comme la résolution d'une équation de diffusion non linéaire : 
 
 \begin{equation}
-\frac{\partial H}{\partial t}=D\frac{{\partial}^{2}H}{\partial x^{2}} + M
+\frac{\partial H}{\partial t}=D(H)\frac{{\partial}^{2}H}{\partial x^{2}} + M
 \label{eq4}
 \end{equation}
 
@@ -236,7 +238,7 @@ L'épaisseur H est donnée par l'équation suivante :
 H(x) = S(x) + B(x)
 \label{eq4}
 \end{equation}
-où B est la hauteur de l'encaissant rocheux et S la topographie de la glace. H est représentée sur la figure ci-dessous : 
+où B est la hauteur de l'encaissant rocheux et S la topographie de la glace. H est représentée sur la figure 1 : 
 \\
 \\
 \begin{figure}[!htpb]
@@ -256,7 +258,7 @@ M = accumulation + ablation
 \end{equation}
 
 \newpage
-Ainsi la conservation de masse permet d'équilibrer les 2 phénomènes à la surface en fonction de la ligne d'équilibre. L'altitude de la ligne d'équilibre (ELA) est où la zone d'accumulation, au sommet du glacier, est égale à la zone d'ablation, en bas du glacier. Nous pouvons la distinguer sur la figure ci-dessous : 
+Ainsi la conservation de masse permet d'équilibrer les 2 phénomènes à la surface en fonction de la ligne d'équilibre. L'altitude de la ligne d'équilibre (ELA) est où la zone d'accumulation, au sommet du glacier, est égale à la zone d'ablation, en bas du glacier. Nous pouvons la distinguer sur la figure 2 : 
 \begin{figure}[!htpb]
 \centering
 \includegraphics[width=10cm, keepaspectratio=true, height=10cm]{equilibrium_line_altitude1.png}
@@ -266,18 +268,18 @@ Ainsi la conservation de masse permet d'équilibrer les 2 phénomènes à la sur
 
 
 
-Dans le code, la conservation de masse M est calculée à partir de \textit{gradb} le gradient du bilan massique, \textit{zELA} la latitude de la ligne d'équilibre (ELA) et \textit{bmax} l'accumulation maximale.
+Dans le code, la conservation de masse M est calculée à partir de \textit{gradb} (qui dépend de la lattitude) le gradient du bilan massique, \textit{zELA} l'altitude de la ligne d'équilibre (ELA) et \textit{bmax} l'accumulation maximale.
 \newpage
 \section{Simulations numériques}
 
 Nous avons commencé par étudier un dossier GITHUB public \cite{site2} qui modélisait la fonte de glacier.
 \newline
 
- Il était composé de trois codes qui simplifiaient le problème en 1D : un code simple qui ne s'occupe que de la fonte de la glace en fonction du temps. Un deuxième code qui rajoute une solution itérative ainsi qu'une tolérance de fin, forçant le programme à s'arrêter uniquement lorsque cette tolérance est atteinte. Enfin, un troisième code introduit un "damp" itératif qui permet au programme de converger plus rapidement.
+ Il était composé de trois codes qui résolvent l'équation de diffusion linéaire avec diférentes méthodes en 1D. Tout d'abord un premier code explicite. Un deuxième code qui rajoute une solution itérative ainsi qu'une tolérance de fin, forçant le programme à s'arrêter uniquement lorsque cette tolérance est atteinte. Enfin, un troisième code introduit un "damp" itératif qui permet au programme de converger plus rapidement.
 \newline
 Ces trois codes sont considérés linéaires, car le coefficient de diffusion D était une constante.
 \newline
-Un quatrième code considérait le problème en 2D et était considéré comme non linéaire, c'est-à-dire que ce coefficient D variait à chaque point et à chaque itération du problème. Notre but était donc de créer un code non linéaire qui simplifie le problème en 1D, à l'aide de tous ces codes.
+Un quatrième code considérait le problème de l'écoulement des glaciers à l'aide du SIA en 2D. Il inclut des itérations non linéaire, c'est-à-dire que ce coefficient D variait à chaque point et à chaque itération du problème, ainsi que les conditions initiales provenants des données. Notre but était donc de mieux comprendre le fonctionnement du code en 2D, puis en écrivant à notre tour un code 1D non linéaire qui résout le problème de SIA.
 \newline
 En s'inspirant de ces codes, nous avons créé un code dont la boucle s'effectue de la manière suivante :
 \newline

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.30)  7 JAN 2022 17:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.30)  10 JAN 2022 20:26
 entering extended mode
 **./rapport.tex
 (rapport.tex
@@ -615,37 +615,37 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 \openout5 = `rapport.toc'.
 
 [2] [3]
-Underfull \hbox (badness 10000) in paragraph at lines 82--88
+Underfull \hbox (badness 10000) in paragraph at lines 84--90
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 90--94
+Underfull \hbox (badness 10000) in paragraph at lines 92--96
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 101--106
+Underfull \hbox (badness 10000) in paragraph at lines 103--108
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 101--106
+Underfull \hbox (badness 10000) in paragraph at lines 103--108
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 132--136
+Underfull \hbox (badness 10000) in paragraph at lines 134--138
 
  []
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 161--164
+Underfull \hbox (badness 10000) in paragraph at lines 163--166
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 183--187
+Underfull \hbox (badness 10000) in paragraph at lines 185--189
 
  []
 
@@ -653,15 +653,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 183--187
 <H.png, id=106, 1927.2pt x 1204.5pt>
 File: H.png Graphic file (type png)
 <use H.png>
-Package pdftex.def Info: H.png  used on input line 244.
+Package pdftex.def Info: H.png  used on input line 246.
 (pdftex.def)             Requested size: 284.50949pt x 177.81844pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 238--251
+Underfull \hbox (badness 10000) in paragraph at lines 240--253
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 238--251
+Underfull \hbox (badness 10000) in paragraph at lines 240--253
 
  []
 
@@ -669,25 +669,25 @@ Underfull \hbox (badness 10000) in paragraph at lines 238--251
 <equilibrium_line_altitude1.png, id=116, 513.8397pt x 496.4949pt>
 File: equilibrium_line_altitude1.png Graphic file (type png)
 <use equilibrium_line_altitude1.png>
-Package pdftex.def Info: equilibrium_line_altitude1.png  used on input line 262
+Package pdftex.def Info: equilibrium_line_altitude1.png  used on input line 264
 .
 (pdftex.def)             Requested size: 284.54149pt x 274.9367pt.
  [8 <./equilibrium_line_altitude1.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 273--275
+Underfull \hbox (badness 10000) in paragraph at lines 275--277
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 276--284
+Underfull \hbox (badness 10000) in paragraph at lines 278--286
 
  []
 
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
-84.
+86.
 (C:\Users\Yamato Musubi\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Overfull \hbox (17.24895pt too wide) in paragraph at lines 298--298
+Overfull \hbox (17.24895pt too wide) in paragraph at lines 300--300
 []        \T1/lmtt/m/n/10 dtau        .= dtausc*min.(10.0, cfl./(epsi .+ av(D[2
 :end])))[] 
  []
@@ -696,28 +696,28 @@ Overfull \hbox (17.24895pt too wide) in paragraph at lines 298--298
 <Groenland.png, id=130, 595.22375pt x 395.4775pt>
 File: Groenland.png Graphic file (type png)
 <use Groenland.png>
-Package pdftex.def Info: Groenland.png  used on input line 323.
+Package pdftex.def Info: Groenland.png  used on input line 325.
 (pdftex.def)             Requested size: 284.52345pt x 189.04256pt.
  [10]
 <Iceflow1D.png, id=135, 600.2425pt x 398.48875pt>
 File: Iceflow1D.png Graphic file (type png)
 <use Iceflow1D.png>
-Package pdftex.def Info: Iceflow1D.png  used on input line 332.
+Package pdftex.def Info: Iceflow1D.png  used on input line 334.
 (pdftex.def)             Requested size: 284.53197pt x 188.89497pt.
  [11 <./Groenland.png> <./Iceflow1D.png>]
 <Vitesses.png, id=144, 560.69475pt x 375.20175pt>
 File: Vitesses.png Graphic file (type png)
 <use Vitesses.png>
-Package pdftex.def Info: Vitesses.png  used on input line 358.
+Package pdftex.def Info: Vitesses.png  used on input line 360.
 (pdftex.def)             Requested size: 284.53032pt x 190.39998pt.
 <ligne43.png, id=145, 517.18219pt x 542.025pt>
 File: ligne43.png Graphic file (type png)
 <use ligne43.png>
-Package pdftex.def Info: ligne43.png  used on input line 367.
+Package pdftex.def Info: ligne43.png  used on input line 369.
 (pdftex.def)             Requested size: 271.49315pt x 284.5343pt.
  [12]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 3
-73.
+75.
 
 (C:\Users\Yamato Musubi\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -725,7 +725,7 @@ File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 <Variation.png, id=151, 245.11575pt x 217.41225pt>
 File: Variation.png Graphic file (type png)
 <use Variation.png>
-Package pdftex.def Info: Variation.png  used on input line 376.
+Package pdftex.def Info: Variation.png  used on input line 378.
 (pdftex.def)             Requested size: 284.55139pt x 252.39076pt.
 
 [13 <./Vitesses.png>] [14 <./ligne43.png>] [15 <./Variation.png>] (rapport.bbl)
@@ -770,7 +770,7 @@ o Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy5.pfb><C:/User
 s/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><
 C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt
 10.pfb>
-Output written on rapport.pdf (16 pages, 1083595 bytes).
+Output written on rapport.pdf (16 pages, 1085092 bytes).
 PDF statistics:
  273 PDF objects out of 1000 (max. 8388607)
  55 named destinations out of 1000 (max. 500000)
