@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.12.7)  11 JAN 2022 10:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.12.7)  11 JAN 2022 11:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -386,15 +386,18 @@ Package: authblk 2001/02/27 1.3 (PWD)
 \c@authors=\count277
 \c@affil=\count278
 )
+(/usr/share/texlive/texmf-dist/tex/latex/titling/titling.sty
+Package: titling 2009/09/04 v2.1d maketitle typesetting
+\thanksmarkwidth=\skip56
+\thanksmargin=\skip57
+\droptitle=\skip58
+)
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
 File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count279
 \l__pdf_internal_box=\box50
 )
 (./rapport.aux
-
-LaTeX Warning: Label `eq1' multiply defined.
-
 
 LaTeX Warning: Label `eq2' multiply defined.
 
@@ -407,36 +410,36 @@ LaTeX Warning: Label `eq4' multiply defined.
 )
 \openout1 = `rapport.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 27
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 39
 .
  (/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Info: Redefining \degres on input line 27.
-LaTeX Info: Redefining \dots on input line 27.
+LaTeX Info: Redefining \degres on input line 39.
+LaTeX Info: Redefining \dots on input line 39.
 Package french.ldf Info: Setting StandardItemizeEnv=true for
 (french.ldf)             compatibility with enumitem package,
-(french.ldf)             reported on input line 27.
+(french.ldf)             reported on input line 39.
 Package french.ldf Info: Setting StandardEnumerateEnv=true for
 (french.ldf)             compatibility with enumitem package,
-(french.ldf)             reported on input line 27.
-LaTeX Info: Redefining \up on input line 27.
+(french.ldf)             reported on input line 39.
+LaTeX Info: Redefining \up on input line 39.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -470,7 +473,7 @@ File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 147.
 )
-Package hyperref Info: Link coloring ON on input line 27.
+Package hyperref Info: Link coloring ON on input line 39.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
@@ -483,9 +486,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count286
 )
-LaTeX Info: Redefining \ref on input line 27.
-LaTeX Info: Redefining \pageref on input line 27.
-LaTeX Info: Redefining \nameref on input line 27.
+LaTeX Info: Redefining \ref on input line 39.
+LaTeX Info: Redefining \pageref on input line 39.
+LaTeX Info: Redefining \nameref on input line 39.
 
 (./rapport.out) (./rapport.out)
 \@outlinefile=\write4
@@ -494,42 +497,47 @@ LaTeX Info: Redefining \nameref on input line 27.
 <Logo_Polytech_Sorbonne-2.png, id=32, 1075.76906pt x 424.58624pt>
 File: Logo_Polytech_Sorbonne-2.png Graphic file (type png)
 <use Logo_Polytech_Sorbonne-2.png>
-Package pdftex.def Info: Logo_Polytech_Sorbonne-2.png  used on input line 36.
+Package pdftex.def Info: Logo_Polytech_Sorbonne-2.png  used on input line 40.
 (pdftex.def)             Requested size: 142.25145pt x 56.14403pt.
 <Logo_Sorbonne_Universite-2.png, id=33, 1792.7778pt x 730.8906pt>
 File: Logo_Sorbonne_Universite-2.png Graphic file (type png)
 <use Logo_Sorbonne_Universite-2.png>
-Package pdftex.def Info: Logo_Sorbonne_Universite-2.png  used on input line 36.
+Package pdftex.def Info: Logo_Sorbonne_Universite-2.png  used on input line 40.
 
 (pdftex.def)             Requested size: 142.24886pt x 57.99287pt.
- [1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./Logo_Polytech_Sorbonne-2
-.png> <./Logo_Sorbonne_Universite-2.png>]
-(./rapport.toc
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 4
-.
+0.
  (/usr/share/texmf/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 4
-.
+0.
 
 (/usr/share/texmf/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-4.
+40.
 
 (/usr/share/texmf/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-4.
+40.
 
 (/usr/share/texmf/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <12> on input line 40.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 40.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 40.
+ [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./Logo_Polytech_Sorbonne-2
+.png> <./Logo_Sorbonne_Universite-2.png>] (./rapport.toc
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -540,141 +548,155 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 \tf@toc=\write5
 \openout5 = `rapport.toc'.
 
- [2] [3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 104--109
+ [2] [3]
+Underfull \hbox (badness 10000) in paragraph at lines 103--108
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 111--127
+Underfull \hbox (badness 10000) in paragraph at lines 110--126
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 111--127
+Underfull \hbox (badness 10000) in paragraph at lines 110--126
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 111--127
+Underfull \hbox (badness 10000) in paragraph at lines 110--126
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 153--157
+Underfull \hbox (badness 10000) in paragraph at lines 110--126
+
+ []
+
+[4]
+Overfull \hbox (17.52872pt too wide) in paragraph at lines 155--156
+\T1/lmr/m/n/10 s'exer-çant per-pen-di-cu-lai-re-ment aux sur-faces et les force
+s in-duitent par les contraintes
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 181--184
 
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 182--185
+Underfull \hbox (badness 10000) in paragraph at lines 206--209
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 204--208
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 252--256
 
  []
 
-[6] [7]
-<H.png, id=116, 1927.2pt x 1204.5pt>
+<H.png, id=112, 1927.2pt x 1204.5pt>
 File: H.png Graphic file (type png)
 <use H.png>
 Package pdftex.def Info: H.png  used on input line 265.
 (pdftex.def)             Requested size: 284.50949pt x 177.81844pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 259--272
+Underfull \hbox (badness 10000) in paragraph at lines 259--270
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 259--272
+Underfull \hbox (badness 10000) in paragraph at lines 259--270
 
  []
 
-[8 <./H.png>]
-<equilibrium_line_altitude1.png, id=125, 513.8397pt x 496.4949pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 271--273
+
+ []
+
+[7 <./H.png>]
+<equilibrium_line_altitude1.png, id=124, 513.8397pt x 496.4949pt>
 File: equilibrium_line_altitude1.png Graphic file (type png)
 <use equilibrium_line_altitude1.png>
-Package pdftex.def Info: equilibrium_line_altitude1.png  used on input line 283
+Package pdftex.def Info: equilibrium_line_altitude1.png  used on input line 285
 .
 (pdftex.def)             Requested size: 284.54149pt x 274.9367pt.
- [9 <./equilibrium_line_altitude1.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 294--296
+ [8 <./equilibrium_line_altitude1.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 296--298
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 297--305
+Underfull \hbox (badness 10000) in paragraph at lines 299--307
 
  []
 
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3
-05.
+07.
 (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Overfull \hbox (17.24895pt too wide) in paragraph at lines 319--319
+Overfull \hbox (17.24895pt too wide) in paragraph at lines 321--321
 []        \T1/lmtt/m/n/10 dtau        .= dtausc*min.(10.0, cfl./(epsi .+ av(D[2
 :end])))[] 
  []
 
-[10]
-<Groenland.png, id=139, 595.22375pt x 395.4775pt>
+[9] [10]
+<Groenland.png, id=143, 595.22375pt x 395.4775pt>
 File: Groenland.png Graphic file (type png)
 <use Groenland.png>
-Package pdftex.def Info: Groenland.png  used on input line 344.
+Package pdftex.def Info: Groenland.png  used on input line 350.
 (pdftex.def)             Requested size: 284.52345pt x 189.04256pt.
- [11]
-<Iceflow1D.png, id=144, 600.2425pt x 398.48875pt>
+ [11 <./Groenland.png>]
+<Iceflow1D.png, id=150, 600.2425pt x 398.48875pt>
 File: Iceflow1D.png Graphic file (type png)
 <use Iceflow1D.png>
-Package pdftex.def Info: Iceflow1D.png  used on input line 353.
+Package pdftex.def Info: Iceflow1D.png  used on input line 361.
 (pdftex.def)             Requested size: 284.53197pt x 188.89497pt.
- [12 <./Groenland.png> <./Iceflow1D.png>]
-<Vitesses.png, id=153, 560.69475pt x 375.20175pt>
+ [12 <./Iceflow1D.png>] [13]
+<Vitesses.png, id=163, 560.69475pt x 375.20175pt>
 File: Vitesses.png Graphic file (type png)
 <use Vitesses.png>
-Package pdftex.def Info: Vitesses.png  used on input line 379.
+Package pdftex.def Info: Vitesses.png  used on input line 394.
 (pdftex.def)             Requested size: 284.53032pt x 190.39998pt.
-<ligne43.png, id=154, 517.18219pt x 542.025pt>
+ [14 <./Vitesses.png>]
+<ligne43.png, id=170, 517.18219pt x 542.025pt>
 File: ligne43.png Graphic file (type png)
 <use ligne43.png>
-Package pdftex.def Info: ligne43.png  used on input line 388.
+Package pdftex.def Info: ligne43.png  used on input line 406.
 (pdftex.def)             Requested size: 271.49315pt x 284.5343pt.
- [13]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 3
-94.
-
-(/usr/share/texmf/tex/latex/lm/ts1lmr.fd
+ [15 <./ligne43.png>]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 4
+12.
+ (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<Variation.png, id=162, 245.11575pt x 217.41225pt>
+<Variation.png, id=178, 245.11575pt x 217.41225pt>
 File: Variation.png Graphic file (type png)
 <use Variation.png>
-Package pdftex.def Info: Variation.png  used on input line 397.
+Package pdftex.def Info: Variation.png  used on input line 415.
 (pdftex.def)             Requested size: 284.55139pt x 252.39076pt.
- [14 <./Vitesses.png>] [15 <./ligne43.png>] [16 <./Variation.png>] (./rapport.b
-bl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 406.
+ [16 <./Variation.png>] (./rapport.bbl)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 424.
  [17]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 406.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 424.
  (./rapport.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 406.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 406.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 424.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 424.
 Package rerunfilecheck Info: File `rapport.out' has not changed.
 (rerunfilecheck)             Checksum: D79D92815ADB8060675BFBC2532E8617;458.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 406.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 424.
  ) 
 Here is how much of TeX's memory you used:
- 8398 strings out of 481239
- 125614 string characters out of 5920377
- 405053 words of memory out of 5000000
- 23406 multiletter control sequences out of 15000+600000
- 591044 words of font info for 53 fonts, out of 8000000 for 9000
+ 8481 strings out of 481239
+ 126704 string characters out of 5920377
+ 405835 words of memory out of 5000000
+ 23476 multiletter control sequences out of 15000+600000
+ 601845 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  34i,8n,35p,738b,425s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texmf/fonts/enc/d
@@ -692,10 +714,10 @@ lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmr5.pfb></usr/share/texmf
 pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/
 type1/public/lm/lmsy5.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy7.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmtt10.pfb>
-Output written on rapport.pdf (17 pages, 1037076 bytes).
+Output written on rapport.pdf (17 pages, 1039005 bytes).
 PDF statistics:
- 266 PDF objects out of 1000 (max. 8388607)
- 212 compressed objects within 3 object streams
- 59 named destinations out of 1000 (max. 500000)
+ 270 PDF objects out of 1000 (max. 8388607)
+ 216 compressed objects within 3 object streams
+ 60 named destinations out of 1000 (max. 500000)
  102 words of extra memory for PDF output out of 10000 (max. 10000000)
 

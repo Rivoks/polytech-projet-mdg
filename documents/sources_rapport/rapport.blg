@@ -1,50 +1,48 @@
-This is BibTeX, Version 0.99d
+This is BibTeX, Version 0.99d (TeX Live 2019/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: rapport.aux
-Reallocating 'name_of_file' (item size: 1) to 18 items.
-Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: unsrt.bst
 Database file #1: bibliographie.bib
 Warning--empty journal in menand2020introduction
-You've used 6 entries,
+You've used 7 entries,
             1791 wiz_defined-function locations,
-            477 strings with 4394 characters,
-and the built_in function-call counts, 1057 in all, are:
-= -- 82
-> -- 51
+            480 strings with 4468 characters,
+and the built_in function-call counts, 1171 in all, are:
+= -- 89
+> -- 55
 < -- 0
-+ -- 20
-- -- 14
++ -- 22
+- -- 15
 * -- 61
-:= -- 181
-add.period$ -- 16
-call.type$ -- 6
-change.case$ -- 5
+:= -- 197
+add.period$ -- 18
+call.type$ -- 7
+change.case$ -- 6
 chr.to.int$ -- 0
-cite$ -- 7
-duplicate$ -- 43
-empty$ -- 111
-format.name$ -- 14
-if$ -- 225
+cite$ -- 8
+duplicate$ -- 48
+empty$ -- 129
+format.name$ -- 15
+if$ -- 252
 int.to.chr$ -- 0
-int.to.str$ -- 6
+int.to.str$ -- 7
 missing$ -- 3
-newline$ -- 31
-num.names$ -- 6
-pop$ -- 19
+newline$ -- 35
+num.names$ -- 7
+pop$ -- 24
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 26
+skip$ -- 33
 stack$ -- 0
 substring$ -- 49
-swap$ -- 5
+swap$ -- 6
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 1
-while$ -- 9
-width$ -- 7
-write$ -- 58
+while$ -- 10
+width$ -- 8
+write$ -- 65
 (There was 1 warning)

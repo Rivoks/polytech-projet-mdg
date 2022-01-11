@@ -20,6 +20,10 @@ H.~Seroussi, M.~Morlighem, E.~Rignot, A.~Khazendar, E.~Larour, and J.~Mouginot.
   its thermal regime.
 \newblock {\em Journal of Glaciology}, 59(218):1024–1034, 2013.
 
+\bibitem{site3}
+Robin Chatelin.
+\newblock Méthodes numériques pour l’écoulement de stokes 3d.
+
 \bibitem{site2}
 Ludovic Räss and Mauro.
 \newblock Solving differential equations in parallel with julia.
