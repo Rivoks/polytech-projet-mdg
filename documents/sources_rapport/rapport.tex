@@ -69,20 +69,39 @@ Julia est un langage de programmation moderne et polyvalent, créé en 2009 par 
 
 \subsection{Les équations de Stokes}
 
+Les équations de Stokes résultent des équations de Navier-Stokes: 
+\begin{equation}
+\Delta \mu v + \rho g = \rho \frac {\partial v}{\partial t}
+\label{equ1}
+\end{equation}
+Le second membre correspond au terme d'inertie.  Ce terme peut être comparé aux effets visqueux par le nombre de Reynolds : 
+\begin{equation}
+\textit{Re} = \frac{\rho V L}{\mu}
+\end{equation}
+avec V une vitesse caractéristique et L une longueur caractéristique. 
+Dans l'étude des glaciers, le nombre de Reynolds est faible ce qui nous permet négliger le second membre de ~\eqref{eq1} car ceux-ci s'écoulent lentement.
+Cela nous permet d'obtenir l'équation suivante: 
+\begin{equation}
+\Delta \mu v + \rho g = 0
+\end{equation}
 Les équations de Stokes \cite{site1} ont comme principal objectif de décrire les mouvements des fluides. 
 Pour procéder correctement, il faut connaître sa vitesse en tout point de l'espace : son champ de vitesse. Ainsi les équations de Stokes permettent de décrire le champ de vitesse d'un fluide. 
-Dans un fluide nous considérons deux types de forces à savoir, les forces de volume (donc de poids) et les forces de surface correspondant au frottement visqueux. 
+Dans un fluide nous considérons deux types de forces à savoir, les forces de volume (donc de poids) et les forces de surface correspondant aux frottements visqueux. 
 
 Afin de pouvoir appliquer ces équations dans le cas des écoulements des glaciers, nous considérerons ces derniers comme des fluides incompressibles, visqueux et non linéaires. Il s'agit d'un système d'équations pouvant être appliqué à tout type de glacier.
 \newpage
 Ce système permet une très grande précision dans les résultats puisqu'il prend en compte toutes les contraintes au nombre de neuf, qu’elles soient longitudinales, transversales, verticales ou encore horizontales. 
 
 
-L'équation de Stokes peut être assimiler à la deuxième loi de Newton appliquée aux fluides
+L'équation de Navier-Stokes peut être assimilé à la deuxième loi de Newton appliquée aux fluides
 \begin{equation}
 \sum\vec{F}=m\vec{a}
 \end{equation}
  , avec  $\vec{F}$ les forces s'exerçant sur le volume, $m$ sa masse et  $\vec{a}$  son accélération.
+Étant donné que le nombre de Reynolds est petit, on peut négliger l'accélération ce qui nous mène à l'équation suivante:
+\begin{equation}
+\sum\vec{F}= 0
+\end{equation}
 Il faut alors déterminer les 3 termes pour un fluide en mouvement, à savoir dans notre cas, la glace. \newline
 Les termes qui vont suivre sont explicités dans le cours "Introduction à la dynamique des fluides visqueux" de Thierry Menand.\cite{menand2020introduction}
 \\\\
@@ -90,17 +109,17 @@ La masse d'un fluide se réécrit :
 \begin{equation}
 \Delta m = \rho \Delta V = \rho dxdydz
 \end{equation}
-Avec $\rho$ la masse volumique et $\Delta V = \rho dxdydz $ le volume du fluide.
+Avec $\rho$ la masse volumique et $\Delta V =dxdydz $ le volume du fluide.
 \\\\
 Les 3 composantes de l'accélération d'un fluide dans un volume élémentaire s'écrit : 
-\begin{equation}
-\begin{array}{l}
-\frac{D v_{x}}{Dt} = \frac{\partial v_{x}}{\partial t} + (\vec{v}.\vec{\nabla})v_{x} = \frac{\partial v_{x}}{\partial t} + v_{x} \frac{\partial v_{x}}{\partial t} + v_{y} \frac{\partial v_{x}}{\partial t} + v_{z} \frac{\partial v_{x}}{\partial t}  \\
-\frac{D v_{y}}{Dt} = \frac{\partial v_{y}}{\partial t} + (\vec{v}.\vec{\nabla})v_{y} = \frac{\partial v_{y}}{\partial t} + v_{x} \frac{\partial v_{y}}{\partial t} + v_{y} \frac{\partial v_{y}}{\partial t} + v_{z} \frac{\partial v_{y}}{\partial t} \\
-\frac{D v_{z}}{Dt} = \frac{\partial v_{z}}{\partial t} + (\vec{v}.\vec{\nabla})v_{z} = \frac{\partial v_{y}}{\partial t} + v_{x} \frac{\partial v_{z}}{\partial t} + v_{y} \frac{\partial v_{z}}{\partial t} + v_{z} \frac{\partial v_{z}}{\partial t}
-\end{array}
-\label{eq1}
-\end{equation}
+%\begin{equation}
+%%\begin{array}{l}
+%%\frac{D v_{x}}{Dt} = \frac{\partial v_{x}}{\partial t} + (\vec{v}.\vec{\nabla})v_{x} = \frac{\partial v_{x}}{\partial t} + v_{x} \frac{\partial v_{x}}{\partial t} + v_{y} \frac{\partial v_{x}}{\partial t} + v_{z} \frac{\partial v_{x}}{\partial t}  \\
+%%\frac{D v_{y}}{Dt} = \frac{\partial v_{y}}{\partial t} + (\vec{v}.\vec{\nabla})v_{y} = \frac{\partial v_{y}}{\partial t} + v_{x} \frac{\partial v_{y}}{\partial t} + v_{y} \frac{\partial v_{y}}{\partial t} + v_{z} \frac{\partial v_{y}}{\partial t} \\
+%%\frac{D v_{z}}{Dt} = \frac{\partial v_{z}}{\partial t} + (\vec{v}.\vec{\nabla})v_{z} = \frac{\partial v_{y}}{\partial t} + v_{x} \frac{\partial v_{z}}{\partial t} + v_{y} \frac{\partial v_{z}}{\partial t} + v_{z} \frac{\partial v_{z}}{\partial t}
+%%\end{array}
+%\label{eq1}
+%\end{equation}
 \\\\
 La somme des forces est la somme des forces $\vec{F}v$ qui agissent sur tout le volume et des forces $\vec{F}s$ qui agissent sur ces surfaces.
 \\\\
@@ -347,7 +366,7 @@ for i = 1:95
     t=V[i,:]
     s[i]=sum(t)
 end
-s1=zeros(94)
+
 for i = 2:94
     s1[i-1] = s[i-1] + s[i+1]
 end
