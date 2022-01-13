@@ -249,20 +249,26 @@ On peut donc écrire cette équation SIA comme la résolution d'une équation de
 \label{eq4}
 \end{equation}
 
-avec D le coefficient de diffusion, H l'épaisseur du glacier et M la conservation de masse.
+avec D le coefficient de diffusion, H l'épaisseur du glacier et M la conservation de masse. 
 \newline
+Ce coefficient D est non linéaire et se calcule par :
+\begin{equation}
+D(H) = aH^{n+2}\sqrt(\nabla S\nabla S)^{n-1}
+\label{eq5}
+\end{equation}
+Avec a la viscoté de la glace (qui est une constante) et n la \textbf{loi de Glen} qui est égale à 3.
 \newline
 L'épaisseur H est donnée par l'équation suivante :
 \begin{equation}
 H(x) = S(x) + B(x)
-\label{eq4}
+\label{eq6}
 \end{equation}
 où B est la hauteur de l'encaissant rocheux et S la topographie de la glace. H est représentée sur la figure \ref{fig01} : 
 \\
 \\
 \begin{figure}[!htpb]
 \centering
-\includegraphics[width=10cm, keepaspectratio=true, height=10cm]{H.png}
+\includegraphics[width=7.5cm, keepaspectratio=true, height=7.5cm]{H.png}
 \caption{Représentation de l'épaisseur de la glace H, la hauteur du lit rocheux B et la topologie de la glace S}
 \label{fig01}
 \end{figure}
@@ -293,6 +299,7 @@ Dans le code, la conservation de masse M est calculée à partir de $ \nabla$\te
 \newpage
 \section{Simulations numériques}
 
+\subsection{Comprendre l'algorithme à introduire}
 Nous avons commencé par étudier un dossier GITHUB public \cite{site2} qui modélisait la fonte de glacier.
 \newline
 
@@ -301,7 +308,8 @@ Nous avons commencé par étudier un dossier GITHUB public \cite{site2} qui mod�
 Ces trois codes sont considérés linéaires, car le coefficient de diffusion D était une constante.
 \newline
 Un quatrième code considérait le problème de l'écoulement des glaciers à l'aide du SIA en 2D. Il inclut des itérations non linéaire, c'est-à-dire que ce coefficient D variait à chaque point et à chaque itération du problème, ainsi que les conditions initiales provenant des données. Notre but était donc de mieux comprendre le fonctionnement du code en 2D pour écrire à notre tour un code 1D non linéaire qui résout le problème de SIA.
-\newline
+
+\subsection{Code 1D non linéaire proposé}
 En s'inspirant de ces codes, nous avons créé un code dont la boucle s'effectue de la manière suivante :
 \newline
 \begin{verbatim}
@@ -324,9 +332,27 @@ Nous avons recréé l'équation~\eqref{eq4} en calculant les dérivées partiell
 Cette méthode permet de trouver une solution approchée d'équations aux dérivées partielles. Elle consiste à discrétiser le domaine étudié en plusieurs sous-intervalles réguliers afin d'approximer l'équation sur chaque sous-intervalles. Cette approximation est obtenue en calculant la différence entre deux valeurs consécutives. 
 L'idée était de reprendre un code similaire au code non linéaire 2D et de ne conserver qu'une seule dimension, c'est-à-dire toutes les variables dépendantes de x. Les composantes dépendantes de y n'ont donc pas été prise en compte.
 \newline
+La conservation de masse M est calculé grâce à plusieurs variables qu'on prend dans les données et qu'on réévalue grâce à une fonction intermédiaire. Elle nous permet de recalculer l'accumulation de neige à chaque itération, avec une augmentation minimum de b\_max (qu'on a considéré à 0.15m par an). La fonction utilisée a été retrouvé dans le GitHUB proposée et est la suivante :
+\begin{verbatim}
+function mass_balance_constants(xc, yc)
+ # Permet de récupérer toutes les valeurs nécessaires pour l'ablation
+    b_max    = 0.15            # max. Mass balance rate
+    lat_min, lat_max = 60, 80
+    Xc, Yc   = [Float32(x) for x=xc,y=yc], [Float32(y) for x=xc,y=yc]
+    Yc2      = Yc .- minimum(Yc); Yc2 .= Yc2/maximum(Yc2)
+    grad_b   = (1.3517 .- 0.014158.*(lat_min.+Yc2*(lat_max-lat_min)))./100.0.*0.91 
+    z_ELA    = 1300.0 .- Yc2*300.0                              
+    return grad_b, z_ELA, b_max
+end                                   
+\end{verbatim}
+Puis à partir de là, nous avons fait en sorte de n'obtenir qu'un tableau en 1D afin qu'on puisse l'utiliser dans notre code. Puis nous calculons un premier dSdx à l'aide des différences finies, qui nous servira ensuite pour calculer le coefficient de diffusion D qu'on a introduit à l'équation ~\eqref{eq5}. Ensuite on reproduit l'équation ~\eqref{eq4} en deux lignes, en effectuant deux fois les différences finies. On calcule le flux qH puis le résidu ResH en introduisant le M précedent. Une fois que cela est fait, on calule dHdt en introduisant le damp itérative pour converger plus rapidement vers une solution. Une fois que cela est fait, nous réattribuons un \textbf{Mask} afin que chaque point considéré soit au minimum au niveau de la mer, et non en dessous, puis nous remettons à jour la surface S.
+\newline
+\newline
 Nous avons introduit plusieurs tableaux : le coefficient de diffusion D, le flux qH, le résidu de l'équation ResH ainsi que les surfaces B, H et S, dont la taille varie en fonction des calculs qu'on leur applique. Par exemple, les méthodes des différences finies sur un tableau de taille nx renvoie un autre tableau de taille nx-1 (car on applique nx-1 opérations sur nx valeurs).
 \newline
+\newline
 Ce code remet à jour toutes les valeurs jusqu'à ce que l'erreur déterminée descende en dessous d'une tolérance prédéfinie. On introduit également un pas d'itération maximal pour éviter que le programme ne s'arrête jamais.
+\newline
 \newline
 A chaque tour de boucle, nous réinitialisons le coefficient D, la conservation de masse M et la [dérivée itérative] dtau. Puis nous calculons les dérivées partielles dSdx, qH et ResH en effectuant les différences finies. Toutes ces valeurs nous permettent de mettre à jour la [] dHdt ainsi que l'épaisseur de la glace H et enfin la surface S. Nous appliquons également un masque afin de ne pas atteindre le niveau de la mer et nous gardons en mémoire l'épaisseur H afin d'en déterminer l'erreur.
 \newline
@@ -343,6 +369,7 @@ La boucle s'arrête lorsque l'erreur est plus petite que la tolérance imposée.
 \vspace*{\fill}
 \section{Résultats}
 
+\subsection{Récupérer les données}
 
 Pour s'assurer que le code compilait, nous avons simplifié certaines variables du problème. La conservation de masse était constante et les surfaces H, B et S  étaient modélisées par des fonctions mathématiques. Une fois cela fait, nous avons extrait des valeurs d'un autre fichier contenant toutes les valeurs du Groenland \textbf{BedMachineGreenland\_96\_176.jld}.
 \begin{figure}[!htpb]
@@ -353,6 +380,7 @@ Pour s'assurer que le code compilait, nous avons simplifié certaines variables 
 \vspace*{\fill}
 
 \newpage
+\subsection{Afficher un premier graphique}
 \vspace*{\fill}
 Nous avons ensuite réajusté l'ablation M ainsi que les coefficients itératifs damp afin d'avoir une vitesse de convergence adaptée au problème.
 Nous affichons donc le résultat obtenu à l'aide d'un plot.
@@ -364,7 +392,8 @@ Nous affichons donc le résultat obtenu à l'aide d'un plot.
 \vspace*{\fill}
 
 \newpage
-\vspace*{\fill}
+\subsection{Chercher une situation proche du code 2D}
+
 Il nous faut à présent déterminer la ligne où les variations verticales soient les plus faibles, afin d'avoir le modèle le plus proche possible de la réalité adapté a notre code.
 \newline
 Pour cela, nous avons cherché dans les données que nous avions sur le Groenland la ligne "horizontale" qui nous permettait d'avoir des résultats suffisamment justes pour pouvoir appliquer notre code. Plus précisément, il fallait que la ligne choisie soit une ligne qui permette de négliger les vitesses verticales.
@@ -383,7 +412,6 @@ end
 display(plot(1:95, s))
 display(plot(1:94, s1))
 \end{verbatim}
-\vspace*{\fill}
 
 \newpage
 
@@ -406,7 +434,9 @@ En exécutant le code avec cette ligne, nous avons alors le résultat suivant:
 \includegraphics[width=10cm, keepaspectratio=true, height=10cm]{ligne43.png}
 \caption{Topologie du Groenland en appliquant la ligne 43. La courbe bleue  représente la hauteur H au début, la courbe orange donne la hauteur H une fois la simulation appliquée pour la ligne 43 et la courbe verte montre le lit rocheux B. }
 \end{figure}
-\newline
+
+\subsection{Interpréter notre simulation}
+
 En observant notre schéma, nous pouvons à présent simuler l'évolution de la glace du Groenland et créer notre propre scénario. En conservant nos valeurs, nous pouvons observer une fonte de glace allant de 0 à 1500m de variation. Avec un simple calcul de moyenne, nous obtenons une variation moyenne de 1091m. Notre hauteur de base moyenne étant de 1907, cela nous donne une variation de 57\% de la hauteur. A chaque itération, nous réattribuons des valeurs à tous les tableaux en fonction de a, qui est la viscosité de la glace \textbf{calculée avec un pas de temps annuel}. Nous en déduisons qu'une itération correspond à une année et donc que ce scénario sera atteinte au bout de 2051 ans. 
 \newpage
 Nous avons trouvé un article \cite{charbit2008amount} spéculant la fonte de glace au Groenland en fonction de la hausse de CO2, car celui-ci est directement relié avec la hausse de température. Il effectue plusieurs simulations, en fonction de la variation de température considérée (variant entre 1.1°C et 6.4°C) : 
