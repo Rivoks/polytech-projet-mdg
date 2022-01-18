@@ -70,21 +70,6 @@ Julia est un langage de programmation moderne et polyvalent, créé en 2009 par 
 
 \subsection{Les équations de Stokes}
 
-Les équations de Stokes résultent des équations de Navier-Stokes: 
-\begin{equation}
-\Delta \mu v + \rho g = \rho \frac {\partial v}{\partial t}
-\label{equ1}
-\end{equation}
-Le second membre correspond au terme d'inertie.  Ce terme peut être comparé aux effets visqueux par le nombre de Reynolds : 
-\begin{equation}
-\textit{Re} = \frac{\rho V L}{\mu}
-\end{equation}
-avec V une vitesse caractéristique et L une longueur caractéristique. 
-Dans l'étude des glaciers, le nombre de Reynolds est faible ce qui nous permet négliger le second membre de ~\eqref{eq1} car ceux-ci s'écoulent lentement.
-Cela nous permet d'obtenir l'équation suivante: 
-\begin{equation}
-\Delta \mu v + \rho g = 0
-\end{equation}
 Les équations de Stokes \cite{site1} ont comme principal objectif de décrire les mouvements des fluides. 
 Pour procéder correctement, il faut connaître sa vitesse en tout point de l'espace : son champ de vitesse. Ainsi les équations de Stokes permettent de décrire le champ de vitesse d'un fluide. 
 Dans un fluide nous considérons deux types de forces à savoir, les forces de volume (donc de poids) et les forces de surface correspondant aux frottements visqueux. 
@@ -94,21 +79,28 @@ Afin de pouvoir appliquer ces équations dans le cas des écoulements des glacie
 Ce système permet une très grande précision dans les résultats puisqu'il prend en compte toutes les contraintes au nombre de neuf, qu’elles soient longitudinales, transversales, verticales ou encore horizontales. 
 
 
+Le second membre correspond au terme d'inertie.  Ce terme peut être comparé aux effets visqueux par le nombre de Reynolds : 
+\begin{equation}
+\textit{Re} = \frac{\rho V L}{\mu}
+\end{equation}
+avec V une vitesse caractéristique et L une longueur caractéristique. 
+
 L'équation de Navier-Stokes peut être assimilé à la deuxième loi de Newton appliquée aux fluides
 \begin{equation}
 \sum\vec{F}=m\vec{a}
 \end{equation}
  avec  $\vec{F}$ les forces s'exerçant sur le volume, $m$ sa masse et  $\vec{a}$  son accélération.
-Étant donné que le nombre de Reynolds est petit, on peut négliger l'accélération ce qui nous mène à l'équation suivante:
+Or, la glace est assimilée à un fluide très visqueux, le nombre de Reynolds est alors petit et ainsi on peut négliger l'inertie. Donc l'accélération est nulle, ce qui nous mène à l'équation suivante :
 \begin{equation}
 \sum\vec{F}= 0
 \end{equation}
 
-Les termes qui vont suivre sont explicités dans le cours "Introduction à la dynamique des fluides visqueux" de Thierry Menand.\cite{menand2020introduction}
 
-La somme des forces est la somme des forces $\vec{F}v$ qui agissent sur tout le volume et des forces $\vec{F}s$ qui agissent sur ces surfaces.
+%%Les termes qui vont suivre sont explicités dans le cours "Introduction à la dynamique des fluides visqueux" de Thierry Menand.\cite{menand2020introduction}
+
+La somme des forces est la somme des forces $\vec{F}v$ qui agissent sur tout le volume et des forces $\vec{F}s$ qui sont les frottement sur les bords et à l'intérieur de la glace.
 \\\\
-Les forces de volume  $\vec{F}v$ induitent par la gravité, agissent sur toutes les particules du volume élémentaire et s'écrient :
+Les forces de volume  $\vec{F}v$ induites par la gravité, agissent sur toutes les particules du volume élémentaire et s'écrient :
 \begin{equation}
 \vec{F}v = 
 \left(
@@ -136,52 +128,70 @@ g_{z}
 \right)
 \Delta V
 \end{equation}
- avec la masse $\Delta_{m} = \rho \Delta V$ et $g$ l'accélération de la pesanteur.
+avec la masse $\Delta_{m}$ la masse élémentaire et $g$ l'accélération de la pesanteur.
+$\Delta_{m}$ peut se réécrire de cette manière :  
+\begin{equation}
+\Delta_{m} = \int \rho dV = \rho dxdydz
+\end{equation}
+
+avec $\rho$ la masse volumique et $dV=dxdydz$ le volume élémentaire.
+
+Ainsi la $\vec{F}v$ la force de volume est 
+\begin{equation}
+\vec{F}v = 
+\rho
+\left(
+\begin{array}{l}
+g_{x} \\
+g_{y}  \\
+g_{z}
+\end{array}
+\right)
+\Delta V
+\end{equation}
+
+
 \newpage
-Les forces de surface $\vec{F}s$ sont les forces induites par la pression du fluide s'exerçant perpendiculairement aux surfaces et les forces induitent par les contraintes cisaillantes qui agissent parallèlement aux surfaces. Pour le cas d'un glacier nous prenons en compte que les contraintes normales à la surface : 
+%%Les forces de surface $\vec{F}s$ sont les forces induites par la pression du fluide s'exerçant perpendiculairement aux surfaces et les forces induitent par les contraintes cisaillantes qui agissent parallèlement aux surfaces. Pour le cas d'un glacier nous prenons en compte que les contraintes normales à la surface : 
+
+Les forces de surface $\vec{F}s$ sont les frottement au bord et à l'intérieur du glacier. Pour le cas d'un glacier nous prenons en compte les contraintes normales à la surface $\sigma$ : 
+
+\begin{equation}
+\vec{F}s = \int \sigma \vec{n} dS 
+\end{equation}
+avec $\vec{n}$ le vecteur normal à la surface dirigé vers l'extérieur.
+Le théorème de divergence permet de réécrire $\vec{F}s$ :
+\begin{equation}
+\vec{F}s = \int \nabla \sigma dV 
+\end{equation}
+Le tenseur de contrainte $\sigma$ s'écrit : 
 \begin{equation}
 \sigma = 2 \mu \varepsilon - I_{d}P
 \end{equation}
-avec $\mu$ le coefficient de viscosité, $\varepsilon$ le taux de déformation, $I_{d}$ la matrice identité et $P$ la pression. $2\mu \varepsilon$ est la partie qui concerne la déformation et $I_{d}$ est la partie isotrope.\newline
-Soit les 3 composantes des contraintes normales aux surfaces :
+avec $\mu$ le coefficient de viscosité, $\varepsilon = \frac{1}{2}( \nabla v + \nabla v^t\ ) $ le taux de déformation, $I_{d}$ la matrice identité et $P$ la pression.  $2\mu \varepsilon$ est la partie qui concerne la déformation et $I_{d}$ est la partie isotrope. En intégrant l'expression du tenseur de contrainte on obtient :
 \begin{equation}
-\left(
-\begin{array}{l}
-\sigma_{xx} = -P + 2 \mu \frac{\partial v_{x}}{\partial x} \\
-\sigma_{yy} = -P + 2 \mu \frac{\partial v_{y}}{\partial y} \\
-\sigma_{zz} = -P + 2 \mu \frac{\partial v_{z}}{\partial z}
-\end{array}
-\right)
+\vec{F}s = \int \nabla(2 \mu \varepsilon - I_{d}P ) dV =  \int \nabla 2 \mu \varepsilon dV - \nabla \int I_{d}P dV
+\end{equation}
+
+
+Ainsi en récapitulant la somme des forces, on obtient
+\begin{equation}
+\begin{split}
+\sum\vec{F} = \vec{F}s + \vec{F}v = 0 \\
+\Leftrightarrow 
+\int \nabla 2 \mu \varepsilon dV - \nabla \int P dV + \int \rho \vec{g} dV = 0 \\
+\Leftrightarrow 
+- \int \nabla 2 \mu \varepsilon dV + \nabla \int P dV = \int \rho \vec{g} dV  \\
+\Leftrightarrow 
+- \nabla 2 \mu \varepsilon + \nabla P = \rho \vec{g}
+\end{split}
 \end{equation}
 \\
-Ainsi les forces de surface $\vec{F}s$ s'écrient : 
-\begin{equation}
-\vec{F}s = 
-\left(
-\begin{array}{l}
-\sum F_{sx} = (-\frac{\partial P}{\partial x} + 2\mu \frac{\partial^2v_{x}}{\partial x^2})\Delta V  \\
-\sum F_{sy} = (-\frac{\partial P}{\partial y} + 2\mu \frac{\partial^2v_{y}}{\partial y^2})\Delta V \\
-\sum F_{sz} = (-\frac{\partial P}{\partial z} + 2\mu \frac{\partial^2v_{z}}{\partial z^2})\Delta V
-\end{array}
-\right)
-\end{equation}
-\\\\
-Au final, en réécrivant la loi de Newton avec tous les termes, nous retrouvons :
-\begin{equation}
-\left(
-\begin{array}{l}
- 0 =  \rho g_{x} - \frac{\partial P}{\partial x} + 2\mu \frac{\partial^2v_{x}}{\partial x^2}  \\
-0 =  \rho g_{y} - \frac{\partial P}{\partial y} + 2\mu \frac{\partial^2v_{y}}{\partial y^2} \\
-0 =  \rho g_{z} - \frac{\partial P}{\partial z} + 2\mu \frac{\partial^2v_{z}}{\partial z^2}
-\end{array}
-\right)
-\end{equation}
-\\
-Sous forme vectorielle l'expression se réécrit : 
+Ainsi, nous retrouvons bien l'expression des équations de stokes 
 \begin{equation}
 \left\{
 \begin{array}{l}
--div(2 \mu \varepsilon(\vec{v})) + \nabla p = \rho \vec{g} \\
+-div(2 \mu \varepsilon(\vec{v})) + \nabla P = \rho \vec{g} \\
 div(\vec{v}) = 0 \qquad
 \end{array}
 \right.
