@@ -1,41 +1,41 @@
  \documentclass{article}
-
 \usepackage[francais]{babel}
-\def\printlandscape{\special{landscape}}    % Works with dvips.
-%\usepackage{pstricks,pst-node,pst-tree}
-%\usepackage{amssymb}
+\def\printlandscape{\special{landscape}}    
 \usepackage{amsmath}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc} 
-\usepackage{fancybox} % for shadow and Bitemize
+\usepackage{fancybox} 
 \usepackage{alltt}
 \usepackage{graphicx}
 \usepackage{lmodern}
-%\usepackage{epsfig}
-%\usepackage{fullpage}
-%\usepackage{fancyhdr}
-%\usepackage{moreverb}
-%\usepackage{xspace}
 \usepackage[colorlinks,hyperindex,bookmarks,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
-%\usepackage{wrapfig}
 \usepackage{epsf}
 \usepackage{enumitem}
 \usepackage{pifont}
 \usepackage{hyperref}
 \usepackage{authblk}
 \usepackage{titling}
+\usepackage{floatflt}
 
-\renewcommand{\maketitlehooka}{%
+\renewcommand{\maketitlehooka}{
  \begin{center}
     \includegraphics[width=5cm, keepaspectratio=true, height=5cm]{Logo_Polytech_Sorbonne-2.png}\hfill\includegraphics[width=5cm, keepaspectratio=true, height=5cm]{Logo_Sorbonne_Universite-2.png}
     \end{center}
-    }
-
+   
+\centering
+\vspace{1cm}
 \title{\vspace{\fill}\textbf{ Rapport de projet pluridisciplinaire :} \newline Diffusion non linéaire en sciences de la terre modélisation des glaciers\vspace{\fill}}
 
-\author{Tania Mendes, Mathieu Nguyen, Samson Petros, Yazid Bouhria, \\ Elyas Assili, Maryam Aarab}
+
+\begin{center}
+\includegraphics[width=9cm, keepaspectratio=true, height=8cm]{rtr1qbn7}    
+\end{center}
+    }
 
 
+\author{Tania Mendes, Mathieu Nguyen, Samson Petros,\\ Yazid Bouhria, Elyas Assili, Maryam Aarab}
+
+\affil{\textbf{Encadrante} : Laetitia Le Pourhiet}
 \begin{document}
 \maketitle 
 
@@ -45,7 +45,9 @@
 
 %-----------------------------------------------------------
 \newpage
-\section{Introduction}\label{sec:intro}
+%\section{Introduction}\label{sec:intro}
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
 
 L’écoulement d’un glacier dépend de plusieurs facteurs qui sont principalement l’accumulation de neige, la fonte de glace, la gravité et le niveau de la pente du lit rocheux.
 Les écoulements sont considérés comme fluides, incompressibles, visqueux et non linéaires, d’où l’intérêt de les modéliser avec les relations de Stokes.
@@ -103,23 +105,7 @@ L'équation de Navier-Stokes peut être assimilé à la deuxième loi de Newton 
 \end{equation}
 
 Les termes qui vont suivre sont explicités dans le cours "Introduction à la dynamique des fluides visqueux" de Thierry Menand.\cite{menand2020introduction}
-\\\\
-La masse d'un fluide se réécrit :
-\begin{equation}
-\Delta m = \rho \Delta V = \rho dxdydz
-\end{equation}
-Avec $\rho$ la masse volumique et $\Delta V =dxdydz $ le volume du fluide.
-\\\\
-%Les 3 composantes de l'accélération d'un fluide dans un volume élémentaire s'écrit : 
-%\begin{equation}
-%%\begin{array}{l}
-%%\frac{D v_{x}}{Dt} = \frac{\partial v_{x}}{\partial t} + (\vec{v}.\vec{\nabla})v_{x} = \frac{\partial v_{x}}{\partial t} + v_{x} \frac{\partial v_{x}}{\partial t} + v_{y} \frac{\partial v_{x}}{\partial t} + v_{z} \frac{\partial v_{x}}{\partial t}  \\
-%%\frac{D v_{y}}{Dt} = \frac{\partial v_{y}}{\partial t} + (\vec{v}.\vec{\nabla})v_{y} = \frac{\partial v_{y}}{\partial t} + v_{x} \frac{\partial v_{y}}{\partial t} + v_{y} \frac{\partial v_{y}}{\partial t} + v_{z} \frac{\partial v_{y}}{\partial t} \\
-%%\frac{D v_{z}}{Dt} = \frac{\partial v_{z}}{\partial t} + (\vec{v}.\vec{\nabla})v_{z} = \frac{\partial v_{y}}{\partial t} + v_{x} \frac{\partial v_{z}}{\partial t} + v_{y} \frac{\partial v_{z}}{\partial t} + v_{z} \frac{\partial v_{z}}{\partial t}
-%%\end{array}
-%\label{eq1}
-%\end{equation}
-\\\\
+
 La somme des forces est la somme des forces $\vec{F}v$ qui agissent sur tout le volume et des forces $\vec{F}s$ qui agissent sur ces surfaces.
 \\\\
 Les forces de volume  $\vec{F}v$ induitent par la gravité, agissent sur toutes les particules du volume élémentaire et s'écrient :
@@ -152,7 +138,7 @@ g_{z}
 \end{equation}
  avec la masse $\Delta_{m} = \rho \Delta V$ et $g$ l'accélération de la pesanteur.
 \newpage
-Les forces de surface $\vec{F}s$ sont les forces induitent par la pression du fluide s'exerçant perpendiculairement aux surfaces et les forces induitent par les contraintes cisaillantes qui agissent parallèlement aux surfaces. Pour le cas d'un glacier nous prenons en compte que les contraintes normales à la surface : 
+Les forces de surface $\vec{F}s$ sont les forces induites par la pression du fluide s'exerçant perpendiculairement aux surfaces et les forces induitent par les contraintes cisaillantes qui agissent parallèlement aux surfaces. Pour le cas d'un glacier nous prenons en compte que les contraintes normales à la surface : 
 \begin{equation}
 \sigma = 2 \mu \varepsilon - I_{d}P
 \end{equation}
@@ -184,9 +170,9 @@ Au final, en réécrivant la loi de Newton avec tous les termes, nous retrouvons
 \begin{equation}
 \left(
 \begin{array}{l}
- 0 = \rho(\frac{\partial v_{x}}{\partial t} + v_{x} \frac{\partial v_{x}}{\partial t} + v_{y} \frac{\partial v_{x}}{\partial t} + v_{z} \frac{\partial v_{x}}{\partial t}) = \rho g_{x} - \frac{\partial P}{\partial x} + 2\mu \frac{\partial^2v_{x}}{\partial x^2}  \\
-0 = \rho(\frac{\partial v_{y}}{\partial t} + v_{x} \frac{\partial v_{y}}{\partial t} + v_{y} \frac{\partial v_{y}}{\partial t} + v_{z} \frac{\partial v_{y}}{\partial t}) =  \rho g_{y} - \frac{\partial P}{\partial y} + 2\mu \frac{\partial^2v_{y}}{\partial y^2} \\
-0 = \rho(\frac{\partial v_{y}}{\partial t} + v_{x} \frac{\partial v_{z}}{\partial t} + v_{y} \frac{\partial v_{z}}{\partial t} + v_{z} \frac{\partial v_{z}}{\partial t}) = \rho g_{z} - \frac{\partial P}{\partial z} + 2\mu \frac{\partial^2v_{z}}{\partial z^2}
+ 0 =  \rho g_{x} - \frac{\partial P}{\partial x} + 2\mu \frac{\partial^2v_{x}}{\partial x^2}  \\
+0 =  \rho g_{y} - \frac{\partial P}{\partial y} + 2\mu \frac{\partial^2v_{y}}{\partial y^2} \\
+0 =  \rho g_{z} - \frac{\partial P}{\partial z} + 2\mu \frac{\partial^2v_{z}}{\partial z^2}
 \end{array}
 \right)
 \end{equation}
@@ -332,7 +318,7 @@ Nous avons recréé l'équation~\eqref{eq4} en calculant les dérivées partiell
 Cette méthode permet de trouver une solution approchée d'équations aux dérivées partielles. Elle consiste à discrétiser le domaine étudié en plusieurs sous-intervalles réguliers afin d'approximer l'équation sur chaque sous-intervalles. Cette approximation est obtenue en calculant la différence entre deux valeurs consécutives. 
 L'idée était de reprendre un code similaire au code non linéaire 2D et de ne conserver qu'une seule dimension, c'est-à-dire toutes les variables dépendantes de x. Les composantes dépendantes de y n'ont donc pas été prise en compte.
 \newline
-La conservation de masse M est calculé grâce à plusieurs variables qu'on prend dans les données et qu'on réévalue grâce à une fonction intermédiaire. Elle nous permet de recalculer l'accumulation de neige à chaque itération, avec une augmentation minimum de b\_max (qu'on a considéré à 0.15m par an). La fonction utilisée a été retrouvé dans le GitHUB proposée et est la suivante :
+La conservation de masse M est calculé grâce à plusieurs variables qu'on prend dans les données et qu'on réévalue grâce à une fonction intermédiaire. Elle nous permet de recalculer l'accumulation de neige à chaque itération, avec une augmentation minimum de \textit{\_max} (qu'on a considéré à 0.15m par an). La fonction utilisée a été retrouvé dans le GitHUB proposée et est la suivante :
 \begin{verbatim}
 function mass_balance_constants(xc, yc)
  # Permet de récupérer toutes les valeurs nécessaires pour l'ablation
@@ -345,18 +331,18 @@ function mass_balance_constants(xc, yc)
     return grad_b, z_ELA, b_max
 end                                   
 \end{verbatim}
-Puis à partir de là, nous avons fait en sorte de n'obtenir qu'un tableau en 1D afin qu'on puisse l'utiliser dans notre code. Puis nous calculons un premier dSdx à l'aide des différences finies, qui nous servira ensuite pour calculer le coefficient de diffusion D qu'on a introduit à l'équation ~\eqref{eq5}. Ensuite on reproduit l'équation ~\eqref{eq4} en deux lignes, en effectuant deux fois les différences finies. On calcule le flux qH puis le résidu ResH en introduisant le M précedent. Une fois que cela est fait, on calule dHdt en introduisant le damp itérative pour converger plus rapidement vers une solution. Une fois que cela est fait, nous réattribuons un \textbf{Mask} afin que chaque point considéré soit au minimum au niveau de la mer, et non en dessous, puis nous remettons à jour la surface S.
+Puis à partir de là, nous avons fait en sorte de n'obtenir qu'un tableau en 1D afin qu'on puisse l'utiliser dans notre code. Puis nous calculons un premier dSdx à l'aide des différences finies, qui nous servira ensuite pour calculer le coefficient de diffusion D qu'on a introduit à l'équation ~\eqref{eq5}. Ensuite on reproduit l'équation ~\eqref{eq4} en deux lignes, en effectuant deux fois les différences finies. On calcule le flux qH puis le résidu \textit{ResH} en introduisant le M précédant. Une fois que cela est fait, on calcule \textit{dHdt} en introduisant le damp itérative pour converger plus rapidement vers une solution. Une fois que cela est fait, nous réatribuons un \textbf{Mask} afin que chaque point considéré soit au minimum au niveau de la mer, et non en dessous, puis nous remettons à jour la surface S.
 \newline
 \newline
-Nous avons introduit plusieurs tableaux : le coefficient de diffusion D, le flux qH, le résidu de l'équation ResH ainsi que les surfaces B, H et S, dont la taille varie en fonction des calculs qu'on leur applique. Par exemple, les méthodes des différences finies sur un tableau de taille nx renvoie un autre tableau de taille nx-1 (car on applique nx-1 opérations sur nx valeurs).
+Nous avons introduit plusieurs tableaux : le coefficient de diffusion D, le flux \textit{qH}, le résidu de l'équation ResH ainsi que les surfaces B, H et S, dont la taille varie en fonction des calculs qu'on leur applique. Par exemple, les méthodes des différences finies sur un tableau de taille \textit{nx} renvoie un autre tableau de taille \textit{nx-1} (car on applique \textit{nx-1} opérations sur \textit{nx} valeurs).
 \newline
 \newline
 Ce code remet à jour toutes les valeurs jusqu'à ce que l'erreur déterminée descende en dessous d'une tolérance prédéfinie. On introduit également un pas d'itération maximal pour éviter que le programme ne s'arrête jamais.
 \newline
 \newline
-A chaque tour de boucle, nous réinitialisons le coefficient D, la conservation de masse M et la [dérivée itérative] dtau. Puis nous calculons les dérivées partielles dSdx, qH et ResH en effectuant les différences finies. Toutes ces valeurs nous permettent de mettre à jour la [] dHdt ainsi que l'épaisseur de la glace H et enfin la surface S. Nous appliquons également un masque afin de ne pas atteindre le niveau de la mer et nous gardons en mémoire l'épaisseur H afin d'en déterminer l'erreur.
+A chaque tour de boucle, nous réinitialisons le coefficient D, la conservation de masse M et la dérivée itérative \textit{dtau}. Puis nous calculons les dérivées partielles \textit{dSdx}, \textit{qH} et \textit{ResH} en effectuant les différences finies. Toutes ces valeurs nous permettent de mettre à jour la dérivée de temps \textit{dHdt} ainsi que l'épaisseur de la glace H et enfin la surface S. Nous appliquons également un masque afin de ne pas atteindre le niveau de la mer et nous gardons en mémoire l'épaisseur H afin d'en déterminer l'erreur.
 \newline
-Au bout de cinquante itérations, nous actualisons la valeur de la variable err avec le code suivant :
+Au bout de cinquante itérations, nous actualisons la valeur de la variable \textit{err} avec le code suivant :
 \begin{verbatim}
 if mod(iter, nout)==0 
             Err .= Err .- H
@@ -383,12 +369,12 @@ Pour s'assurer que le code compilait, nous avons simplifié certaines variables 
 Pour l’extraction des données nécessaires, il a fallu donc charger le ﬁchier \textbf{BedMachineGreenland\_96\_176.jld}.
 Le ﬁchier chargé est stocké dans une variable que l’on nommera \textit{var}, qui est un objet donc il va falloir extraire la valeur pour chaque clé : 
 
-%# Initial condition
-%# On charge notre fichier GeoData...
-%# Puis on extrait les valeurs dans les variables...
-%# On extrait toutes les valeurs nécessaires depuis le fichier helpers.jl...
 \begin{verbatim}
-var = load("BedMachineGreenland_96_176.jld") # ultra low res data
+# Initial condition
+# On charge notre fichier GeoData...
+# Puis on extrait les valeurs dans les variables...
+# On extrait toutes les valeurs nécessaires depuis le fichier helpers.jl...
+var = load("BedMachineGreenland_96_176.jld") # ultra low res data 
 Zbed = var["Zbed"]
 xc = var["xc"]
 yc = var["yc]
@@ -396,25 +382,28 @@ Hice = var["Hice"]
 Mask1 = var["Mask"]
 \end{verbatim}
 \
+\newpage
 On obtient un objet \textit{Zbed} et \textit{Hice} qui sont plus exactement de type GeoData. Après une recherche dans la documentation de GeoData Julia, nous n’avons pas réussi à trouver comment extraire le tableau (ou la matrice) contenu dans ces objets.
 
-Après quelques recherches sur des forums (notamment stackoverﬂow), puis quelques \textit{print()} dans la console, nous en avons déduis qu’il fallait faire ******, ce qui est d’ailleurs une pratique assez courante que ce soit en Python ou même en Javascript par exemple.
+Après quelques recherches sur des forums (notamment stackoverﬂow), puis quelques \textit{print()} dans la console, nous en avons déduis qu’il fallait faire Objet.\_clé\_, ce qui est d’ailleurs une pratique assez courante que ce soit en Python ou même en Javascript par exemple.
 
 Ainsi on peut récupérer les informations concernant le niveau de la terre et l’épaisseur de la glace. Pour notre étude nous avons décidé de récupérer les valeurs à partir de la 80ème colonne de la matrice :
 
 \begin{verbatim}
-B1 = ZBed.data
-H1 = Hice.data
+B1 = ZBed.data # Niveau de la terre
+H1 = Hice.data # Epaisseur de la glace
 
+# On ne récupère qu'une colonne qu'on étudiera ensuite 
+# On choisit arbitrairement la colonne 80
 B = B1[: , 80]
 H = H1[: , 80]
 \end{verbatim}
 \
-Une fois nos données extraite, il était nécéssaire de faire apparaître notre masque pour le niveau de la mer, que l’on a extrait dans la variable \textit{Mask1}, puis de la même manière que les valeurs \textit{Zbed} et \textit{Hice}, on récupère les données à l’aide de la clé data.
+Une fois nos données extraite, il était nécéssaire de faire apparaître notre masque pour le niveau de la mer, que l’on a extrait dans la variable \textit{Mask1}, puis de la même manière que les valeurs \textit{Zbed} et \textit{Hice}, on récupère les données à l’aide de la clé data :
 \begin{verbatim}
 Mask1 = var["Mask"]
 display(Mask1.data)
-
+# Booléen qui nous permettra d'appliquer le masque pour le niveau de la mer
 Mask = Mask1.data[: , 80]
 \end{verbatim}
 \
@@ -487,15 +476,10 @@ Nous avons trouvé un article \cite{charbit2008amount} spéculant la fonte de gl
 \caption{Schéma indiquant le volume de glace du Groenload à partir de l'an 2000. Grâce à cette simulation, nous pouvons en déduire que le Groenload perdrait entre 10\% et 63\% de son volume, ce que l'on retrouve bien avec notre simulation (Notre simulation est proche de la courbe verte de ce schéma) }
 \end{figure}
 \newpage
-% Faire différents scénarios en fonction de la fonte des glacier (3 ?)
+
 
 %-----------------------------------------------------------
 \bibliography{bibliographie.bib}
 \bibliographystyle{unsrt}
 \end{document}
 
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: t
-%%% coding: utf-8
-%%% End:
