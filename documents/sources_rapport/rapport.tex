@@ -170,7 +170,7 @@ Le tenseur de contrainte $\sigma$ s'écrit :
 \end{equation}
 avec $\mu$ le coefficient de viscosité, $\varepsilon = \frac{1}{2}( \nabla v + \nabla v^t\ ) $ le taux de déformation, $I_{d}$ la matrice identité et $P$ la pression.  $2\mu \varepsilon$ est la partie qui concerne la déformation et $I_{d}$ est la partie isotrope. En intégrant l'expression du tenseur de contrainte on obtient :
 \begin{equation}
-\vec{F}s = \int \nabla(2 \mu \varepsilon - I_{d}P ) dV =  \int \nabla 2 \mu \varepsilon dV - \nabla \int I_{d}P dV
+\vec{F}s = \int \nabla(2 \mu \varepsilon - I_{d}P ) dV =  \int \nabla 2 \mu \varepsilon dV - \int \nabla P dV
 \end{equation}
 
 
@@ -256,7 +256,7 @@ Avec a la viscoté de la glace (qui est une constante) et n la \textbf{loi de Gl
 \newline
 L'épaisseur H est donnée par l'équation suivante :
 \begin{equation}
-H(x) = S(x) + B(x)
+H(x) = S(x) - B(x)
 \label{eq6}
 \end{equation}
 où B est la hauteur de l'encaissant rocheux et S la topographie de la glace. H est représentée sur la figure \ref{fig01} : 
