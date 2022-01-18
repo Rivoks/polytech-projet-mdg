@@ -101,7 +101,7 @@ L'équation de Navier-Stokes peut être assimilé à la deuxième loi de Newton 
 \begin{equation}
 \sum\vec{F}= 0
 \end{equation}
-Il faut alors déterminer les 3 termes pour un fluide en mouvement, à savoir dans notre cas, la glace. \newline
+
 Les termes qui vont suivre sont explicités dans le cours "Introduction à la dynamique des fluides visqueux" de Thierry Menand.\cite{menand2020introduction}
 \\\\
 La masse d'un fluide se réécrit :
@@ -366,10 +366,10 @@ end
 La boucle s'arrête lorsque l'erreur est plus petite que la tolérance imposée.
 \newpage
 
-\vspace*{\fill}
+%\vspace*{\fill}
 \section{Résultats}
 
-\subsection{Récupérer les données}
+\subsection{Extraction les données}
 
 Pour s'assurer que le code compilait, nous avons simplifié certaines variables du problème. La conservation de masse était constante et les surfaces H, B et S  étaient modélisées par des fonctions mathématiques. Une fois cela fait, nous avons extrait des valeurs d'un autre fichier contenant toutes les valeurs du Groenland \textbf{BedMachineGreenland\_96\_176.jld}.
 \begin{figure}[!htpb]
@@ -377,7 +377,48 @@ Pour s'assurer que le code compilait, nous avons simplifié certaines variables 
 \includegraphics[width=10cm, keepaspectratio=true, height=10cm]{Groenland.png}
 \caption{Topologie du Groenland d'après les données récupérées. La courbe \textit{y2} représente la hauteur du lit rocheux B et \textit{y1} la topologie de la glace S. }
 \end{figure}
-\vspace*{\fill}
+%\vspace*{\fill}
+
+\
+Pour l’extraction des données nécessaires, il a fallu donc charger le ﬁchier \textbf{BedMachineGreenland\_96\_176.jld}.
+Le ﬁchier chargé est stocké dans une variable que l’on nommera \textit{var}, qui est un objet donc il va falloir extraire la valeur pour chaque clé : 
+
+%# Initial condition
+%# On charge notre fichier GeoData...
+%# Puis on extrait les valeurs dans les variables...
+%# On extrait toutes les valeurs nécessaires depuis le fichier helpers.jl...
+\begin{verbatim}
+var = load("BedMachineGreenland_96_176.jld") # ultra low res data
+Zbed = var["Zbed"]
+xc = var["xc"]
+yc = var["yc]
+Hice = var["Hice"]
+Mask1 = var["Mask"]
+\end{verbatim}
+\
+On obtient un objet \textit{Zbed} et \textit{Hice} qui sont plus exactement de type GeoData. Après une recherche dans la documentation de GeoData Julia, nous n’avons pas réussi à trouver comment extraire le tableau (ou la matrice) contenu dans ces objets.
+
+Après quelques recherches sur des forums (notamment stackoverﬂow), puis quelques \textit{print()} dans la console, nous en avons déduis qu’il fallait faire ******, ce qui est d’ailleurs une pratique assez courante que ce soit en Python ou même en Javascript par exemple.
+
+Ainsi on peut récupérer les informations concernant le niveau de la terre et l’épaisseur de la glace. Pour notre étude nous avons décidé de récupérer les valeurs à partir de la 80ème colonne de la matrice :
+
+\begin{verbatim}
+B1 = ZBed.data
+H1 = Hice.data
+
+B = B1[: , 80]
+H = H1[: , 80]
+\end{verbatim}
+\
+Une fois nos données extraite, il était nécéssaire de faire apparaître notre masque pour le niveau de la mer, que l’on a extrait dans la variable \textit{Mask1}, puis de la même manière que les valeurs \textit{Zbed} et \textit{Hice}, on récupère les données à l’aide de la clé data.
+\begin{verbatim}
+Mask1 = var["Mask"]
+display(Mask1.data)
+
+Mask = Mask1.data[: , 80]
+\end{verbatim}
+\
+Nos données extraites, on peut désormais passer au traitement et à l’utilisation de notre programme.
 
 \newpage
 \subsection{Afficher un premier graphique}
