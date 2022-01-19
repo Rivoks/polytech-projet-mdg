@@ -56,7 +56,7 @@ C'est un processus continu, mais il est très difficile de les résoudre analyti
 L’intérêt ici va être d’énoncer les relations générales de Stokes appliquées aux glaciers, d’énoncer le modèle Shallow Ice Approximation (SIA) afin d’en déterminer les avantages et les limites dans l’analyse de l’écoulement d’un glacier en fonction du temps.
 
 
-Dans le cadre de ce projet, nous allons utilisé le langage Julia pour la résolution de systèmes d'équations différentielles par \textbf{différences finies} afin de pouvoir prédire l'écoulement glaciaire du Groenland. Nous utilisons Julia car c'est un langage de programmation moderne, polyvalent et qui peut tourner sur dse GPU sans demander trop de ressources. C'est un langage créé en 2009 par des chercheurs et ouvert au grand public en 2012. C'est un langage de haut niveau, dynamique et conçu pour des calculs scientifique. Sa syntaxe est similaire à Python, R ou encore Matlab.
+Dans le cadre de ce projet, nous allons utilisé le langage Julia pour la résolution de systèmes d'équations différentielles par \textbf{différences finies} afin de pouvoir prédire l'écoulement glaciaire du Groenland. Nous utilisons Julia car c'est un langage de programmation moderne, polyvalent et qui permet de parralèliser des GPU sans demander trop de ressources. C'est un langage créé en 2009 par des chercheurs et ouvert au grand public en 2012. C'est un langage de haut niveau, dynamique et conçu pour des calculs scientifiques. Sa syntaxe est similaire à Python, R ou encore Matlab.
 
 
 %-----------------------------------------------------------
@@ -348,7 +348,7 @@ dessous de la tolérance 	(ou trop d'itérations)
         S           .= B .+ H                                       
 \end{verbatim}
 Nous avons recréé l'équation~\eqref{eq4} en calculant les dérivées partielles selon ${x}$ avec la méthode des différences finies.
-La conservation de masse M est calculé grâce à plusieurs variables qu'on prend dans les données et qu'on réévalue grâce à une fonction intermédiaire. Elle nous permet de recalculer l'accumulation de neige à chaque itération, avec une augmentation minimum de \textit{\_max} (qu'on a considéré à 0.15m par an). La fonction utilisée a été retrouvé dans le GitHUB proposée et est la suivante :
+La conservation de masse M est calculé grâce à plusieurs variables qu'on prend dans les données et qu'on réévalue grâce à une fonction intermédiaire. Elle nous permet de recalculer l'accumulation de neige à chaque itération, avec une augmentation minimum de \textit{b\_max} (qu'on a considéré à 0.15m par an). La fonction utilisée a été retrouvé dans le GitHUB proposée et est la suivante :
 \begin{verbatim}
 function mass_balance_constants(xc, yc)
  # Permet de récupérer toutes les valeurs nécessaires pour l'ablation
@@ -373,7 +373,7 @@ Ce code remet à jour toutes les valeurs jusqu'à ce que l'erreur déterminée d
 \newline
 A chaque tour de boucle, nous réinitialisons le coefficient D, la conservation de masse M et la dérivée itérative \textit{dtau}. Puis nous calculons les dérivées partielles \textit{dSdx}, \textit{qH} et \textit{ResH} en effectuant les différences finies. Toutes ces valeurs nous permettent de mettre à jour la dérivée de temps \textit{dHdt} ainsi que l'épaisseur de la glace H et enfin la surface S. Nous appliquons également un masque afin de ne pas atteindre le niveau de la mer et nous gardons en mémoire l'épaisseur H afin d'en déterminer l'erreur.
 \newpage
-Afin de sortir de cette boucle, nous avons introduit une \textbf{solution itérative}, semblable au code implicite décrit précédemment. Nous initialisons une variable \textit{err} et nous restons dans la boucle tant que cette erreur est supérieure à la tolérance non linéaire définie (car lorsque celle-ci sera atteinte, les variations suivantes n'auront plus d'effet sur notre modèle). Nous avons décidé de recalculer cette erreur tous les \textit{nout} fois, qu'on a initialisé à \textbf{cinquante}, afin de ne pas faire trop de calculs. Au bout de cinquante itérations, nous actualisons la valeur de la variable \textit{err} avec le code suivant :
+Afin de sortir de cette boucle, nous avons introduit une \textbf{solution itérative}, semblable au code implicite décrit précédemment. Nous initialisons une variable \textit{err} et nous restons dans la boucle tant que cette erreur est supérieure à la tolérance non linéaire définie (car lorsque celle-ci sera atteinte, les variations qui suivent n'auront plus d'effet sur notre modèle). Nous avons décidé de recalculer cette erreur tous les \textit{nout} fois, qu'on a initialisé à \textbf{cinquante}, afin de ne pas faire trop de calculs. Au bout de cinquante itérations, nous actualisons la valeur de la variable \textit{err} avec le code suivant :
 \begin{verbatim}
 if mod(iter, nout)==0 
             Err .= Err .- H
@@ -490,7 +490,7 @@ A l'aide de ce programme, nous pouvons obtenir une courbe donnant les vitesses v
 \begin{figure}[!htpb]
 \centering
 \includegraphics[width=10cm, keepaspectratio=true, height=10cm]{Vitesses.png}
-\caption{Graphe représentant la somme des vitesses selon l'axe Y pour chaque ligne. On ne considère pas les bordures du Groenland car on veut prendre la ligne qui correspond au rapport entre la vitesse horizontale et verticale la plus élevée, ceci est situé au centre du Groenland }
+\caption{Graphe représentant la somme des variations verticales par rapport aux lignes du Groenland. On ne considère pas les bordures du Groenland car on veut prendre la ligne qui correspond au rapport entre la vitesse horizontale et verticale la plus élevée, ceci est situé au centre du Groenland }
 \end{figure}
 \newline
  En regardant au centre, nous observons que les vitesses verticales sont les plus faibles vers la ligne 43. Nous avons alors choisi cette ligne pour que notre modèle soit le plus cohérent avec notre modèle 2D. 
@@ -517,7 +517,7 @@ Nous avons trouvé un article \cite{charbit2008amount} spéculant la fonte de gl
 \caption{Schéma indiquant le volume de glace du Groenload à partir de l'an 2000. Grâce à cette simulation, nous pouvons en déduire que le Groenload perdrait entre 10\% et 63\% de son volume, ce que l'on retrouve bien avec notre simulation (Notre simulation est proche de la courbe verte de ce schéma) }
 \end{figure}
 \newpage
-\subsection{En modifiant nos valeurs itératives}
+\subsection{Modifier nos valeurs itératives}
 
 Etant donné que nous avons introduit des valeurs itératives comme damp, nous avons voulu savoir ce qu'on allait obtenir lorsqu'on fait varier cette valeur. Nous avons donc prit deux valeurs extrèmes 0.1 et 1 et nous avons tenté d'afficher le modèle obtenu :
 \begin{figure}[!htpb]

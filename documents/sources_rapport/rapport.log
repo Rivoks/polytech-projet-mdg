@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.30)  19 JAN 2022 16:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.30)  19 JAN 2022 16:29
 entering extended mode
 **./rapport.tex
 (rapport.tex
@@ -859,8 +859,14 @@ Package pdftex.def Info: Damp1.png  used on input line 531.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package rerunfilecheck Info: File `rapport.out' has not changed.
-(rerunfilecheck)             Checksum: 321D768F038668453AEB9A5BCF6CAC7A;2799.
+
+Package rerunfilecheck Warning: File `rapport.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `rapport.out':
+(rerunfilecheck)             Before: 321D768F038668453AEB9A5BCF6CAC7A;2799
+(rerunfilecheck)             After:  BAF3191DEBC30BB3035677F1CD7900F6;2776.
  ) 
 Here is how much of TeX's memory you used:
  11681 strings out of 478927
@@ -896,7 +902,7 @@ o Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy5.pfb><C:/User
 s/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><
 C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt
 10.pfb>
-Output written on rapport.pdf (23 pages, 1457305 bytes).
+Output written on rapport.pdf (23 pages, 1457355 bytes).
 PDF statistics:
  363 PDF objects out of 1000 (max. 8388607)
  77 named destinations out of 1000 (max. 500000)

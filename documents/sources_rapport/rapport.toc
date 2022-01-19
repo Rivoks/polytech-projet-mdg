@@ -12,4 +12,4 @@
 \contentsline {subsection}{\numberline {3.2}Afficher un premier graphique}{17}{subsection.3.2}%
 \contentsline {subsection}{\numberline {3.3}Chercher une situation proche du code 2D}{18}{subsection.3.3}%
 \contentsline {subsection}{\numberline {3.4}Interpréter notre simulation}{20}{subsection.3.4}%
-\contentsline {subsection}{\numberline {3.5}En modifiant nos valeurs itératives}{22}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.5}Modifier nos valeurs itératives}{22}{subsection.3.5}%
