@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.30)  13 JAN 2022 22:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.30)  19 JAN 2022 16:20
 entering extended mode
 **./rapport.tex
 (rapport.tex
@@ -460,6 +460,29 @@ Package: titling 2009/09/04 v2.1d maketitle typesetting
 \thanksmargin=\skip57
 \droptitle=\skip58
 )
+(C:\Users\Yamato Musubi\AppData\Local\Programs\MiKTeX\tex/latex/floatflt\floatf
+lt.sty
+Package: floatflt 1997/07/16 v. 1.31
+\c@OptionTest=\count292
+\figbox=\box55
+\tabbox=\box56
+\pagebox=\box57
+\ffigcount=\count293
+\ftabcount=\count294
+\fftest=\count295
+\hangcount=\count296
+\nosuccesstryfig=\count297
+\nosuccesstrytab=\count298
+\figgutter=\dimen173
+\tabgutter=\dimen174
+\htdone=\dimen175
+\pageht=\dimen176
+\startpageht=\dimen177
+\tabbredd=\dimen178
+\floatfltwidth=\dimen179
+\fltitemwidth=\dimen180
+\outputpretest=\toks30
+)
 LaTeX Font Info:    Trying to load font information for T1+lmr on input line 39
 .
 
@@ -469,8 +492,8 @@ File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 (C:\Users\Yamato Musubi\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3bac
 kend-pdftex.def
 File: l3backend-pdftex.def 2021-08-04 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count292
-\l__pdf_internal_box=\box55
+\l__color_backend_stack_int=\count299
+\l__pdf_internal_box=\box58
 ) (rapport.aux
 
 LaTeX Warning: Label `eq2' multiply defined.
@@ -511,17 +534,17 @@ LaTeX Info: Redefining \up on input line 39.
 (C:\Users\Yamato Musubi\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\sup
 p-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count293
-\scratchdimen=\dimen173
-\scratchbox=\box56
-\nofMPsegments=\count294
-\nofMParguments=\count295
-\everyMPshowfont=\toks30
-\MPscratchCnt=\count296
-\MPscratchDim=\dimen174
-\MPnumerator=\count297
-\makeMPintoPDFobject=\count298
-\everyMPtoPDFconversion=\toks31
+\scratchcounter=\count300
+\scratchdimen=\dimen181
+\scratchbox=\box59
+\nofMPsegments=\count301
+\nofMParguments=\count302
+\everyMPshowfont=\toks31
+\MPscratchCnt=\count303
+\MPscratchDim=\dimen182
+\MPnumerator=\count304
+\makeMPintoPDFobject=\count305
+\everyMPtoPDFconversion=\toks32
 )
 (C:\Users\Yamato Musubi\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\ep
 stopdf-base.sty
@@ -557,7 +580,7 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 g\gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count299
+\c@section@level=\count306
 )
 LaTeX Info: Redefining \ref on input line 39.
 LaTeX Info: Redefining \pageref on input line 39.
@@ -566,17 +589,22 @@ LaTeX Info: Redefining \nameref on input line 39.
 \@outlinefile=\write4
 \openout4 = `rapport.out'.
 
-<Logo_Polytech_Sorbonne-2.png, id=55, 1075.76906pt x 424.58624pt>
+<Logo_Polytech_Sorbonne-2.png, id=59, 1075.76906pt x 424.58624pt>
 File: Logo_Polytech_Sorbonne-2.png Graphic file (type png)
 <use Logo_Polytech_Sorbonne-2.png>
 Package pdftex.def Info: Logo_Polytech_Sorbonne-2.png  used on input line 40.
 (pdftex.def)             Requested size: 142.25145pt x 56.14403pt.
-<Logo_Sorbonne_Universite-2.png, id=56, 1792.7778pt x 730.8906pt>
+<Logo_Sorbonne_Universite-2.png, id=60, 1792.7778pt x 730.8906pt>
 File: Logo_Sorbonne_Universite-2.png Graphic file (type png)
 <use Logo_Sorbonne_Universite-2.png>
 Package pdftex.def Info: Logo_Sorbonne_Universite-2.png  used on input line 40.
 
 (pdftex.def)             Requested size: 142.24886pt x 57.99287pt.
+<rtr1qbn7.jpg, id=62, 1284.8pt x 814.04124pt>
+File: rtr1qbn7.jpg Graphic file (type jpg)
+<use rtr1qbn7.jpg>
+Package pdftex.def Info: rtr1qbn7.jpg  used on input line 40.
+(pdftex.def)             Requested size: 256.07324pt x 162.2464pt.
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 4
 0.
 
@@ -611,7 +639,8 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 [1
 
 {C:/Users/Yamato Musubi/AppData/Local/MiKTeX/pdftex/config/pdftex.map} <./Logo_
-Polytech_Sorbonne-2.png> <./Logo_Sorbonne_Universite-2.png>] (rapport.toc
+Polytech_Sorbonne-2.png> <./Logo_Sorbonne_Universite-2.png> <./rtr1qbn7.jpg>] (
+rapport.toc
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -622,186 +651,230 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 \tf@toc=\write5
 \openout5 = `rapport.toc'.
 
-
-[2] [3]
-Underfull \hbox (badness 10000) in paragraph at lines 103--108
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 110--126
+ [2] [3]
+Underfull \hbox (badness 10000) in paragraph at lines 95--98
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 110--126
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 110--126
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 110--126
-
- []
-
-[4]
-Overfull \hbox (17.52872pt too wide) in paragraph at lines 155--156
-\T1/lmr/m/n/10 s'exer-çant per-pen-di-cu-lai-re-ment aux sur-faces et les force
-s in-duitent par les contraintes
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 181--184
-
- []
-
-[5]
-Underfull \hbox (badness 10000) in paragraph at lines 206--209
+[4] [5]
+Underfull \hbox (badness 10000) in paragraph at lines 163--166
 
  []
 
 [6]
-<H.png, id=141, 1927.2pt x 1204.5pt>
+<H.png, id=144, 1927.2pt x 1204.5pt>
 File: H.png Graphic file (type png)
 <use H.png>
-Package pdftex.def Info: H.png  used on input line 271.
+Package pdftex.def Info: H.png  used on input line 228.
 (pdftex.def)             Requested size: 213.37477pt x 133.35922pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 265--276
+Underfull \hbox (badness 10000) in paragraph at lines 222--233
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 265--276
+Underfull \hbox (badness 10000) in paragraph at lines 222--233
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 277--279
+Underfull \hbox (badness 10000) in paragraph at lines 234--236
 
  []
 
 [7 <./H.png>]
-<equilibrium_line_altitude1.png, id=154, 513.8397pt x 496.4949pt>
+<equilibrium_line_altitude1.png, id=157, 513.8397pt x 496.4949pt>
 File: equilibrium_line_altitude1.png Graphic file (type png)
 <use equilibrium_line_altitude1.png>
-Package pdftex.def Info: equilibrium_line_altitude1.png  used on input line 291
+Package pdftex.def Info: equilibrium_line_altitude1.png  used on input line 248
 .
 (pdftex.def)             Requested size: 284.54149pt x 274.9367pt.
  [8 <./equilibrium_line_altitude1.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 303--305
+<Differences.png, id=164, 767.86874pt x 146.949pt>
+File: Differences.png Graphic file (type png)
+<use Differences.png>
+Package pdftex.def Info: Differences.png  used on input line 266.
+(pdftex.def)             Requested size: 284.52878pt x 54.45099pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 272--274
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 313--315
-
- []
-
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3
-15.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
+79.
 (C:\Users\Yamato Musubi\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Overfull \hbox (17.24895pt too wide) in paragraph at lines 329--329
+[9 <./Differences.png>]
+Overfull \hbox (17.24895pt too wide) in paragraph at lines 305--305
+[]            \T1/lmtt/m/n/10 ResH       .= -(H[2:end-1]-Hold[2:end-1])/dt -dif
+f(qH)/dx[] 
+ []
+
+
+Overfull \hbox (17.24895pt too wide) in paragraph at lines 305--305
+[]            \T1/lmtt/m/n/10 dHdtau     .= ResH                       # rate o
+f change[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 306--310
+
+ []
+
+
+Overfull \hbox (17.24895pt too wide) in paragraph at lines 324--324
+[]            \T1/lmtt/m/n/10 ResH       .= -(H[2:end-1]-Hold[2:end-1])/dt -dif
+f(qH)/dx[] 
+ []
+
+
+Overfull \hbox (53.99884pt too wide) in paragraph at lines 324--324
+[]            \T1/lmtt/m/n/10 dHdtau     .= ResH + damp*dHdtau         # damped
+ rate of change[] 
+ []
+
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 327--331
+
+ []
+
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 333--335
+
+ []
+
+
+Overfull \hbox (17.24895pt too wide) in paragraph at lines 349--349
 []        \T1/lmtt/m/n/10 dtau        .= dtausc*min.(10.0, cfl./(epsi .+ av(D[2
 :end])))[] 
  []
 
-[9]
-Overfull \hbox (17.24895pt too wide) in paragraph at lines 347--347
+
+Overfull \hbox (17.24895pt too wide) in paragraph at lines 363--363
 [] \T1/lmtt/m/n/10 # Permet de récupérer toutes les valeurs nécessaires pour l'
 ablation[] 
  []
 
 
-Overfull \hbox (17.24895pt too wide) in paragraph at lines 347--347
+Overfull \hbox (17.24895pt too wide) in paragraph at lines 363--363
 []    \T1/lmtt/m/n/10 Xc, Yc   = [Float32(x) for x=xc,y=yc], [Float32(y) for x=
 xc,y=yc][] 
  []
 
 
-Overfull \hbox (85.49875pt too wide) in paragraph at lines 347--347
+Overfull \hbox (85.49875pt too wide) in paragraph at lines 363--363
 []    \T1/lmtt/m/n/10 grad_b   = (1.3517 .- 0.014158.*(lat_min.+Yc2*(lat_max-la
 t_min)))./100.0.*0.91[] 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 348--360
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 348--360
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 365--375
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 348--360
+Underfull \hbox (badness 10000) in paragraph at lines 365--375
 
  []
 
-[10] [11]
-<Groenland.png, id=179, 595.22375pt x 395.4775pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 365--375
+
+ []
+
+[13]
+Overfull \hbox (27.74892pt too wide) in paragraph at lines 386--386
+[]            \T1/lmtt/m/n/10 decreasing `damp` and/or `dtausc`, more smoothing
+ steps""")[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 387--393
+
+ []
+
+[14]
+<Groenland.png, id=199, 595.22375pt x 395.4775pt>
 File: Groenland.png Graphic file (type png)
 <use Groenland.png>
-Package pdftex.def Info: Groenland.png  used on input line 377.
+Package pdftex.def Info: Groenland.png  used on input line 403.
 (pdftex.def)             Requested size: 284.52345pt x 189.04256pt.
- [12 <./Groenland.png>]
-<Iceflow1D.png, id=186, 600.2425pt x 398.48875pt>
+
+Overfull \hbox (48.74886pt too wide) in paragraph at lines 423--423
+[]\T1/lmtt/m/n/10 # On extrait toutes les valeurs nécessaires depuis le fichier
+ helpers.jl...[] 
+ []
+
+[15 <./Groenland.png>]
+Overfull \hbox (48.74886pt too wide) in paragraph at lines 448--448
+[]\T1/lmtt/m/n/10 # Booléen qui nous permettra d'appliquer le masque pour le ni
+veau de la mer[] 
+ []
+
+[16]
+<Iceflow1D.png, id=210, 600.2425pt x 398.48875pt>
 File: Iceflow1D.png Graphic file (type png)
 <use Iceflow1D.png>
-Package pdftex.def Info: Iceflow1D.png  used on input line 389.
+Package pdftex.def Info: Iceflow1D.png  used on input line 459.
 (pdftex.def)             Requested size: 284.53197pt x 188.89497pt.
- [13 <./Iceflow1D.png>] [14]
-<Vitesses.png, id=198, 560.69475pt x 375.20175pt>
+ [17 <./Iceflow1D.png>] [18]
+<Vitesses.png, id=221, 560.69475pt x 375.20175pt>
 File: Vitesses.png Graphic file (type png)
 <use Vitesses.png>
-Package pdftex.def Info: Vitesses.png  used on input line 422.
+Package pdftex.def Info: Vitesses.png  used on input line 492.
 (pdftex.def)             Requested size: 284.53032pt x 190.39998pt.
- [15 <./Vitesses.png>]
-<ligne43.png, id=205, 517.18219pt x 542.025pt>
+ [19 <./Vitesses.png>]
+<ligne43.png, id=229, 517.18219pt x 542.025pt>
 File: ligne43.png Graphic file (type png)
 <use ligne43.png>
-Package pdftex.def Info: ligne43.png  used on input line 434.
+Package pdftex.def Info: ligne43.png  used on input line 504.
 (pdftex.def)             Requested size: 271.49315pt x 284.5343pt.
- [16 <./ligne43.png>]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 4
-42.
+ [20 <./ligne43.png>]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 5
+13.
 
 (C:\Users\Yamato Musubi\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<Variation.png, id=213, 245.11575pt x 217.41225pt>
+<Variation.png, id=237, 245.11575pt x 217.41225pt>
 File: Variation.png Graphic file (type png)
 <use Variation.png>
-Package pdftex.def Info: Variation.png  used on input line 445.
+Package pdftex.def Info: Variation.png  used on input line 516.
 (pdftex.def)             Requested size: 284.55139pt x 252.39076pt.
 
-[17 <./Variation.png>] (rapport.bbl) [18] (rapport.aux)
+[21 <./Variation.png>]
+<Damp01.png, id=246, 331.2375pt x 27.7035pt>
+File: Damp01.png Graphic file (type png)
+<use Damp01.png>
+Package pdftex.def Info: Damp01.png  used on input line 525.
+(pdftex.def)             Requested size: 284.54027pt x 23.7979pt.
+<Damp1.png, id=247, 357.7365pt x 260.172pt>
+File: Damp1.png Graphic file (type png)
+<use Damp1.png>
+Package pdftex.def Info: Damp1.png  used on input line 531.
+(pdftex.def)             Requested size: 284.53561pt x 206.93498pt.
+ [22 <./Damp01.png> <./Damp1.png>] (rapport.bbl) [23]
+(rapport.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `rapport.out' has not changed.
-(rerunfilecheck)             Checksum: 1FC26FD1C46A38020F8528652302CF76;2510.
+(rerunfilecheck)             Checksum: 321D768F038668453AEB9A5BCF6CAC7A;2799.
  ) 
 Here is how much of TeX's memory you used:
- 11549 strings out of 478927
- 178104 string characters out of 2848707
- 502586 words of memory out of 3000000
- 29122 multiletter control sequences out of 15000+600000
+ 11681 strings out of 478927
+ 180034 string characters out of 2848707
+ 503554 words of memory out of 3000000
+ 29237 multiletter control sequences out of 15000+600000
  472937 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,8n,66p,868b,424s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,16n,66p,1035b,424s stack positions out of 5000i,500n,10000p,200000b,80000s
 {C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-t
 s1.enc}{C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm
 /lm-ec.enc}{C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/enc/dvip
-s/lm/lm-mathsy.enc}{C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/
-enc/dvips/lm/lm-rm.enc}{C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fo
+s/lm/lm-rm.enc}{C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/enc/
+dvips/lm/lm-mathsy.enc}{C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fo
 nts/enc/dvips/lm/lm-mathit.enc}{C:/Users/Yamato Musubi/AppData/Local/Programs/M
 iKTeX/fonts/enc/dvips/lm/lm-mathex.enc}<C:/Users/Yamato Musubi/AppData/Local/Pr
 ograms/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/Yamato Musubi/AppData/
@@ -823,9 +896,9 @@ o Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy5.pfb><C:/User
 s/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><
 C:/Users/Yamato Musubi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt
 10.pfb>
-Output written on rapport.pdf (18 pages, 1105314 bytes).
+Output written on rapport.pdf (23 pages, 1457305 bytes).
 PDF statistics:
- 324 PDF objects out of 1000 (max. 8388607)
- 68 named destinations out of 1000 (max. 500000)
- 150 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 363 PDF objects out of 1000 (max. 8388607)
+ 77 named destinations out of 1000 (max. 500000)
+ 178 words of extra memory for PDF output out of 10000 (max. 10000000)
 

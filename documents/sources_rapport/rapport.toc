@@ -1,14 +1,15 @@
 \babel@toc {french}{}\relax 
-\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
-\contentsline {section}{\numberline {2}Présentation des techniques de résolution}{3}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Pourquoi Julia ?}{3}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Les équations de Stokes}{3}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Shallow ice approximation (SIA)}{6}{subsection.2.3}%
-\contentsline {section}{\numberline {3}Simulations numériques}{9}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Comprendre l'algorithme à introduire}{9}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Code 1D non linéaire proposé}{9}{subsection.3.2}%
-\contentsline {section}{\numberline {4}Résultats}{12}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Récupérer les données}{12}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Afficher un premier graphique}{13}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Chercher une situation proche du code 2D}{14}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Interpréter notre simulation}{16}{subsection.4.4}%
+\contentsline {section}{Introduction}{3}{section*.2}%
+\contentsline {section}{\numberline {1}Présentation des techniques de résolution}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Les équations de Stokes}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Shallow ice approximation (SIA)}{6}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Simulations numériques}{9}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Les équations de Stokes}{9}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Comprendre l'algorithme à introduire}{9}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Code 1D non linéaire proposé}{12}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Résultats}{15}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Extraction les données}{15}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Afficher un premier graphique}{17}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Chercher une situation proche du code 2D}{18}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Interpréter notre simulation}{20}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}En modifiant nos valeurs itératives}{22}{subsection.3.5}%

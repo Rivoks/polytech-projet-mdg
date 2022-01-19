@@ -56,17 +56,11 @@ C'est un processus continu, mais il est très difficile de les résoudre analyti
 L’intérêt ici va être d’énoncer les relations générales de Stokes appliquées aux glaciers, d’énoncer le modèle Shallow Ice Approximation (SIA) afin d’en déterminer les avantages et les limites dans l’analyse de l’écoulement d’un glacier en fonction du temps.
 
 
-Dans le cadre de ce projet, nous allons utilisé le langage Julia pour la résolution de systèmes d'équations différentielles par \textbf{différences finies} afin de pouvoir prédire l'écoulement glaciaire du Groenland.
+Dans le cadre de ce projet, nous allons utilisé le langage Julia pour la résolution de systèmes d'équations différentielles par \textbf{différences finies} afin de pouvoir prédire l'écoulement glaciaire du Groenland. Nous utilisons Julia car c'est un langage de programmation moderne, polyvalent et qui peut tourner sur dse GPU sans demander trop de ressources. C'est un langage créé en 2009 par des chercheurs et ouvert au grand public en 2012. C'est un langage de haut niveau, dynamique et conçu pour des calculs scientifique. Sa syntaxe est similaire à Python, R ou encore Matlab.
 
 
 %-----------------------------------------------------------
 \section{Présentation des techniques de résolution}
-
-\subsection{Pourquoi Julia ?}
-
-Julia est un langage de programmation moderne et polyvalent, créé en 2009 par des chercheurs et ouvert au grand public en 2012. C'est un langage de haut niveau, dynamique et conçu pour des calculs scientifique. Sa syntaxe est similaire à Python, R ou encore Matlab.
- 
-
 
 \subsection{Les équations de Stokes}
 
@@ -262,18 +256,81 @@ Dans le code, la conservation de masse M est calculée à partir de $ \nabla$\te
 \newpage
 \section{Simulations numériques}
 
+\subsection{Les équations de Stokes}
+Pour créer nos simulations numériques, on va devoir déterminer des dérivées partielles. Mais celles-ci étant longues à calculer, nous utiliserons ici la \textbf{méthode des différences finies} afin d'approcher ces dérivées avec des calculs plus faciles et rapides.
+\newline
+Cependant, cette méthode étant compliquée, nous ne considèrerons que la définition suivante : On considère un intervalle et on le discrétise en plusieurs sous-intervalles.
+
+\begin{figure}[!htpb]
+\centering
+\includegraphics[width=10cm, keepaspectratio=true, height=10cm]{Differences.png}
+\caption{Séparation de l'intervalle en plusieurs sous-intervalles de même taille. Afin d'obtenir une approximation de notre dérivée partielle, il suffit de prendre la valeur des deux extrêmités de chaque sous-intervalle et de faire la différence des deux.}
+\label{differences}
+\end{figure}
+
 \subsection{Comprendre l'algorithme à introduire}
 Nous avons commencé par étudier un dossier GITHUB public \cite{site2} qui modélisait la fonte de glacier.
 \newline
 
- Il était composé de trois codes qui résolvent l'équation de diffusion linéaire avec différentes méthodes en 1D. Tout d'abord un premier code explicite. Un deuxième code qui rajoute une solution itérative ainsi qu'une tolérance de fin, forçant le programme à s'arrêter uniquement lorsque cette tolérance est atteinte. Enfin, un troisième code introduit un "damp" itératif qui permet au programme de converger plus rapidement.
+ Il était composé de trois codes qui résolvent l'équation de diffusion linéaire avec différentes méthodes en 1D. 
 \newline
-Ces trois codes sont considérés linéaires, car le coefficient de diffusion D était une constante.
-\newline
-Un quatrième code considérait le problème de l'écoulement des glaciers à l'aide du SIA en 2D. Il inclut des itérations non linéaire, c'est-à-dire que ce coefficient D variait à chaque point et à chaque itération du problème, ainsi que les conditions initiales provenant des données. Notre but était donc de mieux comprendre le fonctionnement du code en 2D pour écrire à notre tour un code 1D non linéaire qui résout le problème de SIA.
+Tout d'abord un premier code explicite qui avait pour but de nous initier à la méthode des différences finies, en calculant simplement l'équation de diffusion : 
 
+\begin{verbatim}
+ while t<ttot
+        qH         .= -D*diff(H)/dx         # flux
+        dHdt       .=  -diff(qH)/dx         # rate of change
+        H[2:end-1] .= H[2:end-1] .+ dt*dHdt
+        t += dt; it += 1
+    end
+\end{verbatim}
+ On y applique la méthode des différences finies deux fois afin de calculer dHdt et nous l’ajoutons à H, ce qui nous permet de calculer la dérivée seconde de H par rapport au temps. Ce code s'exécute au total \textit{ttot} fois.
+\newpage
+On a également un deuxième code qui rajoute un résiduel \textit{ResH}, une solution itérative ainsi qu'une tolérance linéaire \textit{tol}, forçant le programme à s'arrêter lorsque cette tolérance est atteinte.
+
+\begin{verbatim}
+while t<ttot
+        iter = 0; err = 2*tol
+        # Picard-type iteration
+        while err>tol && iter<itMax
+            qH         .= -D*diff(H)/dx              # flux
+            ResH       .= -(H[2:end-1]-Hold[2:end-1])/dt -diff(qH)/dx
+            dHdtau     .= ResH                       # rate of change
+            H[2:end-1] .= H[2:end-1] + dtau*dHdtau   
+            iter += 1; err = norm(ResH)/length(ResH)
+        end
+        ittot += iter; it += 1; t += dt
+        Hold .= H
+    end
+\end{verbatim}
+Ce \textit{err} se calcule à chaque itération gràce au résiduel \textit{ResH}. Ce résiduel est l'erreur générée par les simplifications mathématiques que l'on a créé avec la méthode des différences finies (celui-ci aurait été égal à 0 si nous avions calculé exactement nos dérivées partielles). L'erreur est déterminée avec la norme et la longueur de \textit{ResH}. Une fois que \textit{err} est inférieur à notre tolérance, nous sortons de la boucle et donc du code.
+\newline
+\newline
+ Puis, un troisième code semblable au code implicite mais qui introduit en plus une variable \textit{damp} itératif qui permet au programme de converger plus rapidement.
+\begin{verbatim}
+while t<ttot
+        iter = 0; err = 2*tol
+        # Pseudo-transient iteration
+        while err>tol && iter<itMax
+            qH         .= -D*diff(H)/dx              # flux
+            ResH       .= -(H[2:end-1]-Hold[2:end-1])/dt -diff(qH)/dx
+            dHdtau     .= ResH + damp*dHdtau         # damped rate of change
+            H[2:end-1] .= H[2:end-1] + dtau*dHdtau   
+            iter += 1; err = norm(ResH)/length(ResH)
+        end
+        ittot += iter; it += 1; t += dt
+        Hold .= H
+    end
+\end{verbatim}
+Ce \textit{damp} est une valeur déterminée par l'utilisateur mais doit être compris entre 0 et 1. Plus ce damp est bas, plus le nombre d'itérations sera grand. Cependant, il ne faut pas prendre un damp trop grand car avec trop peu d'itérations, on risque de ne pas avoir un modèle satisfaisant (car il serait trop imprécis).
+\newpage
+Ces trois codes sont considérés linéaires, car le coefficient de diffusion D était une constante. De plus, ils considéraient le glacier comme une fonction mathématique comme une courbe gaussienne pour ne pas avoir à extraire des données d'un autre fichier pour modéliser ce glacier.
+\newline
+\newline
+On avait enfin un quatrième code qui résolvait le problème de l'écoulement des glaciers en 2D à l'aide du SIA. Il inclut des itérations non linéaire, c'est-à-dire que ce coefficient D variait à chaque point et à chaque itération du problème, ainsi que les conditions initiales provenant des données. Notre but était donc de mieux comprendre le fonctionnement du code en 2D pour écrire à notre tour un code 1D non linéaire qui résout le problème de SIA.
+\newpage
 \subsection{Code 1D non linéaire proposé}
-En s'inspirant de ces codes, nous avons créé un code dont la boucle s'effectue de la manière suivante :
+En s'inspirant de ces codes, nous avons créé notre propre code non linéaire en 1D, qui respecte l'équation~\eqref{eq4}. L'idée était de reprendre un code similaire au code non linéaire 2D et de ne conserver qu'une seule dimension, c'est-à-dire toutes les variables dépendantes de x. Les composantes dépendantes de y n'ont donc pas été prise en compte. La boucle principale s'effectue de la manière suivante :
 \newline
 \begin{verbatim}
 while err>tolnl && iter<itMax # On sort lorsque l'erreur est en 
@@ -290,11 +347,7 @@ dessous de la tolérance 	(ou trop d'itérations)
         H[Mask.==0] .= 0.0
         S           .= B .+ H                                       
 \end{verbatim}
-\newpage
 Nous avons recréé l'équation~\eqref{eq4} en calculant les dérivées partielles selon ${x}$ avec la méthode des différences finies.
-Cette méthode permet de trouver une solution approchée d'équations aux dérivées partielles. Elle consiste à discrétiser le domaine étudié en plusieurs sous-intervalles réguliers afin d'approximer l'équation sur chaque sous-intervalles. Cette approximation est obtenue en calculant la différence entre deux valeurs consécutives. 
-L'idée était de reprendre un code similaire au code non linéaire 2D et de ne conserver qu'une seule dimension, c'est-à-dire toutes les variables dépendantes de x. Les composantes dépendantes de y n'ont donc pas été prise en compte.
-\newline
 La conservation de masse M est calculé grâce à plusieurs variables qu'on prend dans les données et qu'on réévalue grâce à une fonction intermédiaire. Elle nous permet de recalculer l'accumulation de neige à chaque itération, avec une augmentation minimum de \textit{\_max} (qu'on a considéré à 0.15m par an). La fonction utilisée a été retrouvé dans le GitHUB proposée et est la suivante :
 \begin{verbatim}
 function mass_balance_constants(xc, yc)
@@ -308,7 +361,8 @@ function mass_balance_constants(xc, yc)
     return grad_b, z_ELA, b_max
 end                                   
 \end{verbatim}
-Puis à partir de là, nous avons fait en sorte de n'obtenir qu'un tableau en 1D afin qu'on puisse l'utiliser dans notre code. Puis nous calculons un premier dSdx à l'aide des différences finies, qui nous servira ensuite pour calculer le coefficient de diffusion D qu'on a introduit à l'équation ~\eqref{eq5}. Ensuite on reproduit l'équation ~\eqref{eq4} en deux lignes, en effectuant deux fois les différences finies. On calcule le flux qH puis le résidu \textit{ResH} en introduisant le M précédant. Une fois que cela est fait, on calcule \textit{dHdt} en introduisant le damp itérative pour converger plus rapidement vers une solution. Une fois que cela est fait, nous réatribuons un \textbf{Mask} afin que chaque point considéré soit au minimum au niveau de la mer, et non en dessous, puis nous remettons à jour la surface S.
+\newpage
+Puis à partir de là, nous avons fait en sorte de n'obtenir qu'un tableau en 1D afin qu'on puisse l'utiliser dans notre code. Puis nous calculons un premier dSdx à l'aide des différences finies, qui nous servira ensuite pour calculer le coefficient de diffusion D qu'on a introduit à l'équation ~\eqref{eq5}. Ensuite on reproduit l'équation ~\eqref{eq4} en deux lignes, en effectuant deux fois les différences finies. On calcule le flux qH puis le résidu \textit{ResH} en introduisant le M précédant. Une fois que cela est fait, on calcule \textit{dHdt} en introduisant le damp itérative pour converger plus rapidement vers une solution. Une fois que cela est fait, nous réatribuons un \textbf{Mask} afin que chaque point considéré soit au minimum au niveau de la mer, et non en dessous, puis nous remettons à jour la surface S. On introduit aussi une variable \textit{cfl} qui est un coefficient suffisant pour assurer que notre modèle converge vers une solution cohérente.
 \newline
 \newline
 Nous avons introduit plusieurs tableaux : le coefficient de diffusion D, le flux \textit{qH}, le résidu de l'équation ResH ainsi que les surfaces B, H et S, dont la taille varie en fonction des calculs qu'on leur applique. Par exemple, les méthodes des différences finies sur un tableau de taille \textit{nx} renvoie un autre tableau de taille \textit{nx-1} (car on applique \textit{nx-1} opérations sur \textit{nx} valeurs).
@@ -318,15 +372,24 @@ Ce code remet à jour toutes les valeurs jusqu'à ce que l'erreur déterminée d
 \newline
 \newline
 A chaque tour de boucle, nous réinitialisons le coefficient D, la conservation de masse M et la dérivée itérative \textit{dtau}. Puis nous calculons les dérivées partielles \textit{dSdx}, \textit{qH} et \textit{ResH} en effectuant les différences finies. Toutes ces valeurs nous permettent de mettre à jour la dérivée de temps \textit{dHdt} ainsi que l'épaisseur de la glace H et enfin la surface S. Nous appliquons également un masque afin de ne pas atteindre le niveau de la mer et nous gardons en mémoire l'épaisseur H afin d'en déterminer l'erreur.
-\newline
-Au bout de cinquante itérations, nous actualisons la valeur de la variable \textit{err} avec le code suivant :
+\newpage
+Afin de sortir de cette boucle, nous avons introduit une \textbf{solution itérative}, semblable au code implicite décrit précédemment. Nous initialisons une variable \textit{err} et nous restons dans la boucle tant que cette erreur est supérieure à la tolérance non linéaire définie (car lorsque celle-ci sera atteinte, les variations suivantes n'auront plus d'effet sur notre modèle). Nous avons décidé de recalculer cette erreur tous les \textit{nout} fois, qu'on a initialisé à \textbf{cinquante}, afin de ne pas faire trop de calculs. Au bout de cinquante itérations, nous actualisons la valeur de la variable \textit{err} avec le code suivant :
 \begin{verbatim}
 if mod(iter, nout)==0 
             Err .= Err .- H
             err = norm(Err)/length(Err) 
+	    if isnan(err)
+            	error("""NaNs encountered.  Try a combination of:
+            decreasing `damp` and/or `dtausc`, more smoothing steps""")
+            end
 end
 \end{verbatim}
+Dans cette condition, on recalcule notre \textit{Err} en la comparant avec la hauteur de glace H actuelle. Puis on prend sa norme et on la divise par sa longueur pour obtenir notre \textit{err}. 
 La boucle s'arrête lorsque l'erreur est plus petite que la tolérance imposée.
+\newline
+On a également une condition qui vérifie que \textit{err} est définie, c'est-à-dire qu'on vérifie que cette erreur ne tend pas vers l'infini. Cela peut arriver lorsque la longueur de \textit{Err} est nulle ou bien lorsque sa norme tend vers l'infini (ce qui peut arriver lorsqu'une des valeurs dans la boucle est mal définie). Si cela arrive, on sort du code en envoyant une erreur, signalant les étapes à effectuer pour eventuellement régler le problème.
+\newline\newline
+Maintenant que l'on a un modèle résolvant l'équation non linéaire H en 1D, il nous faut à présent vérifier que ce modèle est juste. Pour cela, nous avons extrait des données du Groenland datant de 2020.
 \newpage
 
 %\vspace*{\fill}
@@ -440,6 +503,7 @@ En exécutant le code avec cette ligne, nous avons alors le résultat suivant:
 \centering
 \includegraphics[width=10cm, keepaspectratio=true, height=10cm]{ligne43.png}
 \caption{Topologie du Groenland en appliquant la ligne 43. La courbe bleue  représente la hauteur H au début, la courbe orange donne la hauteur H une fois la simulation appliquée pour la ligne 43 et la courbe verte montre le lit rocheux B. }
+\label{ligne43}
 \end{figure}
 
 \subsection{Interpréter notre simulation}
@@ -453,8 +517,21 @@ Nous avons trouvé un article \cite{charbit2008amount} spéculant la fonte de gl
 \caption{Schéma indiquant le volume de glace du Groenload à partir de l'an 2000. Grâce à cette simulation, nous pouvons en déduire que le Groenload perdrait entre 10\% et 63\% de son volume, ce que l'on retrouve bien avec notre simulation (Notre simulation est proche de la courbe verte de ce schéma) }
 \end{figure}
 \newpage
+\subsection{En modifiant nos valeurs itératives}
 
+Etant donné que nous avons introduit des valeurs itératives comme damp, nous avons voulu savoir ce qu'on allait obtenir lorsqu'on fait varier cette valeur. Nous avons donc prit deux valeurs extrèmes 0.1 et 1 et nous avons tenté d'afficher le modèle obtenu :
+\begin{figure}[!htpb]
+\centering
+\includegraphics[width=10cm, keepaspectratio=true, height=10cm]{Damp01.png}
+\caption{Résultat du plot de notre code lorsque damp est à 0.1. Cela montre bien qu'avec trop peu d'itérations, notre modèle est incapable d'afficher une modélisation cohérente.}
+\end{figure}
 
+\begin{figure}[!htpb]
+\centering
+\includegraphics[width=10cm, keepaspectratio=true, height=10cm]{Damp1.png}
+\caption{Résultat du plot de notre code lorsque damp est à 1. On remarque que le résultat obtenu est semblable à celui présenté à la figure \ref{ligne43}, mais on a fait un nombre d'itérations bien plus important pour parvenir à ce résultat. Cela montre bien l'intérêt d'avoir un damp permettant de réduire le temps de modélisation.}
+\end{figure}
+\newpage
 %-----------------------------------------------------------
 \bibliography{bibliographie.bib}
 \bibliographystyle{unsrt}
