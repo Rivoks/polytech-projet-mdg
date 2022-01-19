@@ -1,4 +1,4 @@
-\babel@toc {french}{}\relax 
+\babel@toc {french}{}
 \contentsline {section}{Introduction}{3}{section*.2}%
 \contentsline {section}{\numberline {1}Présentation des techniques de résolution}{3}{section.1}%
 \contentsline {subsection}{\numberline {1.1}Les équations de Stokes}{3}{subsection.1.1}%

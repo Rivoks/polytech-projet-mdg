@@ -284,7 +284,7 @@ Tout d'abord un premier code explicite qui avait pour but de nous initier à la 
         t += dt; it += 1
     end
 \end{verbatim}
- On y applique la méthode des différences finies deux fois afin de calculer dHdt et nous l’ajoutons à H, ce qui nous permet de calculer la dérivée seconde de H par rapport au temps. Ce code s'exécute au total \textit{ttot} fois.
+ On y applique la méthode des différences finies deux fois ce qui correspond à la dérivée seconde de H par rapport à celle de \textit{x} dans l'équation \ref{eq4}. Nous faisons cela afin de calculer dHdt que nous ajoutons à H  qui nous permet de calculer l'équation de diffusion. Ce code s'exécute au total \textit{ttot} fois.
 \newpage
 On a également un deuxième code qui rajoute un résiduel \textit{ResH}, une solution itérative ainsi qu'une tolérance linéaire \textit{tol}, forçant le programme à s'arrêter lorsque cette tolérance est atteinte.
 
@@ -306,7 +306,7 @@ while t<ttot
 Ce \textit{err} se calcule à chaque itération gràce au résiduel \textit{ResH}. Ce résiduel est l'erreur générée par les simplifications mathématiques que l'on a créé avec la méthode des différences finies (celui-ci aurait été égal à 0 si nous avions calculé exactement nos dérivées partielles). L'erreur est déterminée avec la norme et la longueur de \textit{ResH}. Une fois que \textit{err} est inférieur à notre tolérance, nous sortons de la boucle et donc du code.
 \newline
 \newline
- Puis, un troisième code semblable au code implicite mais qui introduit en plus une variable \textit{damp} itératif qui permet au programme de converger plus rapidement.
+ Puis, un troisième code semblable au code implicite mais qui introduit en plus une variable \textit{damp} itérative qui permet au programme de converger plus rapidement.
 \begin{verbatim}
 while t<ttot
         iter = 0; err = 2*tol
@@ -324,10 +324,12 @@ while t<ttot
 \end{verbatim}
 Ce \textit{damp} est une valeur déterminée par l'utilisateur mais doit être compris entre 0 et 1. Plus ce damp est bas, plus le nombre d'itérations sera grand. Cependant, il ne faut pas prendre un damp trop grand car avec trop peu d'itérations, on risque de ne pas avoir un modèle satisfaisant (car il serait trop imprécis).
 \newpage
-Ces trois codes sont considérés linéaires, car le coefficient de diffusion D était une constante. De plus, ils considéraient le glacier comme une fonction mathématique comme une courbe gaussienne pour ne pas avoir à extraire des données d'un autre fichier pour modéliser ce glacier.
+Ces trois codes sont linéaires, car le coefficient de diffusion D est considéré comme une constante. De plus, ils considéraient le glacier comme étant une courbe parfaitement gaussienne pour ne pas avoir à extraire des données d'un autre fichier pour modéliser ce glacier.
 \newline
 \newline
-On avait enfin un quatrième code qui résolvait le problème de l'écoulement des glaciers en 2D à l'aide du SIA. Il inclut des itérations non linéaire, c'est-à-dire que ce coefficient D variait à chaque point et à chaque itération du problème, ainsi que les conditions initiales provenant des données. Notre but était donc de mieux comprendre le fonctionnement du code en 2D pour écrire à notre tour un code 1D non linéaire qui résout le problème de SIA.
+On avait enfin un quatrième code qui résolvait le problème de l'écoulement des glaciers en 2D à l'aide du SIA. Il inclut des itérations non linéaires, c'est-à-dire que ce coefficient de diffusion D variait à chaque point et à chaque itération de la boucle, ainsi que les conditions initiales provenant des données. 
+\newline
+Notre but était donc de mieux comprendre le fonctionnement de ce code en 2D pour écrire à notre tour un code 1D non linéaire qui résout le problème de SIA.
 \newpage
 \subsection{Code 1D non linéaire proposé}
 En s'inspirant de ces codes, nous avons créé notre propre code non linéaire en 1D, qui respecte l'équation~\eqref{eq4}. L'idée était de reprendre un code similaire au code non linéaire 2D et de ne conserver qu'une seule dimension, c'est-à-dire toutes les variables dépendantes de x. Les composantes dépendantes de y n'ont donc pas été prise en compte. La boucle principale s'effectue de la manière suivante :
@@ -519,7 +521,7 @@ Nous avons trouvé un article \cite{charbit2008amount} spéculant la fonte de gl
 \newpage
 \subsection{Modifier nos valeurs itératives}
 
-Etant donné que nous avons introduit des valeurs itératives comme damp, nous avons voulu savoir ce qu'on allait obtenir lorsqu'on fait varier cette valeur. Nous avons donc prit deux valeurs extrèmes 0.1 et 1 et nous avons tenté d'afficher le modèle obtenu :
+Etant donné que nous avons introduit des valeurs itératives comme damp, nous avons voulu savoir ce qu'on allait obtenir lorsqu'on faisait varier cette valeur. Nous avons donc pris deux valeurs extrèmes 0.1 et 1 et nous avons tenté d'afficher le modèle obtenu :
 \begin{figure}[!htpb]
 \centering
 \includegraphics[width=10cm, keepaspectratio=true, height=10cm]{Damp01.png}
