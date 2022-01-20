@@ -19,8 +19,8 @@
 
 \renewcommand{\maketitlehooka}{
  \begin{center}
-    \includegraphics[width=5cm, keepaspectratio=true, height=5cm]{Logo_Polytech_Sorbonne-2.png}\hfill\includegraphics[width=5cm, keepaspectratio=true, height=5cm]{Logo_Sorbonne_Universite-2.png}
-    \end{center}
+\includegraphics[width=5cm, keepaspectratio=true, height=5cm]{Logo_Polytech_Sorbonne-2.png}\hfill\includegraphics[width=5cm, keepaspectratio=true, height=5cm]{Logo_Sorbonne_Universite-2.png}
+\end{center}
    
 \centering
 \vspace{1cm}
@@ -50,118 +50,123 @@
 \addcontentsline{toc}{section}{Introduction}
 
 L’écoulement d’un glacier dépend de plusieurs facteurs qui sont principalement l’accumulation de neige, la fonte de glace, la gravité et le niveau de la pente du lit rocheux.
-Les écoulements sont considérés comme fluides, incompressibles, visqueux et non linéaires, d’où l’intérêt de les modéliser avec les relations de Stokes.
+Les écoulements sont considérés incompressibles, visqueux et non linéaires, d’où l’intérêt de les modéliser avec les relations de Stokes.
 \newline
 C'est un processus continu, mais il est très difficile de les résoudre analytiquement. Pour cela, les modélisateurs utilisent donc des méthodes numériques.
-L’intérêt ici va être d’énoncer les relations générales de Stokes appliquées aux glaciers, d’énoncer le modèle Shallow Ice Approximation (SIA) afin d’en déterminer les avantages et les limites dans l’analyse de l’écoulement d’un glacier en fonction du temps.
+L’intérêt ici va être d’énoncer les \textbf{relations générales de Stokes} appliquées aux glaciers, d’énoncer le modèle \textbf{Shallow Ice Approximation (SIA)} afin d’en déterminer les avantages et les limites dans l’analyse de l’écoulement d’un glacier en fonction du temps.
 
 
-Dans le cadre de ce projet, nous allons utilisé le langage Julia pour la résolution de systèmes d'équations différentielles par \textbf{différences finies} afin de pouvoir prédire l'écoulement glaciaire du Groenland. Nous utilisons Julia car c'est un langage de programmation moderne, polyvalent et qui permet de parralèliser des GPU sans demander trop de ressources. C'est un langage créé en 2009 par des chercheurs et ouvert au grand public en 2012. C'est un langage de haut niveau, dynamique et conçu pour des calculs scientifiques. Sa syntaxe est similaire à Python, R ou encore Matlab.
+Dans le cadre de ce projet, nous allons utilisé le langage \textbf{Julia} pour la résolution de systèmes d'équations différentielles par \textbf{différences finies} afin de pouvoir prédire l'écoulement glaciaire du Groenland. \\ Nous utilisons Julia car c'est un langage de programmation moderne, polyvalent et qui permet de parralèliser des GPU sans demander trop de ressources. C'est un langage créé en 2009 par des chercheurs et ouvert au grand public en 2012. C'est un langage de haut niveau, dynamique et conçu pour des calculs scientifiques. Sa syntaxe est similaire à Python, R ou encore Matlab.
 
 
 %-----------------------------------------------------------
-\section{Présentation des techniques de résolution}
+\section{Présentation des méthodes de résolution}
 
 \subsection{Les équations de Stokes}
 
-Les équations de Stokes \cite{site1} ont comme principal objectif de décrire les mouvements des fluides. 
-Pour procéder correctement, il faut connaître sa vitesse en tout point de l'espace : son champ de vitesse. Ainsi les équations de Stokes permettent de décrire le champ de vitesse d'un fluide. 
-Dans un fluide nous considérons deux types de forces à savoir, les forces de volume (donc de poids) et les forces de surface correspondant aux frottements visqueux. 
+Les équations de Stokes \cite{site1} ont comme principal objectif de décrire les \textbf{mouvements des fluides}. 
+Pour procéder correctement, il faut connaître sa vitesse en tout point de l'espace : son champ de vitesse. Ainsi les équations de Stokes permettent de décrire le \textbf{champ de vitesse} d'un fluide. 
 
-Afin de pouvoir appliquer ces équations dans le cas des écoulements des glaciers, nous considérerons ces derniers comme des fluides incompressibles, visqueux et non linéaires. Il s'agit d'un système d'équations pouvant être appliqué à tout type de glacier.
+Afin de pouvoir appliquer ces équations dans le cas des écoulements des glaciers, nous considérerons ces derniers comme des fluides \textbf{incompressibles}, \textbf{visqueux} et \textbf{non linéaires}. Il s'agit d'un système d'équations pouvant être appliqué à tout type de glacier.
 
 Ce système permet une très grande précision dans les résultats puisqu'il prend en compte toutes les contraintes au nombre de neuf, qu’elles soient longitudinales, transversales, verticales ou encore horizontales. 
 
 
-Le second membre correspond au terme d'inertie.  Ce terme peut être comparé aux effets visqueux par le nombre de Reynolds : 
-\begin{equation}
-\textit{Re} = \frac{\rho V L}{\mu}
-\end{equation}
-avec V une vitesse caractéristique et L une longueur caractéristique. 
-
-L'équation de Navier-Stokes peut être assimilé à la deuxième loi de Newton appliquée aux fluides
+Les équations de stokes peuvent être assimilé à la \textbf{seconde loi de Newton} appliquée aux fluides,
 \begin{equation}
 \sum\vec{F}=m\vec{a}
 \end{equation}
- avec  $\vec{F}$ les forces s'exerçant sur le volume, $m$ sa masse et  $\vec{a}$  son accélération.
-Or, la glace est assimilée à un fluide très visqueux, le nombre de Reynolds est alors petit et ainsi on peut négliger l'inertie. Donc l'accélération est nulle, ce qui nous mène à l'équation suivante :
+, avec  $\vec{F}$ les forces s'exerçant sur le volume en $kg.m.s^{-2}$ ou $N$, $m$ sa masse en $kg$ et  $a$ son accélération en $m.s^{-2}$.
+\newpage
+Le nombre de Reynolds $Re$, qui représente le rapport entre les forces d'inertie et les forces visqueuses,
+ \begin{equation}
+\textit{Re} = \frac{\rho V L}{\mu}
+\end{equation}
+avec $\rho$ la masse volumique en $kg.m^{-3}$, $V$ la vitesse caractéristique en $m.s^{-1}$, L la dimension caractéristique en $m$ et $\mu$ le coefficient de viscosité en $m^{2}.s^{-1}$, caractérise les différents types d'écoulements. \\
+Dans le cas des glaciers, le nombre de Reynolds est considéré comme petit car les glaciers sont égalés à des fluides très visqueux et pas conséquent le coefficient de viscosité $\mu$ est très élevé. On en déduit que les écoulements se font très lentement et donc nous pouvons \textbf{négliger le deuxième terme de la seconde loi de Newton} :
 \begin{equation}
 \sum\vec{F}= 0
+\label{somme force}
 \end{equation}
 
 
 %%Les termes qui vont suivre sont explicités dans le cours "Introduction à la dynamique des fluides visqueux" de Thierry Menand.\cite{menand2020introduction}
-
-La somme des forces est la somme des forces $\vec{F}v$ qui agissent sur tout le volume et des forces $\vec{F}s$ qui sont les frottement sur les bords et à l'intérieur de la glace.
+La somme des forces est ainsi la somme des forces de volume $\vec{F}v$ induites par la gravité et qui agissent sur tout le volume, et des forces de surface $\vec{F}s$ qui sont induites par les frottements sur les bords et à l'intérieur de la glace.
 \\\\
-Les forces de volume  $\vec{F}v$ induites par la gravité, agissent sur toutes les particules du volume élémentaire et s'écrient :
+\begin{enumerate}
+\item \textbf{Forces de volume}\\
+Les forces de volume  $\vec{F}v$ induites par la gravité, et donc le poids, agissent sur toutes les particules d'un volume élémentaire et s'écrient :
 \begin{equation}
 \vec{F}v = \Delta_{m} \vec{g}
 \end{equation}
-avec $\Delta_{m}$ la masse élémentaire et $g$ l'accélération de la pesanteur.
-$\Delta_{m}$ peut se réécrire de cette manière :  
+avec $\Delta_{m}$ la masse élémentaire en $kg$ et $g$ l'accélération de la pesanteur en $m.s^{-2}$.
+La masse élémentaire $\Delta_{m}$ peut se réécrire,  
 \begin{equation}
 \Delta_{m} = \int \rho dV = \rho dxdydz
 \end{equation}
+, avec $\rho$ la masse volumique en $kg.m^{-3}$, $dV=dxdydz$ le volume élémentaire de côtés $dx$, $dy$ et $dz$, en $m^{3}$.
 
-avec $\rho$ la masse volumique et $dV=dxdydz$ le volume élémentaire.
-
-Ainsi la $\vec{F}v$ la force de volume est 
+Ainsi la $\vec{F}v$ la force de volume est : 
 \begin{equation}
 \vec{F}v = \int \rho \vec{g} dV
 \end{equation}
 
-
-\newpage
-%%Les forces de surface $\vec{F}s$ sont les forces induites par la pression du fluide s'exerçant perpendiculairement aux surfaces et les forces induitent par les contraintes cisaillantes qui agissent parallèlement aux surfaces. Pour le cas d'un glacier nous prenons en compte que les contraintes normales à la surface : 
-
+\item \textbf{Forces de surface}\\
+\end{enumerate}
 Les forces de surface $\vec{F}s$ sont les frottement au bord et à l'intérieur du glacier. Pour le cas d'un glacier nous prenons en compte les contraintes normales à la surface $\sigma$ : 
 
 \begin{equation}
 \vec{F}s = \int \sigma \vec{n} dS 
 \end{equation}
-avec $\vec{n}$ le vecteur normal à la surface dirigé vers l'extérieur.
+avec $\vec{n}$ le vecteur normal à la surface dirigé vers l'extérieur et $\sigma$ le tenseur de contrainte.\\
 Le théorème de divergence permet de réécrire $\vec{F}s$ :
 \begin{equation}
 \vec{F}s = \int \nabla \sigma dV 
+\label{force surface}
 \end{equation}
-Le tenseur de contrainte $\sigma$ s'écrit : 
+
+Le tenseur de contrainte $\sigma$,
 \begin{equation}
-\sigma = 2 \mu \varepsilon - I_{d}P
+\sigma = 2 \mu \dot \varepsilon - I_{d}P
 \end{equation}
-avec $\mu$ le coefficient de viscosité, $\varepsilon = \frac{1}{2}( \nabla v + \nabla v^t\ ) $ le taux de déformation, $I_{d}$ la matrice identité et $P$ la pression.  $2\mu \varepsilon$ est la partie qui concerne la déformation et $I_{d}$ est la partie isotrope. En intégrant l'expression du tenseur de contrainte on obtient :
+avec $\mu$ le coefficient de viscosité en $m^{2}.s^{-1}$, $\dot \varepsilon = \frac{1}{2}( \nabla v + \nabla v^t\ ) $ le taux de déformation , $I_{d}$ la matrice identité et $P$ la pression en $Pa$ ou $kg.m^{-1}.s^{-2}$ .   \\ 
+$2\mu \dot \varepsilon$ est la partie qui concerne la déformation et $I_{d}P$ est la partie isotrope. Le taux de déformation $\dot \varepsilon$ est un paramètre capital en rhéologie qui est l'étude de la déformation des écoulements sous l'effet des différentes contraintes appliquées.
+\\\\
+En intégrant l'expression du tenseur de contrainte dans ~\eqref{force surface} on obtient :
 \begin{equation}
-\vec{F}s = \int \nabla(2 \mu \varepsilon - I_{d}P ) dV =  \int \nabla 2 \mu \varepsilon dV - \int \nabla P dV
+\vec{F}s = \int \nabla(2 \mu \dot \varepsilon - I_{d}P ) dV =  \int \nabla 2 \mu \dot \varepsilon dV - \int \nabla P dV
 \end{equation}
 
 
-Ainsi en récapitulant la somme des forces, on obtient
+Ainsi en récapitulant la somme des forces ~\eqref{somme force},
 \begin{equation}
 \begin{split}
 \sum\vec{F} = \vec{F}s + \vec{F}v = 0 \\
 \Leftrightarrow 
-\int \nabla 2 \mu \varepsilon dV - \nabla \int P dV + \int \rho \vec{g} dV = 0 \\
+\int \nabla 2 \mu \dot \varepsilon dV - \nabla \int P dV + \int \rho \vec{g} dV = 0 \\
 \Leftrightarrow 
-- \int \nabla 2 \mu \varepsilon dV + \nabla \int P dV = \int \rho \vec{g} dV  \\
+- \int \nabla 2 \mu \dot \varepsilon dV + \nabla \int P dV = \int \rho \vec{g} dV  \\
 \Leftrightarrow 
-- \nabla 2 \mu \varepsilon + \nabla P = \rho \vec{g}
+- \nabla 2 \mu \dot \varepsilon + \nabla P = \rho \vec{g}
 \end{split}
 \end{equation}
-\\
+
+
 Ainsi, nous retrouvons bien l'expression des équations de stokes 
 \begin{equation}
 \left\{
 \begin{array}{l}
--div(2 \mu \varepsilon(\vec{v})) + \nabla P = \rho \vec{g} \\
+-div(2 \mu \dot \varepsilon(\vec{v})) + \nabla P = \rho \vec{g} \\
 div(\vec{v}) = 0 \qquad
 \end{array}
 \right.
 \label{eq1}
 \end{equation}
-avec $\nabla = ( \frac{\partial}{\partial x} + \frac{\partial}{\partial y} + \frac{\partial}{\partial z})$, $\vec{v}$ la vitesse, $\vec{g}$ l'accélération de pesanteur, $\rho$ la masse volumique, $\mu$ le coefficient de viscosité et $\varepsilon$ le taux de déformation. $div(\vec{v}) = 0$ car il n'y a pas de variation de volume.
+avec $\nabla = ( \frac{\partial}{\partial x} + \frac{\partial}{\partial y} + \frac{\partial}{\partial z})$, $v$ la vitesse en $m.s^{-1}$, $g$ l'accélération de pesanteur $en m.s^{-2}$, $\rho$ la masse volumique en $kg.m^{-3}$, $\mu$ le coefficient de viscosité $m^{2}.s^{-1}$ et $\dot \varepsilon$ le taux de déformation. Les écoulements sont incompressibles donc il n'y a pas de variation de volume ce qui se traduit par $div(\vec{v}) = 0$.
 \newpage
-Néanmoins, le Groenland est une calotte grande de milliers de kilomètres. Il faut alors un nombre considérable de points pour résoudre ces équations. De plus du fait de la complexité de celles-ci ainsi que des géométries de la calotte, cela est coûteux en temps de calcul. 
-Il existe de nombreuses simplifications de  ces équations afin de minimiser le temps de calcul. Parmi elle, une des plus connue est l'approximation de la couche mince (Shallow Ice Approximation)appliquée pour la première fois sur la glace par Kolumban Hutter (1983). Ce modèle permet de réduire le problème de résolution 3D à un problème 2D. Il permet des calculs beaucoup plus simples. Ainsi, les calottes étant relativement minces, soit quelques kilomètres d'épaisseur, nous pouvons négliger les (variations verticales de la vitesse) les contraintes de cisaillement longitudinales et utiliser le modèle de l'approximation de la couche mince.
+Néanmoins, le \textbf{Groenland} est une calotte grande de milliers de kilomètres. Il faut alors un nombre considérable de points pour résoudre ces équations. De plus du fait de la complexité de celles-ci ainsi que des géométries de la calotte, cela est \textbf{coûteux en temps de calcul}. 
+\\\\
+Il existe de nombreuses simplifications de ces équations afin de minimiser le temps de calcul. Parmi elle, une des plus connue est l'approximation de la couche mince (\textbf{Shallow Ice Approximation})appliquée pour la première fois sur la glace par Kolumban Hutter (1983). Ce modèle permet de réduire le problème de résolution 3D à un \textbf{problème 2D}. Il permet des calculs beaucoup plus simples. Ainsi, les calottes étant relativement minces, soit quelques kilomètres d'épaisseur, nous pouvons négliger les variations verticales de la vitesse les contraintes de cisaillement longitudinales et utiliser le modèle de l'approximation de la couche mince.
 \newline
 
 \subsection{Shallow ice approximation (SIA)}
@@ -169,15 +174,16 @@ Il existe de nombreuses simplifications de  ces équations afin de minimiser le 
 
 Pour cette partie, nous nous sommes renseignées à travers le cours de Martina Schäfer \cite{schafer2007modelisation} et aussi grâce à un article publié dans le Cambridge University Press  \cite{seroussi_morlighem_rignot_khazendar_larour_mouginot_2013}.
 \newline
-D'après une étude \cite{site3}, des chercheurs  assurent que la résolution du système des équations de Stokes est très coûteuse en temps pour des applications réalistes (avec une complexité de \textbf{nlog(n)}). C'est pour cette raison qu'ils utilisent une simplification de ces équations basée sur le fait que sur de très grandes calottes, l'épaisseur est extrêmement faible par rapport à la dimension horizontale. Pour cela, nous allons utiliser le modèle SIA (Shallow Ice Approximation). Sa validité dépend du rapport d'aspect caractéristique $\zeta$ des objets glaciaires :
+D'après une étude \cite{site3}, des chercheurs assurent que la résolution du système des équations de Stokes est \textbf{très coûteuse en temps} pour des applications réalistes (avec une complexité de \textbf{nlog(n)}). C'est pour cette raison qu'ils utilisent une simplification de ces équations basée sur le fait que sur de très grandes calottes, l'\textbf{épaisseur est extrêmement faible} par rapport à la dimension horizontale. Pour cela, nous allons utiliser le modèle SIA (Shallow Ice Approximation). Sa validité dépend du \textbf{rapport d'aspect caractéristique $\zeta$} des objets glaciaires :
 \begin{equation}
 \zeta = \frac{e}{L}
 \label{eq2} 
 \end{equation}
 
-Avec e l'épaisseur du glacier et L la largeur du glacier. Ce rapport est par exemple de $10^{-3}$ pour l'Antarctique et de $5.10^{-3}$ pour le Groenland. En effet, la validité de la SIA diminue lorsque le rapport d'aspect caractéristique $\zeta$ augmente. 
+Avec e l'épaisseur du glacier en $m$ et L la largeur du glacier en $m$. \\
+Ce rapport est par exemple de $10^{-3}$ pour l'Antarctique et de $5.10^{-3}$ pour le Groenland. En effet, la validité de la SIA diminue lorsque le rapport d'aspect caractéristique $\zeta$ augmente. 
 
-De plus, on néglige ici les interactions internes (aussi appelées bridge effect), ce qui nous permet de séparer les vitesses horizontales et verticales. $\mu$ est considéré isotrope et s'écrit :
+De plus, on néglige ici les \textbf{interactions internes} (aussi appelées bridge effect), ce qui nous permet de séparer les vitesses horizontales et verticales. $\mu$ est considéré isotrope et s'écrit :
 \begin{equation}
 \mu = \frac{B}{2\varepsilon(\vec{v})^\frac{n-1}{n}}
 \label{eq2}      
@@ -256,7 +262,7 @@ Dans le code, la conservation de masse M est calculée à partir de $ \nabla$\te
 \newpage
 \section{Simulations numériques}
 
-\subsection{Les équations de Stokes}
+\subsection{Les différences finies}
 Pour créer nos simulations numériques, on va devoir déterminer des dérivées partielles. Mais celles-ci étant longues à calculer, nous utiliserons ici la \textbf{méthode des différences finies} afin d'approcher ces dérivées avec des calculs plus faciles et rapides.
 \newline
 Cependant, cette méthode étant compliquée, nous ne considèrerons que la définition suivante : On considère un intervalle et on le discrétise en plusieurs sous-intervalles.
