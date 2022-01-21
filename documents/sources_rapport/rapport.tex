@@ -166,7 +166,7 @@ avec $\nabla = ( \frac{\partial}{\partial x} + \frac{\partial}{\partial y} + \fr
 \newpage
 Néanmoins, le \textbf{Groenland} est une calotte grande de milliers de kilomètres. Il faut alors un nombre considérable de points pour résoudre ces équations. De plus du fait de la complexité de celles-ci ainsi que des géométries de la calotte, cela est \textbf{coûteux en temps de calcul}. 
 \\\\
-Il existe de nombreuses simplifications de ces équations afin de minimiser le temps de calcul. Parmi elle, une des plus connue est l'approximation de la couche mince (\textbf{Shallow Ice Approximation})appliquée pour la première fois sur la glace par Kolumban Hutter (1983). Ce modèle permet de réduire le problème de résolution 3D à un \textbf{problème 2D}. Il permet des calculs beaucoup plus simples. Ainsi, les calottes étant relativement minces, soit quelques kilomètres d'épaisseur, nous pouvons négliger les variations verticales de la vitesse les contraintes de cisaillement longitudinales et utiliser le modèle de l'approximation de la couche mince.
+Il existe de nombreuses simplifications de ces équations afin de minimiser le temps de calcul. Parmi elle, une des plus connue est l'approximation de la couche mince (\textbf{Shallow Ice Approximation}) appliquée pour la première fois sur la glace par Kolumban Hutter (1983). Ce modèle permet de réduire le problème de résolution 3D à un \textbf{problème 2D}. Il permet des calculs beaucoup plus simples. Ainsi, les calottes étant relativement minces, soit quelques kilomètres d'épaisseur, nous pouvons négliger les variations verticales de la vitesse les contraintes de cisaillement longitudinales et utiliser le modèle de l'approximation de la couche mince.
 \newline
 
 \subsection{Shallow ice approximation (SIA)}
@@ -174,7 +174,7 @@ Il existe de nombreuses simplifications de ces équations afin de minimiser le t
 
 Pour cette partie, nous nous sommes renseignées à travers le cours de Martina Schäfer \cite{schafer2007modelisation} et aussi grâce à un article publié dans le Cambridge University Press  \cite{seroussi_morlighem_rignot_khazendar_larour_mouginot_2013}.
 \newline
-D'après une étude \cite{site3}, des chercheurs assurent que la résolution du système des équations de Stokes est \textbf{très coûteuse en temps} pour des applications réalistes (avec une complexité de \textbf{nlog(n)}). C'est pour cette raison qu'ils utilisent une simplification de ces équations basée sur le fait que sur de très grandes calottes, l'\textbf{épaisseur est extrêmement faible} par rapport à la dimension horizontale. Pour cela, nous allons utiliser le modèle SIA (Shallow Ice Approximation). Sa validité dépend du \textbf{rapport d'aspect caractéristique $\zeta$} des objets glaciaires :
+D'après une étude de Robin Chatelin \cite{site3}, des chercheurs assurent que la résolution du système des équations de Stokes est \textbf{très coûteuse en temps} pour des applications réalistes (avec une complexité de \textbf{nlog(n)}). C'est pour cette raison qu'ils utilisent une simplification de ces équations basée sur le fait que, sur de très grandes calottes, l'\textbf{épaisseur est extrêmement faible} par rapport à la dimension horizontale. Pour cela, nous allons utiliser le modèle SIA (Shallow Ice Approximation). Sa validité dépend du \textbf{rapport d'aspect caractéristique $\zeta$} des objets glaciaires :
 \begin{equation}
 \zeta = \frac{e}{L}
 \label{eq2} 
@@ -370,10 +370,10 @@ function mass_balance_constants(xc, yc)
 end                                   
 \end{verbatim}
 \newpage
-Puis à partir de là, nous avons fait en sorte de n'obtenir qu'un tableau en 1D afin qu'on puisse l'utiliser dans notre code. Puis nous calculons un premier dSdx à l'aide des différences finies, qui nous servira ensuite pour calculer le coefficient de diffusion D qu'on a introduit à l'équation ~\eqref{eq5}. Ensuite on reproduit l'équation ~\eqref{eq4} en deux lignes, en effectuant deux fois les différences finies. On calcule le flux qH puis le résidu \textit{ResH} en introduisant le M précédant. Une fois que cela est fait, on calcule \textit{dHdt} en introduisant le damp itérative pour converger plus rapidement vers une solution. Une fois que cela est fait, nous réatribuons un \textbf{Mask} afin que chaque point considéré soit au minimum au niveau de la mer, et non en dessous, puis nous remettons à jour la surface S. On introduit aussi une variable \textit{cfl} qui est un coefficient suffisant pour assurer que notre modèle converge vers une solution cohérente.
+Puis à partir de là, nous avons fait en sorte de n'obtenir qu'un tableau en 1D afin qu'on puisse l'utiliser dans notre code. Puis nous calculons un premier dSdx à l'aide des différences finies, qui nous servira ensuite pour calculer le coefficient de diffusion D qu'on a introduit à l'équation ~\eqref{eq5}. Ensuite on reproduit l'équation ~\eqref{eq4} en deux lignes, en effectuant deux fois les différences finies. On calcule le flux qH puis le résidu \textit{ResH} en introduisant le M précédant. Une fois que cela est fait, on calcule \textit{dHdt} en introduisant le damp itérative pour converger plus rapidement vers une solution. Une fois que cela est fait, nous réattribuons un \textbf{Mask} afin que chaque point considéré soit au minimum au niveau de la mer, et non en dessous, puis nous remettons à jour la surface S. On introduit aussi une variable \textit{cfl} qui est un coefficient suffisant pour assurer que notre modèle converge vers une solution cohérente.
 \newline
 \newline
-Nous avons introduit plusieurs tableaux : le coefficient de diffusion D, le flux \textit{qH}, le résidu de l'équation ResH ainsi que les surfaces B, H et S, dont la taille varie en fonction des calculs qu'on leur applique. Par exemple, les méthodes des différences finies sur un tableau de taille \textit{nx} renvoie un autre tableau de taille \textit{nx-1} (car on applique \textit{nx-1} opérations sur \textit{nx} valeurs).
+Nous avons introduit plusieurs tableaux : le coefficient de diffusion D, le flux \textit{qH}, le résidu de l'équation ResH ainsi que les surfaces B, H et S, dont la taille varie en fonction des calculs qu'on leur applique. Par exemple, les méthodes des différences finies sur un tableau de taille \textit{nx} renvoie un autre tableau de taille \textit{nx-1} (car on applique \textit{nx-1} opérations sur \textit{nx} valeurs). Mais d'autres calculs directement fournis avec Julia peuvent renvoyer des tableaux de taille différente à celle d'origine, comme par exemple \textbf{av} (qui fait la moyenne des deux extrêmités pour chaque sous-intervalles) ou bien \textbf{inn} (qui renvoie le même tableau sans la première et la dernière valeur).
 \newline
 \newline
 Ce code remet à jour toutes les valeurs jusqu'à ce que l'erreur déterminée descende en dessous d'une tolérance prédéfinie. On introduit également un pas d'itération maximal pour éviter que le programme ne s'arrête jamais.
@@ -433,7 +433,7 @@ Mask1 = var["Mask"]
 \newpage
 On obtient un objet \textit{Zbed} et \textit{Hice} qui sont plus exactement de type GeoData. Après une recherche dans la documentation de GeoData Julia, nous n’avons pas réussi à trouver comment extraire le tableau (ou la matrice) contenu dans ces objets.
 
-Après quelques recherches sur des forums (notamment stackoverﬂow), puis quelques \textit{print()} dans la console, nous en avons déduis qu’il fallait faire Objet.\_clé\_, ce qui est d’ailleurs une pratique assez courante que ce soit en Python ou même en Javascript par exemple.
+Après quelques recherches sur des forums (notamment stackoverﬂow), puis quelques \textit{print()} dans la console, nous en avons déduit qu’il fallait faire Objet.\_clé\_, ce qui est d’ailleurs une pratique assez courante que ce soit en Python ou même en Javascript par exemple.
 
 Ainsi on peut récupérer les informations concernant le niveau de la terre et l’épaisseur de la glace. Pour notre étude nous avons décidé de récupérer les valeurs à partir de la 80ème colonne de la matrice :
 
@@ -447,7 +447,7 @@ B = B1[: , 80]
 H = H1[: , 80]
 \end{verbatim}
 \
-Une fois nos données extraite, il était nécéssaire de faire apparaître notre masque pour le niveau de la mer, que l’on a extrait dans la variable \textit{Mask1}, puis de la même manière que les valeurs \textit{Zbed} et \textit{Hice}, on récupère les données à l’aide de la clé data :
+Une fois nos données extraites, il était nécéssaire de faire apparaître notre masque pour le niveau de la mer, que l’on a extrait dans la variable \textit{Mask1}, puis de la même manière que les valeurs \textit{Zbed} et \textit{Hice}, on récupère les données à l’aide de la clé data :
 \begin{verbatim}
 Mask1 = var["Mask"]
 display(Mask1.data)
@@ -465,14 +465,14 @@ Nous affichons donc le résultat obtenu à l'aide d'un plot.
 \begin{figure}[!htpb]
 \centering
 \includegraphics[width=10cm, keepaspectratio=true, height=10cm]{Iceflow1D.png}
-\caption{Evolution du niveau de glace en fonction du temps. La courbe bleu représente la hauteur H au début, la courbe orange donne la hauteur H une fois la simulation terminée et la courbe verte montre le lit rocheux B.}
+\caption{Evolution du niveau de glace en fonction du temps. La courbe bleue représente la hauteur H au début, la courbe orange donne la hauteur H une fois la simulation terminée et la courbe verte montre le lit rocheux B.}
 \end{figure}
 \vspace*{\fill}
 
 \newpage
 \subsection{Chercher une situation proche du code 2D}
 
-Il nous faut à présent déterminer la ligne où les variations verticales soient les plus faibles, afin d'avoir le modèle le plus proche possible de la réalité adapté a notre code.
+Il nous faut à présent déterminer la ligne où les variations verticales soient les plus faibles, afin d'avoir le modèle le plus proche possible de la réalité adapté à notre code.
 \newline
 Pour cela, nous avons cherché dans les données que nous avions sur le Groenland la ligne "horizontale" qui nous permettait d'avoir des résultats suffisamment justes pour pouvoir appliquer notre code. Plus précisément, il fallait que la ligne choisie soit une ligne qui permette de négliger les vitesses verticales.
 Pour choisir judicieusement cette ligne, nous avons comparé les différentes données de vitesses verticales \textit{Vy} que nous avions à notre disposition en faisant une somme entre deux lignes consécutives, voici le code qui nous a permis de trouver  la ligne correspondante: 
@@ -516,9 +516,19 @@ En exécutant le code avec cette ligne, nous avons alors le résultat suivant:
 
 \subsection{Interpréter notre simulation}
 
-En observant notre schéma, nous pouvons à présent simuler l'évolution de la glace du Groenland et créer notre propre scénario. En conservant nos valeurs, nous pouvons observer une fonte de glace allant de 0 à 1500m de variation. Avec un simple calcul de moyenne, nous obtenons une variation moyenne de 1091m. Notre hauteur de base moyenne étant de 1907, cela nous donne une variation de 57\% de la hauteur. A chaque itération, nous réattribuons des valeurs à tous les tableaux en fonction de a, qui est la viscosité de la glace \textbf{calculée avec un pas de temps annuel}. Nous en déduisons qu'une itération correspond à une année et donc que ce scénario sera atteinte au bout de 2051 ans. 
+En observant notre schéma, nous pouvons à présent simuler l'évolution de la glace du Groenland et créer notre propre scénario. En observant nos valeurs, nous pouvons observer une fonte de glace allant de 0 à 1500m de variation. 
+\begin{verbatim}
+    fonte = zeros(nx)
+    fonte = H0 .- H
+    moy0 = sum(H0)
+    moy = sum(fonte)
+    @printf(" Hauteur de base moyenne est : %d , 
+Fonte moyenne est : %f ",moy0/length(H0) ,moy/length(fonte))
+\end{verbatim}
 \newpage
-Nous avons trouvé un article \cite{charbit2008amount} spéculant la fonte de glace au Groenland en fonction de la hausse de CO2, car celui-ci est directement relié avec la hausse de température. Il effectue plusieurs simulations, en fonction de la variation de température considérée (variant entre 1.1°C et 6.4°C) : 
+Avec un simple calcul de moyenne, nous obtenons une variation moyenne de 1091m. Notre hauteur de base moyenne étant de 1907, cela nous donne une variation de 57\% de la hauteur. A chaque itération, nous réattribuons des valeurs à tous les tableaux en fonction de a, qui est la viscosité de la glace \textbf{calculée avec un pas de temps annuel}. Nous en déduisons qu'une itération correspond à une année et donc que ce scénario sera atteinte au bout de 2051 ans. 
+\newline
+Nous avons trouvé un article de \textbf{ Geophysical Research Letters} \cite{charbit2008amount} spéculant la fonte de glace au Groenland en fonction de la hausse de CO2, car celui-ci est directement relié avec la hausse de température. Il effectue plusieurs simulations, en fonction de la variation de température considérée (variant entre 1.1°C et 6.4°C) : 
 \begin{figure}[!htpb]
 \centering
 \includegraphics[width=10cm, keepaspectratio=true, height=10cm]{Variation.png}

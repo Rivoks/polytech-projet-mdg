@@ -1,10 +1,10 @@
-\babel@toc {french}{}
+\babel@toc {french}{}\relax 
 \contentsline {section}{Introduction}{3}{section*.2}%
-\contentsline {section}{\numberline {1}Présentation des techniques de résolution}{3}{section.1}%
+\contentsline {section}{\numberline {1}Présentation des méthodes de résolution}{3}{section.1}%
 \contentsline {subsection}{\numberline {1.1}Les équations de Stokes}{3}{subsection.1.1}%
 \contentsline {subsection}{\numberline {1.2}Shallow ice approximation (SIA)}{6}{subsection.1.2}%
 \contentsline {section}{\numberline {2}Simulations numériques}{9}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Les équations de Stokes}{9}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.1}Les différences finies}{9}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Comprendre l'algorithme à introduire}{9}{subsection.2.2}%
 \contentsline {subsection}{\numberline {2.3}Code 1D non linéaire proposé}{12}{subsection.2.3}%
 \contentsline {section}{\numberline {3}Résultats}{15}{section.3}%
